@@ -10,6 +10,8 @@
   
 </script>
 
+<!-- 주석 처리 연습 -->
+
 <style lang="scss" scoped>
 
 </style>
