@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import illvent.backend.comment.domain.Comment;
 import illvent.backend.post.domain.Post;
 import illvent.backend.member.dto.MemberUpdateRequestDTO;
+import illvent.backend.wish.domain.Wish;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -53,6 +54,9 @@ public class Member {
 
     @OneToMany(mappedBy = "member")
     private List<Comment> comments = new ArrayList<>();
+
+    @OneToMany(mappedBy = "member")
+    private List<Wish> wishes = new ArrayList<>();
 
     public void update(MemberUpdateRequestDTO memberUpdateRequestDTO) {
         Optional.ofNullable(memberUpdateRequestDTO.getName()).ifPresent(name -> this.name = name);

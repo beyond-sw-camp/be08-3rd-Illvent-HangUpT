@@ -47,7 +47,7 @@ public class PostController {
     }
 
     @Operation(summary = "특정 게시물을 반환하는 API")
-    @GetMapping("{postNo}")
+    @GetMapping("/{postNo}")
     public ResponseEntity<PostResponseDTO> getPost(@PathVariable Long postNo){
         PostResponseDTO post = postService.getPost(postNo);
 
