@@ -1,10 +1,13 @@
 package illvent.backend.member.service;
 
+import illvent.backend.event.domain.Event;
+import illvent.backend.event.dto.EventResponseDTO;
 import illvent.backend.member.domain.*;
 import illvent.backend.member.dto.MemberLoginRequestDTO;
 import illvent.backend.member.dto.MemberRegisterRequestDTO;
 import illvent.backend.member.dto.MemberUpdateRequestDTO;
 import illvent.backend.member.util.JwtTokenProvider;
+import illvent.backend.wish.domain.Wish;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseCookie;
@@ -12,8 +15,11 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -45,6 +51,7 @@ public class MemberService {
                 .nickname(memberRegisterRequestDTO.getNickname())
                 .location(memberRegisterRequestDTO.getLocation())
                 .status(memberRegisterRequestDTO.getStatus())
+                .role(MemberRole.USER)
                 .build();
 
         return Optional.of(memberRepository.save(member));
@@ -125,5 +132,19 @@ public class MemberService {
         member.updateStatus();
 
         return Optional.empty();
+    }
+
+    public List<EventResponseDTO> getAllWishEvents(Long memberNo){
+        Member member = memberRepository.findById(memberNo).orElseThrow(() ->
+                new IllegalArgumentException("Member not found"));
+
+        List<Wish> wishes = member.getWishes();
+        List<Event> events = new ArrayList<>();
+        for(Wish wish : wishes) events.add(wish.getEvent());
+        for(Event event : events) System.out.println(event.getNo());
+
+        return events.stream()
+                .map(EventResponseDTO::new)
+                .collect(Collectors.toList());
     }
 }

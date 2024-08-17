@@ -28,9 +28,9 @@ public class PostService {
     private final MemberRepository memberRepository;
 
     @Transactional
-    public Optional<Post> registerPost(PostRegisterRequestDTO postRegisterRequestDTO) {
+    public Optional<Post> registerPost(Long postNo, PostRegisterRequestDTO postRegisterRequestDTO) {
 
-        Member foundMember = memberRepository.findById(postRegisterRequestDTO.getMemberNo()).orElseThrow(() ->
+        Member foundMember = memberRepository.findById(postNo).orElseThrow(() ->
                 new IllegalArgumentException("Member not found"));
 
         if(foundMember.getStatus() == MemberStatus.N) throw new IllegalArgumentException("Invalid member");

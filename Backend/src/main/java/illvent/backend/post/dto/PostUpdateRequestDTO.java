@@ -6,8 +6,6 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDateTime;
-
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
@@ -20,6 +18,4 @@ public class PostUpdateRequestDTO {
     @NotNull
     private String content;
 
-    @NotNull
-    private LocalDateTime updateDate;
 }
