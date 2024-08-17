@@ -1,45 +1,64 @@
 package illvent.backend.event.controller;
 
-import illvent.backend.event.dto.EventsResponseDto;
+import illvent.backend.event.dto.EventRegisterRequestDTO;
+import illvent.backend.event.dto.EventResponseDTO;
+import illvent.backend.event.dto.EventUpdateRequestDTO;
 import illvent.backend.event.service.EventService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@Tag(name="Event",description = "행사 이벤트 관리")
+@Tag(name = "Event", description = "행사 관리")
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("v1/api/events")
+@RequestMapping("v1/api/event")
 public class EventController {
 
     private final EventService eventService;
 
-    // 필터별
-//    @Operation(summary = "조건(필터)별로 이벤트 리스트를 가져오는 API")
-//    @GetMapping("")
-//    public RestController<> getEventsByFilter(){
-//
-//    }
+    @Operation(summary = "행사를 등록하는 API")
+    @PostMapping("/register")
+    public ResponseEntity<String> registerEvent(@RequestBody EventRegisterRequestDTO eventRegisterRequestDTO) {
+        eventService.registerEvent(eventRegisterRequestDTO);
 
-    @Operation(summary = "이벤트 리스트 전체 조회 API")
-    @GetMapping("")
-    public ResponseEntity<List<EventsResponseDto>> getAllEvents() {
-
-        List<EventsResponseDto> result = eventService.getAllEvents();
-
-        return ResponseEntity.ok(result);
-
+        return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
+    @Operation(summary = "특정 행사 정보를 수정하는 API")
+    @PutMapping("/update/{eventNo}")
+    public ResponseEntity<EventResponseDTO> updateEvent(@PathVariable Long eventNo, @RequestBody EventUpdateRequestDTO eventUpdateRequestDTO) {
+        EventResponseDTO event = eventService.updateEvent(eventNo, eventUpdateRequestDTO);
 
+        return ResponseEntity.ok(event);
+    }
+
+    @Operation(summary = "특정 행사 정보를 삭제하는 API")
+    @DeleteMapping("/delete/{eventNo}")
+    public ResponseEntity<String> deleteEvent(@PathVariable Long eventNo) {
+        eventService.deleteEvent(eventNo);
+
+        return ResponseEntity.ok().build();
+    }
+
+    @Operation(summary = "특정 행사 정보를 반환하는 API")
+    @GetMapping("/{eventNo}")
+    public ResponseEntity<EventResponseDTO> getEvent(@PathVariable Long eventNo) {
+        EventResponseDTO event = eventService.getEvent(eventNo);
+
+        return ResponseEntity.ok(event);
+    }
+
+    @Operation(summary = "모든 행사 정보를 반환하는 API")
+    @GetMapping("/list")
+    public ResponseEntity<List<EventResponseDTO>> getAllEvents() {
+        List<EventResponseDTO> events = eventService.getAllEvents();
+
+        return ResponseEntity.ok(events);
+    }
 
 }

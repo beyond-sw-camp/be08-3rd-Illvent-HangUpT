@@ -28,7 +28,7 @@ public class Post{
     @Column(name = "no")
     private Long no;
 
-    @Column(nullable = false, length = 255)
+    @Column(nullable = false)
     private String title;
 
     @Column(nullable = false, length = 1023)
@@ -52,6 +52,6 @@ public class Post{
     public void update(PostUpdateRequestDTO postUpdateRequestDTO) {
         Optional.ofNullable(postUpdateRequestDTO.getTitle()).ifPresent(title -> this.title = title);
         Optional.ofNullable(postUpdateRequestDTO.getContent()).ifPresent(content -> this.content = content);
-        Optional.ofNullable(postUpdateRequestDTO.getUpdateDate()).ifPresent(updateDate -> this.updateDate = updateDate);
+        this.updateDate = LocalDateTime.now();
     }
 }

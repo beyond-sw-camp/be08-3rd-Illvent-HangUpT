@@ -1,4 +1,4 @@
-package illvent.backend.post.dto;
+package illvent.backend.wish.dto;
 
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -10,12 +10,11 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder
 @Getter
-public class PostRegisterRequestDTO {
+public class WishRegisterRequestDTO {
 
     @NotNull
-    private String title;
+    private Long memberNo;
 
     @NotNull
-    private String content;
-
+    private Long eventNo;
 }
