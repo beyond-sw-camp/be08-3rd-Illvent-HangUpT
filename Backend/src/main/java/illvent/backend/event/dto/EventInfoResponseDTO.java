@@ -7,7 +7,7 @@ import java.time.LocalDate;
 
 @AllArgsConstructor
 @Getter
-public class EventsResponseDto {
+public class EventInfoResponseDTO {
     private Long id;
     private String title;
     private String imgUrl;
