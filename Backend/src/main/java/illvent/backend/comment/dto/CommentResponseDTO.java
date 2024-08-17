@@ -1,11 +1,11 @@
 package illvent.backend.comment.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import illvent.backend.comment.domain.Comment;
 import illvent.backend.comment.domain.CommentStatus;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.NoArgsConstructor;
-import org.springframework.cglib.core.Local;
 
 import java.time.LocalDateTime;
 
@@ -14,20 +14,28 @@ import java.time.LocalDateTime;
 @Builder
 public class CommentResponseDTO {
 
+    @JsonProperty
     private Long no;
 
+    @JsonProperty
     private String content;
 
+    @JsonProperty
     private Long level;
 
+    @JsonProperty
     private Long memberNo;
 
+    @JsonProperty
     private Long postNo;
 
+    @JsonProperty
     private LocalDateTime createDate;
 
+    @JsonProperty
     private LocalDateTime updateDate;
 
+    @JsonProperty
     private CommentStatus status;
 
     public CommentResponseDTO(Comment comment) {
