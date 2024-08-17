@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 @Getter
 public class EventRegisterRequestDTO {
 
@@ -27,5 +28,8 @@ public class EventRegisterRequestDTO {
     private String description;
 
     @NotNull
-    private String price;
+    private String region;
+
+    @NotNull
+    private Long price;
 }

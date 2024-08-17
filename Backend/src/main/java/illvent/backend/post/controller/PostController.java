@@ -22,9 +22,9 @@ public class PostController {
     private final PostService postService;
 
     @Operation(summary = "게시물을 등록하는 API")
-    @PostMapping("/register")
-    public ResponseEntity<String> registerPost(@RequestBody PostRegisterRequestDTO postRegisterRequestDTO) {
-        postService.registerPost(postRegisterRequestDTO);
+    @PostMapping("/register/{postNo}")
+    public ResponseEntity<String> registerPost(@PathVariable Long postNo ,@RequestBody PostRegisterRequestDTO postRegisterRequestDTO) {
+        postService.registerPost(postNo, postRegisterRequestDTO);
 
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }

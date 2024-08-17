@@ -23,7 +23,7 @@ public class EventController {
 
     @Operation(summary = "행사를 등록하는 API")
     @PostMapping("/register")
-    public ResponseEntity<String> registerEvent(EventRegisterRequestDTO eventRegisterRequestDTO) {
+    public ResponseEntity<String> registerEvent(@RequestBody EventRegisterRequestDTO eventRegisterRequestDTO) {
         eventService.registerEvent(eventRegisterRequestDTO);
 
         return ResponseEntity.status(HttpStatus.CREATED).build();
@@ -31,7 +31,7 @@ public class EventController {
 
     @Operation(summary = "특정 행사 정보를 수정하는 API")
     @PutMapping("/update/{eventNo}")
-    public ResponseEntity<EventResponseDTO> updateEvent(@PathVariable Long eventNo, EventUpdateRequestDTO eventUpdateRequestDTO) {
+    public ResponseEntity<EventResponseDTO> updateEvent(@PathVariable Long eventNo, @RequestBody EventUpdateRequestDTO eventUpdateRequestDTO) {
         EventResponseDTO event = eventService.updateEvent(eventNo, eventUpdateRequestDTO);
 
         return ResponseEntity.ok(event);

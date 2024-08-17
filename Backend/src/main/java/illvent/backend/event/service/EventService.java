@@ -7,7 +7,6 @@ import illvent.backend.event.dto.EventResponseDTO;
 import illvent.backend.event.dto.EventUpdateRequestDTO;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -46,6 +45,7 @@ public class EventService {
                 .address(eventUpdateRequestDTO.getAddress())
                 .imageUrl(eventUpdateRequestDTO.getImageUrl())
                 .description(eventUpdateRequestDTO.getDescription())
+                .region(eventUpdateRequestDTO.getRegion())
                 .price(eventUpdateRequestDTO.getPrice())
                 .build();
 

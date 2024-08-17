@@ -25,5 +25,8 @@ public class EventUpdateRequestDTO {
     private String description;
 
     @NotNull
-    private String price;
+    private String region;
+
+    @NotNull
+    private Long price;
 }

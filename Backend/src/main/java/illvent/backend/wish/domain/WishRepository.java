@@ -5,4 +5,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface WishRepository extends JpaRepository<Wish, Long> {
+    Wish findByMemberNoAndEventNo(Long memberId, Long eventId);
 }

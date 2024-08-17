@@ -1,7 +1,6 @@
 package illvent.backend.event.domain;
 
 import illvent.backend.wish.domain.Wish;
-import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -39,7 +38,10 @@ public class Event {
     private String description;
 
     @Column(nullable = false)
-    private String price;
+    private String region;
+
+    @Column(nullable = false)
+    private Long price;
 
     @OneToMany(mappedBy = "event")
     private List<Wish> wishes = new ArrayList<>();
