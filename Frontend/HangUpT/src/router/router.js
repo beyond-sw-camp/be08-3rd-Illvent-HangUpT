@@ -12,7 +12,7 @@ const routes = [
     { path: "/boards", component: Board },
     { path: "/boards/new", component: BoardNew },
     { path: "/boards/:id", component: BoardDetail },
-    { path:"/events",name:'events',component: EventView}
+    { path:"/events",name:'events',component: EventView},
     { path: "/event", component: EventDetail, props: true},
     { path: "/map", component: KakaoMap},
 ];
