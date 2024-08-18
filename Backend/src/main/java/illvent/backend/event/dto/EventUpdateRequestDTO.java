@@ -39,6 +39,9 @@ public class EventUpdateRequestDTO {
     private int views;
 
     @NotNull
+    private int likes;
+
+    @NotNull
     private boolean online;
 
     @NotNull

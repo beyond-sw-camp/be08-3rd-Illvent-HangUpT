@@ -49,6 +49,9 @@ public class Event {
     private int views;
 
     @Column(nullable = false)
+    private int likes;
+
+    @Column(nullable = false)
     private boolean online;
 
     @Column(nullable = false)
@@ -59,5 +62,13 @@ public class Event {
 
     public void updateViews(){
         this.views++;
+    }
+
+    public void updateLikesIncrease(){
+        this.likes++;
+    }
+
+    public void updateLikesDecrease(){
+        this.likes--;
     }
 }

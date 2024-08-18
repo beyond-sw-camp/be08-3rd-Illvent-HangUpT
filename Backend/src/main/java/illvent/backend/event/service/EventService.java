@@ -9,7 +9,6 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -32,6 +31,7 @@ public class EventService {
                 .region(eventRegisterRequestDTO.getRegion())
                 .price(eventRegisterRequestDTO.getPrice())
                 .views(0)
+                .likes(0)
                 .online(eventRegisterRequestDTO.isOnline())
                 .offline(eventRegisterRequestDTO.isOffline())
                 .build();
@@ -54,6 +54,7 @@ public class EventService {
                 .region(eventUpdateRequestDTO.getRegion())
                 .price(eventUpdateRequestDTO.getPrice())
                 .views(eventUpdateRequestDTO.getViews())
+                .likes(eventUpdateRequestDTO.getLikes())
                 .online(eventUpdateRequestDTO.isOnline())
                 .offline(eventUpdateRequestDTO.isOffline())
                 .build();
@@ -87,6 +88,12 @@ public class EventService {
 
     public List<EventResponseDTO> getEventsOrderByViews() {
         return eventRepository.findTop10ByOrderByViewsDesc().stream()
+                .map(EventResponseDTO::new)
+                .collect(Collectors.toList());
+    }
+
+    public List<EventResponseDTO> getEventsOrderByLikes() {
+        return eventRepository.findTop10ByOrderByLikesDesc().stream()
                 .map(EventResponseDTO::new)
                 .collect(Collectors.toList());
     }
