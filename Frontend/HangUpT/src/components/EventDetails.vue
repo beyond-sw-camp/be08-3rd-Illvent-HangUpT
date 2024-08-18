@@ -1,13 +1,16 @@
 <template>
     <div class="event-details-container">
         <header class="event-header">
-            
+            <p>{{id}}</p>
+            <p>{{event.id}}</p>
         </header>
         <section class="sidebar">
-            <p>{{event.title }}</p>
+            <!-- <p>{{event.title }}</p> -->
+            <p>경기/인천/서울</p>
+            <h3>Busan NE(O)RDINARY DemoDay : FLASH</h3>
             <img src="../assets/list/1.jpg"><br>
-            <a :href="event.registrationLink" class="register-button">신청하기</a>
-            <a :href="event.inquiryLink" class="inquiry-button">관심 행사</a>
+            <a align="center" class="register-button">신청하기</a>
+            <a align="center" class="inquiry-button">관심 행사 ♡</a>
         </section>
         <section class="event-content">
             <!-- <img :src="getImageUrl(event.bannerImage)" class="event-banner" alt="Event Banner"/> -->
@@ -25,9 +28,9 @@
                             <li><strong>Speakers</strong> {{ event.speakers }}</li> -->
                     </ul>
                 </div>
-                <div v-for="(des, i) in event.description" :key="i">
+                <!-- <div v-for="(des, i) in event.description" :key="i">
                     <p class="event-description" >{{ des }}</p>
-                </div>
+                </div> -->
             </div>
         </section>
         
@@ -37,33 +40,64 @@
 </template>
     
 <script>
-    import { defineComponent } from 'vue';
-    import EventData from '../assets/EventData.js'; // 데이터 경로에 맞게 수정하세요
-
-export default defineComponent({
+    import { defineComponent, ref, computed, onMounted } from 'vue';
+    import { useRoute } from 'vue-router';
+    import axios from 'axios';
+    const baseUrl = 'http://localhost:8080/v1/api/event';
+    
+export default {
     name: 'EventDetails',
-    data() {
-        return {
-            event: EventData
-        };
+    components: {
+        
     },
-methods: {
-    getImageUrl(url) {
-        return new URL(`${url}`, import.meta.url).href;
-        }
+    setup() {
+        const event = ref({});
+        const message = ref('');
+
+        const route = useRoute();
+        const id = route.query.id;
+    
+        const getImageUrl = (url) => {
+            return new URL(`${url}`, import.meta.url).href;
+        };
+        
+        const fetchData = async() => {
+            try {
+                const result = await axios.get(`${baseUrl}/${id}`);
+                console.log(result.data);
+                event.value = result.data;
+            } catch (error) {
+                console.error('Error fetching data:', error);
+            } finally {
+                message.value = "Data loaded";
+            }
+        };
+
+        onMounted(() => {
+            fetchData();
+        });
+    
+        return {
+            event,
+            getImageUrl,
+            id,
+            event,
+            route,
+            message
+        };
     }
-});
+};
 </script>
 
 <style>
 .event-details-container {
     float: left;
-    width: 1400px;
+    width: 80%;
     margin-top: 100px;
     padding: 20px;
     align-items: left;
     /* padding-right: 400px; */
-    padding-left: 100px;
+    padding-left: 15%;
     height: 2000px;
 }
 
@@ -154,28 +188,29 @@ methods: {
 }
 
 .register-button {
-    /* background-color: #007bff; */
     background-color: rebeccapurple;
 }
 
 .inquiry-button {
-    /* background-color: #28a745; */
-    background-color: skyblue;
+    background-color: rgb(138, 236, 239);
+    color: rgb(55, 118, 218);
 }
 
 .sidebar {
     position: sticky;
     top: 100px;
     width: 400px; 
-    /* height: 100px; */
-    background-color: #f4f4f4;
+    background-color: white;
     padding: 20px;
-    box-shadow: -2px 0 5px rgba(0, 0, 0, 0.2);
-    /* align-items: left; */
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.3);
     float: right;
 }
-.sidebar p {
-    font-size: 20px;
+.sidebar h {
+    font-size: 25px;
     font-weight: bold;
+}
+.sidebar p {
+    font-size: 13px;
+    color: gray;
 }
 </style>

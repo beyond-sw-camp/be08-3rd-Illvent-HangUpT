@@ -1,84 +1,90 @@
 <template>
+    <p>{{ message }}</p>
     <div class="carousel-wrapper">
-    <Carousel :items-to-show="4.5" :wrap-around="false" :autoplay="false" transition="500">
-        <Slide v-for="item in list" :key="item.id">
-        <div class="slide_item">
-            <img :src="getImageUrl(item.image)" class="slide-image" />
+        <Carousel :items-to-show="4.5" :wrap-around="false" :autoplay="false" transition="500">
+        <Slide v-for="item in list" :key="item.no">
+            <div class="slide-item">
+                <router-link :to="{path: `/event`, query: {id: item.no}}"><h4>{{ item }}</h4></router-link>
+            <!-- <img :src="item.image" class="slide-image" />
             <div class="slide-content">
-            <p class="slide-date">{{ item.date }}</p>
-            <h2 class="slide-title">{{ item.title }}</h2>
-            <h4 class="slide-price">{{ item.price }}</h4>
+                <p class="slide-date">{{ item.date }}</p>
+                <h2 class="slide-title">{{ item.title }}</h2>
+                <h4 class="slide-price">{{ item.price }}</h4>
+            </div> -->
             </div>
-        </div>
         </Slide>
 
         <template #addons>
-        <!-- <div class="navigation-container">
-            <Navigation />
-        </div> -->
         </template>
-    </Carousel>
+        </Carousel>
     </div>
 </template>
 
 <script>
-import { defineComponent } from 'vue'
-import { Carousel, Navigation, Slide } from 'vue3-carousel'
+    import { ref, onMounted } from 'vue';
+    import { Carousel, Navigation, Slide } from 'vue3-carousel';
+    import 'vue3-carousel/dist/carousel.css';
+    import axios from 'axios';
 
-import 'vue3-carousel/dist/carousel.css'
+    const baseUrl = 'http://localhost:8080/v1/api/event';
 
-import data from '../assets/list.js'
-
-export default defineComponent({
+export default {
     name: 'WrapAround',
     components: {
         Carousel,
         Slide,
         Navigation,
     },
-    data(){
-        return {
-            list : data
-        }
-    },
-    methods:{
-            getImageUrl(url) {
-                return new URL(`${url}`, import.meta.url).href;
+    setup() {
+        const list = ref([]);
+        const message = ref('Loading...');
+
+        const getImageUrl = (url) => {
+            return new URL(`${url}`, import.meta.url).href;
+        };
+
+        const fetchData = async() => {
+            try {
+                const result = await axios.get(`${baseUrl}/list`);
+                console.log(result.data);
+                list.value = result.data;
+            } catch (error) {
+                console.error('Error fetching data:', error);
+            } finally {
+                message.value = "Data loaded";
             }
+        };
+
+        onMounted(() => {
+            fetchData();
+        });
+
+        return {
+            list,
+            message,
+            getImageUrl,
+        };
     },
-})
+};
 </script>
 
 <style>
-.carousel-container {
+.carousel-wrapper {
     position: relative;
     width: 100%;
 }
-    
+
 .slide-item {
     position: relative;
     border-radius: 8px;
     overflow: hidden;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
-    
+
 .slide-image {
     width: 100%;
     height: 300px;
     object-fit: cover;
-}
-    
-.slide-overlay {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    background: rgba(0, 0, 0, 0.4);
-    color: white;
-    padding: 15px;
-    box-sizing: border-box;
-    border-top-left-radius: 8px;
-    border-top-right-radius: 8px;
 }
 
 .slide-content {
@@ -105,5 +111,4 @@ export default defineComponent({
     color: blueviolet;
     margin-top: 20px;
 }
-
 </style>

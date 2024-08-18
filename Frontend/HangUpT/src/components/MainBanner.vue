@@ -1,5 +1,5 @@
 <template>
-    <Carousel :autoplay="2000" :wrap-around="true" transition="1000" pauseAutoplayOnHover="true"
+    <Carousel :autoplay="3000" :wrap-around="true" transition="1000" pauseAutoplayOnHover="true"
             @mouseover="isHovered = true" @mouseout="isHovered = false">
         <Slide v-for="(image, i) in images" :key="i">
             <div class="carousel__item" >
@@ -54,7 +54,7 @@ export default defineComponent({
     background-color: var(--vc-clr-primary);
     color: var(--vc-clr-white);
     /* font-size: 20px; */
-    border-radius: 8px;
+    /* border-radius: 8px; */
     display: flex;
     justify-content: center;
     align-items: center;
