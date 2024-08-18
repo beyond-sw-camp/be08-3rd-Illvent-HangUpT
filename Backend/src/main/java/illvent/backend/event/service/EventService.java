@@ -36,6 +36,7 @@ public class EventService {
                 .region(eventRegisterRequestDTO.getRegion())
                 .price(eventRegisterRequestDTO.getPrice())
                 .views(0)
+                .likes(0)
                 .online(eventRegisterRequestDTO.isOnline())
                 .offline(eventRegisterRequestDTO.isOffline())
                 .build();
@@ -58,6 +59,7 @@ public class EventService {
                 .region(eventUpdateRequestDTO.getRegion())
                 .price(eventUpdateRequestDTO.getPrice())
                 .views(eventUpdateRequestDTO.getViews())
+                .likes(eventUpdateRequestDTO.getLikes())
                 .online(eventUpdateRequestDTO.isOnline())
                 .offline(eventUpdateRequestDTO.isOffline())
                 .build();
@@ -95,6 +97,11 @@ public class EventService {
                 .collect(Collectors.toList());
     }
 
+    public List<EventResponseDTO> getEventsOrderByLikes() {
+        return eventRepository.findTop10ByOrderByLikesDesc().stream()
+                .map(EventResponseDTO::new)
+                .collect(Collectors.toList());
+
     public List<EventInfoResponseDTO> getEventsByFilter(DateFilter date, String region, String join, String price,int page, int size) {
         Pageable pageable = PageRequest.of(page,size);
         Page<Event> events = null;
@@ -111,7 +118,6 @@ public class EventService {
             startDate = dateRange.getStartDate();
             endDate = dateRange.getEndDate();
         }
-
 
         // on off 계산
         if (join != null) {

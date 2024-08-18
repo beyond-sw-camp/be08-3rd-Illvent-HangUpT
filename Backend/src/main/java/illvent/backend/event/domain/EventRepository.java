@@ -15,6 +15,7 @@ import java.util.List;
 public interface EventRepository extends JpaRepository<Event, Long>, JpaSpecificationExecutor<Event> {
     List<Event> findTop10ByOrderByViewsDesc();
 
+    List<Event> findTop10ByOrderByLikesDesc();
 
     @Query(value = "select e from Event e where "
             + "(:startDate is null or e.eventDate>=:startDate) and "
@@ -42,7 +43,6 @@ public interface EventRepository extends JpaRepository<Event, Long>, JpaSpecific
     );
 
 
-
     @Query(value = "select e from Event e where "
             + "(:startDate is null or e.eventDate>=:startDate) and "
             + "(:endDate is null or e.eventDate<=:endDate) and "
@@ -66,6 +66,5 @@ public interface EventRepository extends JpaRepository<Event, Long>, JpaSpecific
             @Param("price") Integer price,
             @Param("region") String region
     );
-
 
 }

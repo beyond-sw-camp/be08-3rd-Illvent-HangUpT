@@ -32,6 +32,9 @@ public class WishService {
         Event event = eventRepository.findById(wishRegisterRequestDTO.getEventNo()).orElseThrow(() ->
                 new IllegalArgumentException("Event not found"));
 
+        event.updateLikesIncrease();
+        eventRepository.save(event);
+
         Wish wish = Wish.builder()
                 .member(member)
                 .event(event)
@@ -43,6 +46,10 @@ public class WishService {
     @Transactional
     public void deleteWish(WishDeleteRequestDTO wishDeleteRequestDTO){
         Wish wish = wishRepository.findByMemberNoAndEventNo(wishDeleteRequestDTO.getMemberNo(), wishDeleteRequestDTO.getEventNo());
+
+        Event event = wish.getEvent();
+        event.updateLikesDecrease();
+        eventRepository.save(event);
 
         wishRepository.delete(wish);
     }
