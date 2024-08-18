@@ -1,5 +1,6 @@
 package illvent.backend.member.controller;
 
+import illvent.backend.event.dto.EventResponseDTO;
 import illvent.backend.member.dto.MemberRegisterRequestDTO;
 import illvent.backend.member.dto.MemberLoginRequestDTO;
 import illvent.backend.member.dto.MemberUpdateRequestDTO;
@@ -12,6 +13,8 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @Tag(name = "Member", description = "회원 관리")
 @RestController
@@ -53,5 +56,13 @@ public class MemberController {
         memberService.deleteMember(email);
 
         return ResponseEntity.ok().build();
+    }
+
+    @Operation(summary = "회원의 모든 관심 행사를 반환하는 API")
+    @GetMapping("/list/{memberNo}")
+    public ResponseEntity<List<EventResponseDTO>> getAllWishEvents(@PathVariable Long memberNo){
+        List<EventResponseDTO> events = memberService.getAllWishEvents(memberNo);
+
+        return ResponseEntity.ok(events);
     }
 }

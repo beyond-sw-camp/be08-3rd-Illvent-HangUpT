@@ -2,9 +2,7 @@ package illvent.backend.comment.domain;
 
 import illvent.backend.comment.dto.CommentUpdateRequestDTO;
 import illvent.backend.member.domain.Member;
-import illvent.backend.member.domain.MemberStatus;
 import illvent.backend.post.domain.Post;
-import illvent.backend.post.dto.PostUpdateRequestDTO;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -60,6 +58,6 @@ public class Comment {
 
     public void update(CommentUpdateRequestDTO commentUpdateRequestDTO) {
         Optional.ofNullable(commentUpdateRequestDTO.getContent()).ifPresent(content ->this.content = content);
-        Optional.ofNullable(commentUpdateRequestDTO.getUpdateDate()).ifPresent(updateDate -> this.updateDate = updateDate);
+        this.updateDate = LocalDateTime.now();
     }
 }

@@ -1,6 +1,5 @@
 package illvent.backend.member.dto;
 
-import illvent.backend.member.domain.MemberRole;
 import illvent.backend.member.domain.MemberStatus;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -31,4 +30,5 @@ public class MemberRegisterRequestDTO {
 
     @NotNull
     private MemberStatus status;
+
 }
