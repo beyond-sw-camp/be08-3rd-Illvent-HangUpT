@@ -5,7 +5,11 @@
             <div class="img_container">
                
                 <img :src="event.imgUrl" :alt="event.title">  
-                <img :src="scrapImgUrl" class="scrap-button" @click="onScrap"></img>
+                <!-- <img :src="scrapImgUrl" class="scrap-button" @click="onScrap"></img> -->
+                <img :src="event.wish? checkImg:unCheckImg" class="scrap-button" @click="onScrap"></img>
+              
+
+            
             
             </div>
             
@@ -30,18 +34,23 @@
     import scrapCheck from '../assets/images/scrap_check.png';
 
     const scrapImgUrl = ref(scrapUnCheck);
+    const unCheckImg = ref(scrapUnCheck);
+    const checkImg = ref(scrapCheck);
 
     const props = defineProps(['events']);
+
     // const events = ref(props.events);
 
-    
 
     // onMounted(()=>{
     //     events.value = props.events;
     // });
 
     const onScrap =()=>{
-        scrapImgUrl.value = scrapCheck;
+     //   scrapImgUrl.value = scrapCheck;
+     // 로그인 여부 먼저 확인 
+     // todo 스크랩 api 호출
+
     }
     
     
@@ -94,6 +103,7 @@
        top:5px;
        right:10px;
        width:35px !important;
+       cursor: pointer;
      
     }
 

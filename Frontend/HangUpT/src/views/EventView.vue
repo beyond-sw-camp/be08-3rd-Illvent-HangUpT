@@ -93,6 +93,11 @@
     });
 
     const filterReset=()=>{
+        alert('필터를 초기화합니다.');
+        selectDate.value = 'ALL';
+        selectRegion.value = '전체';
+        selectJoin.value = 'onoff';
+        selectPrice.value = 'freeAndPaid';
         fetchEventData();
     }
 
