@@ -2,11 +2,9 @@ package illvent.backend.event.domain;
 
 import illvent.backend.wish.domain.Wish;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,6 +14,7 @@ import java.util.List;
 @Builder
 @Getter
 @Table(name = "Event")
+@ToString
 public class Event {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -32,6 +31,9 @@ public class Event {
     private String address;
 
     @Column(nullable = false)
+    private LocalDate eventDate;
+
+    @Column(nullable = false)
     private String imageUrl;
 
     @Column(nullable = false, length = 2047)
@@ -41,8 +43,21 @@ public class Event {
     private String region;
 
     @Column(nullable = false)
-    private Long price;
+    private int price;
+
+    @Column(nullable = false)
+    private int views;
+
+    @Column(nullable = false)
+    private boolean online;
+
+    @Column(nullable = false)
+    private boolean offline;
 
     @OneToMany(mappedBy = "event")
     private List<Wish> wishes = new ArrayList<>();
+
+    public void updateViews(){
+        this.views++;
+    }
 }
