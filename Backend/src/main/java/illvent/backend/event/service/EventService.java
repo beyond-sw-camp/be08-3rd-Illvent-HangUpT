@@ -95,7 +95,7 @@ public class EventService {
                 .collect(Collectors.toList());
     }
 
-    public List<EventInfoResponseDTO> getEventsByFilter(DateFilter date, String region, String join, String price,int page, int size) {
+    public List<EventInfoResponseDTO> getEventsByFilter(Long loginUserId,DateFilter date, String region, String join, String price,int page, int size) {
         Pageable pageable = PageRequest.of(page,size);
         Page<Object[]> events = null;
 
@@ -124,12 +124,12 @@ public class EventService {
 
         if (price != null) {
             if (price.equals("free")) {
-                events = eventRepository.findEventInfoByConditionAndFree(1L,pageable,startDate, endDate, online, offline, 0,region);
+                events = eventRepository.findEventInfoByConditionAndFree(loginUserId,pageable,startDate, endDate, online, offline, 0,region);
             } else if (price.equals("paid")) {
-                events = eventRepository.findEventInfoByConditionAndPaid(1L,pageable,startDate, endDate, online, offline, 0,region);
+                events = eventRepository.findEventInfoByConditionAndPaid(loginUserId,pageable,startDate, endDate, online, offline, 0,region);
             }
         }else { // 전체 가격
-            events = eventRepository.findEventInfoByConditionAndFree(1L,pageable,startDate, endDate, online, offline, null,region);
+            events = eventRepository.findEventInfoByConditionAndFree(loginUserId,pageable,startDate, endDate, online, offline, null,region);
         }
 
 

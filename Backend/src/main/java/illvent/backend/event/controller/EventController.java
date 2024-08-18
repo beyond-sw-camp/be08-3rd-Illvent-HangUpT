@@ -6,6 +6,9 @@ import illvent.backend.event.dto.EventRegisterRequestDTO;
 import illvent.backend.event.dto.EventResponseDTO;
 import illvent.backend.event.dto.EventUpdateRequestDTO;
 import illvent.backend.event.service.EventService;
+import illvent.backend.member.domain.Member;
+import illvent.backend.member.domain.MemberRole;
+import illvent.backend.member.domain.MemberStatus;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -80,9 +83,23 @@ public class EventController {
                                                                         @RequestParam(value="page",defaultValue ="0") int page,
                                                                         @RequestParam(value = "size",defaultValue = "9") int size) {
 
-        System.out.println("region: " + region);
-        System.out.println("join: " + join);
-        System.out.println("price: " + price);
+//        System.out.println("region: " + region);
+//        System.out.println("join: " + join);
+//        System.out.println("price: " + price);
+
+        // todo : 로그인한 유저 정보 가져옴.
+//        // 테스트용 유저 생성
+//        Member member = Member.builder()
+//                .email("test@naver.com")
+//                .password("1234")
+//                .name("홍길동")
+//                .nickname("hong")
+//                .location("aa")
+//                .role(MemberRole.USER)
+//                .status(MemberStatus.Y).build();
+
+        Long loginUserId = 1L;
+
 
         if(date.equals(DateFilter.ALL)) {
             date = null;
@@ -98,9 +115,10 @@ public class EventController {
             price = null;
         }
 
-        List<EventInfoResponseDTO> result = eventService.getEventsByFilter(date,region,join,price,page,size);
+        List<EventInfoResponseDTO> result = eventService.getEventsByFilter(loginUserId,date,region,join,price,page,size);
 
         return ResponseEntity.ok(result);
     }
+
 
 }
