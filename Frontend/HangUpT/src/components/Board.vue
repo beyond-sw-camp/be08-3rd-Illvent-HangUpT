@@ -2,6 +2,11 @@
   <div class="container-fluid mt-5">
     <h1 class="mb-4 text-center">자유 게시판</h1>
 
+    <!-- 글쓰기 버튼 -->
+    <div class="d-flex justify-content-end mb-3">
+      <router-link to="/boards/new" class="btn btn-primary">글쓰기</router-link>
+    </div>
+
     <div class="row justify-content-center">
       <!-- 필터링 체크박스 -->
       <div class="col-md-3">
@@ -40,11 +45,11 @@
           <thead class="table-dark">
             <tr>
               <th scope="col" style="width: 5%;">ID</th>
-              <th scope="col" style="width: 7%;">지역</th>
+              <th scope="col" style="width: 12%;">지역</th>
               <th scope="col" style="width: 50%;">제목</th>
-              <th scope="col" style="width: 10%;">좋아요 수</th>
+              <th scope="col" style="width: 8%;">좋아요 수</th>
               <th scope="col" style="width: 7%;">조회수</th>
-              <th scope="col" style="width: 10%;">날짜</th>
+              <th scope="col" style="width: 12%;">날짜</th>
             </tr>
           </thead>
           <tbody>
@@ -84,7 +89,10 @@ import { ref, computed, watch } from 'vue'
 import data from '../data/board.js'
 
 // 지역 목록
-const cities = ["서울", "부산", "인천", "대구", "대전", "광주"]
+const cities = ["경기도", "강원도", "충청북도", "충청남도", "전라북도", 
+          "전라남도", "경상북도", "경상남도", "서울특별시", 
+          "부산광역시", "대구광역시", "인천광역시", "광주광역시", 
+          "대전광역시", "울산광역시", "세종특별자치시", "제주특별자치도"]
 
 const posts = ref(data)
 const currentPage = ref(1)

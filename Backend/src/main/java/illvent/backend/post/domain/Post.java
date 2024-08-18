@@ -46,6 +46,9 @@ public class Post{
     @Column(name = "updated_date")
     private LocalDateTime updateDate;
 
+    @Column(nullable = false)
+    private int views;
+
     @OneToMany(mappedBy = "post")
     private List<Comment> comments = new ArrayList<>();
 
@@ -53,5 +56,9 @@ public class Post{
         Optional.ofNullable(postUpdateRequestDTO.getTitle()).ifPresent(title -> this.title = title);
         Optional.ofNullable(postUpdateRequestDTO.getContent()).ifPresent(content -> this.content = content);
         this.updateDate = LocalDateTime.now();
+    }
+
+    public void updateViews(){
+        this.views++;
     }
 }

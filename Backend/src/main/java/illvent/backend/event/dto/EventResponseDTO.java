@@ -6,6 +6,8 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
+
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
@@ -24,6 +26,9 @@ public class EventResponseDTO {
     private String address;
 
     @JsonProperty
+    private LocalDate eventDate;
+
+    @JsonProperty
     private String imageUrl;
 
     @JsonProperty
@@ -33,16 +38,29 @@ public class EventResponseDTO {
     private String region;
 
     @JsonProperty
-    private Long price;
+    private int price;
+
+    @JsonProperty
+    private int views;
+
+    @JsonProperty
+    private boolean online;
+
+    @JsonProperty
+    private boolean offline;
 
     public EventResponseDTO(Event event){
         this.no = event.getNo();
         this.title = event.getTitle();
         this.location = event.getLocation();
         this.address = event.getAddress();
+        this.eventDate = event.getEventDate();
         this.imageUrl = event.getImageUrl();
         this.description = event.getDescription();
         this.region = event.getRegion();
         this.price = event.getPrice();
+        this.views = event.getViews();
+        this.online = event.isOnline();
+        this.offline = event.isOffline();
     }
 }
