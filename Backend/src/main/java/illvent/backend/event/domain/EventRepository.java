@@ -15,7 +15,6 @@ import java.util.List;
 public interface EventRepository extends JpaRepository<Event, Long>, JpaSpecificationExecutor<Event> {
     List<Event> findTop10ByOrderByViewsDesc();
 
-
     @Query(value = "select e, "
             +"case when (w.member.no = :userId) then true else false end as isWish "
             +"from Event e "
@@ -46,7 +45,6 @@ public interface EventRepository extends JpaRepository<Event, Long>, JpaSpecific
     );
 
 
-
     @Query(value = "select e, "
             +"case when (w.member.no = :userId) then true else false end as isWish "
             +"from Event e "
@@ -74,6 +72,5 @@ public interface EventRepository extends JpaRepository<Event, Long>, JpaSpecific
             @Param("price") Integer price,
             @Param("region") String region
     );
-
 
 }
