@@ -5,6 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
+
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
@@ -19,6 +21,9 @@ public class EventUpdateRequestDTO {
     private String address;
 
     @NotNull
+    private LocalDate eventDate;
+
+    @NotNull
     private String imageUrl;
 
     @NotNull
@@ -28,5 +33,14 @@ public class EventUpdateRequestDTO {
     private String region;
 
     @NotNull
-    private Long price;
+    private int price;
+
+    @NotNull
+    private int views;
+
+    @NotNull
+    private boolean online;
+
+    @NotNull
+    private boolean offline;
 }

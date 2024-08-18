@@ -40,6 +40,7 @@ public class PostService {
                 .content(postRegisterRequestDTO.getContent())
                 .member(foundMember)
                 .createDate(LocalDateTime.now())
+                .views(0)
                 .build();
 
         return Optional.of(postRepository.save(post));

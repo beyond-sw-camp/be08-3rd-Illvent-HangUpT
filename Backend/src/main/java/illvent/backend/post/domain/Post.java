@@ -46,6 +46,9 @@ public class Post{
     @Column(name = "updated_date")
     private LocalDateTime updateDate;
 
+    @Column(nullable = false)
+    private int views;
+
     @OneToMany(mappedBy = "post")
     private List<Comment> comments = new ArrayList<>();
 

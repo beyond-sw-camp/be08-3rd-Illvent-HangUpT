@@ -61,4 +61,12 @@ public class EventController {
         return ResponseEntity.ok(events);
     }
 
+    @Operation(summary = "조회수를 기준으로 상위 10개의 행사 정보를 반환하는 API")
+    @GetMapping("/list/top")
+    public ResponseEntity<List<EventResponseDTO>> getTopEventsOrderByViews() {
+        List<EventResponseDTO> events = eventService.getEventsOrderByViews();
+
+        return ResponseEntity.ok(events);
+    }
+
 }

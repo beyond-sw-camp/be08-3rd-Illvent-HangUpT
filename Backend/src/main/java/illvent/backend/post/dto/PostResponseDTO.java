@@ -31,6 +31,9 @@ public class PostResponseDTO {
     @JsonProperty
     private LocalDateTime updateDate;
 
+    @JsonProperty
+    private int views;
+
     public PostResponseDTO(Post post) {
         this.no = post.getNo();
         this.title = post.getTitle();
@@ -38,5 +41,6 @@ public class PostResponseDTO {
         this.memberNo = post.getMember().getNo();
         this.createDate = post.getCreateDate();
         this.updateDate = post.getUpdateDate();
+        this.views = post.getViews();
     }
 }
