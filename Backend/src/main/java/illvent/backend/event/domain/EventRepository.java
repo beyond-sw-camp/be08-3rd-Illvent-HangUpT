@@ -16,8 +16,11 @@ public interface EventRepository extends JpaRepository<Event, Long>, JpaSpecific
     List<Event> findTop10ByOrderByViewsDesc();
 
 
-    @Query(value = "select e from Event e where "
-            + "(:startDate is null or e.eventDate>=:startDate) and "
+    @Query(value = "select e, "
+            +"case when (w.member.no = :userId) then true else false end as isWish "
+            +"from Event e "
+            +"left join Wish w on e.no=w.event.no and w.member.no = :userId "
+            +"where (:startDate is null or e.eventDate>=:startDate) and "
             + "(:endDate is null or e.eventDate<=:endDate) and "
             + "(:online is null or e.online is true) and "
             + "(:offline is null or e.offline is true) and "
@@ -30,7 +33,8 @@ public interface EventRepository extends JpaRepository<Event, Long>, JpaSpecific
                     + "(:offline is null or e.offline is true) and "
                     + "(:region is null or e.region=:region) and "
                     + "(:price is null or e.price=0)")
-    Page<Event> findEventInfoByConditionAndFree(
+    Page<Object[]> findEventInfoByConditionAndFree(
+            @Param("userId") Long userId,
             Pageable pageable,
             @Param("startDate") LocalDate startDate,
             @Param("endDate") LocalDate endDate,
@@ -43,8 +47,11 @@ public interface EventRepository extends JpaRepository<Event, Long>, JpaSpecific
 
 
 
-    @Query(value = "select e from Event e where "
-            + "(:startDate is null or e.eventDate>=:startDate) and "
+    @Query(value = "select e, "
+            +"case when (w.member.no = :userId) then true else false end as isWish "
+            +"from Event e "
+            +"left join Wish w on e.no=w.event.no and w.member.no = :userId "
+            +"where (:startDate is null or e.eventDate>=:startDate) and "
             + "(:endDate is null or e.eventDate<=:endDate) and "
             + "(:online is null or e.online is true) and "
             + "(:offline is null or e.offline is true) and "
@@ -57,7 +64,8 @@ public interface EventRepository extends JpaRepository<Event, Long>, JpaSpecific
                     + "(:offline is null or e.offline is true) and "
                     + "(:region is null or e.region=:region) and "
                     + "(:price is null or e.price!=0)")  // 가격 유료
-    Page<Event> findEventInfoByConditionAndPaid(
+    Page<Object[]> findEventInfoByConditionAndPaid(
+            @Param("userId") Long userId,
             Pageable pageable,
             @Param("startDate") LocalDate startDate,
             @Param("endDate") LocalDate endDate,

@@ -97,7 +97,7 @@ public class EventService {
 
     public List<EventInfoResponseDTO> getEventsByFilter(DateFilter date, String region, String join, String price,int page, int size) {
         Pageable pageable = PageRequest.of(page,size);
-        Page<Event> events = null;
+        Page<Object[]> events = null;
 
         Boolean online = null;
         Boolean offline = null;
@@ -124,15 +124,33 @@ public class EventService {
 
         if (price != null) {
             if (price.equals("free")) {
-                events = eventRepository.findEventInfoByConditionAndFree(pageable,startDate, endDate, online, offline, 0,region);
+                events = eventRepository.findEventInfoByConditionAndFree(1L,pageable,startDate, endDate, online, offline, 0,region);
             } else if (price.equals("paid")) {
-                events = eventRepository.findEventInfoByConditionAndPaid(pageable,startDate, endDate, online, offline, 0,region);
+                events = eventRepository.findEventInfoByConditionAndPaid(1L,pageable,startDate, endDate, online, offline, 0,region);
             }
         }else { // 전체 가격
-            events = eventRepository.findEventInfoByConditionAndFree(pageable,startDate, endDate, online, offline, null,region);
+            events = eventRepository.findEventInfoByConditionAndFree(1L,pageable,startDate, endDate, online, offline, null,region);
         }
-        return events.stream().map(e -> new EventInfoResponseDTO(e.getNo(), e.getTitle(), e.getImageUrl(), e.getPrice(), e.getRegion(),
-                e.getEventDate(), e.isOnline(), e.isOffline(), e.getViews())).toList();
 
+
+//        return events.stream().map(e -> new EventInfoResponseDTO(e.getNo(), e.getTitle(), e.getImageUrl(), e.getPrice(), e.getRegion(),
+//                e.getEventDate(), e.isOnline(), e.isOffline(), e.getViews())).toList();
+
+        return events.stream().map(item->{
+            Event event = (Event) item[0];
+            Boolean isWish = (Boolean) item[1];
+            return EventInfoResponseDTO.builder()
+                    .id(event.getNo())
+                    .title(event.getTitle())
+                    .imgUrl(event.getImageUrl())
+                    .price(event.getPrice())
+                    .region(event.getRegion())
+                    .eventDate(event.getEventDate())
+                    .online(event.isOnline())
+                    .offline(event.isOffline())
+                    .views(event.getViews())
+                    .isWish(isWish)
+                    .build();
+        }).toList();
     }
 }
