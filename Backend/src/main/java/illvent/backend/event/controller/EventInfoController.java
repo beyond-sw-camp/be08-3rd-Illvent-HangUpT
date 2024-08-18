@@ -39,6 +39,17 @@ public class EventInfoController {
 //        System.out.println("region: " + region);
 //        System.out.println("join: " + join);
 //        System.out.println("price: " + price);
+
+        if(region.equals("전체")){
+            region = null;
+        }
+        if(join.equals("onoff")){
+            join = null;
+        }
+        if(price.equals("freeAndPaid")){
+            price = null;
+        }
+
         List<EventInfoResponseDTO> result = eventInfoService.getEventsByFilter(date,region,join,price,page,size);
 
         return ResponseEntity.ok(result);

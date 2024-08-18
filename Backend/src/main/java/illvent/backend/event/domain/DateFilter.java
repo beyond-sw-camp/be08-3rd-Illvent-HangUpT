@@ -7,7 +7,17 @@ import java.time.LocalDate;
 import java.time.temporal.TemporalAdjusters;
 
 public enum DateFilter {
-    ALL,TODAY,THIS_WEEK,THIS_MONTH;
+    ALL("all"),TODAY("today"),THIS_WEEK("this_week"),THIS_MONTH("this_month");
+
+    private String value;
+
+    DateFilter(String value) {
+        this.value = value;
+    }
+
+    public String getValue() {
+        return value;
+    }
 
     public LocalDateRange getDateRange() {
         LocalDate today = LocalDate.now(); // 오늘 날짜

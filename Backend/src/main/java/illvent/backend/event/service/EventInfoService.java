@@ -40,7 +40,7 @@ public class EventInfoService {
 
         // 날짜 계산
         if (date != null) {
-            LocalDateRange dateRange = date.getDateRange(); // 날짜 받을때 ENUM 타입으로
+            LocalDateRange dateRange = date.getDateRange();
             startDate = dateRange.getStartDate();
             endDate = dateRange.getEndDate();
         }
@@ -56,9 +56,9 @@ public class EventInfoService {
         }
 
         if (price != null) {
-            if (price.equals("무료")) {
+            if (price.equals("free")) {
                 events = eventInfoRepository.findEventInfoByConditionAndFree(pageable,startDate, endDate, online, offline, 0,region);
-            } else if (price.equals("유료")) {
+            } else if (price.equals("paid")) {
                 events = eventInfoRepository.findEventInfoByConditionAndPaid(pageable,startDate, endDate, online, offline, 0,region);
             }
         }else { // 전체 가격
