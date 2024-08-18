@@ -77,7 +77,8 @@ public class PostService {
     public PostResponseDTO getPost(Long postNo) {
         Post post = postRepository.findById(postNo).orElseThrow(() ->
                 new IllegalArgumentException("Post not found"));
+        post.updateViews();
 
-        return new PostResponseDTO(post);
+        return new PostResponseDTO(postRepository.save(post));
     }
 }

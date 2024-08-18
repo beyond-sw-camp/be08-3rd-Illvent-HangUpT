@@ -9,6 +9,7 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -28,6 +29,7 @@ public class EventService {
                 .eventDate(eventRegisterRequestDTO.getEventDate())
                 .imageUrl(eventRegisterRequestDTO.getImageUrl())
                 .description(eventRegisterRequestDTO.getDescription())
+                .region(eventRegisterRequestDTO.getRegion())
                 .price(eventRegisterRequestDTO.getPrice())
                 .views(0)
                 .online(eventRegisterRequestDTO.isOnline())

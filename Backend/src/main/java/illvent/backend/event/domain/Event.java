@@ -2,10 +2,7 @@ package illvent.backend.event.domain;
 
 import illvent.backend.wish.domain.Wish;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -17,6 +14,7 @@ import java.util.List;
 @Builder
 @Getter
 @Table(name = "Event")
+@ToString
 public class Event {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)

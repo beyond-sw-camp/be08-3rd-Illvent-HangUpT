@@ -57,4 +57,8 @@ public class Post{
         Optional.ofNullable(postUpdateRequestDTO.getContent()).ifPresent(content -> this.content = content);
         this.updateDate = LocalDateTime.now();
     }
+
+    public void updateViews(){
+        this.views++;
+    }
 }

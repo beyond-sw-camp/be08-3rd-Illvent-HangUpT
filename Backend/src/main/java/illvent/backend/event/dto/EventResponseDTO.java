@@ -54,9 +54,13 @@ public class EventResponseDTO {
         this.title = event.getTitle();
         this.location = event.getLocation();
         this.address = event.getAddress();
+        this.eventDate = event.getEventDate();
         this.imageUrl = event.getImageUrl();
         this.description = event.getDescription();
         this.region = event.getRegion();
         this.price = event.getPrice();
+        this.views = event.getViews();
+        this.online = event.isOnline();
+        this.offline = event.isOffline();
     }
 }
