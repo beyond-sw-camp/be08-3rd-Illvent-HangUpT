@@ -79,10 +79,14 @@ public class EventController {
                                                                         @RequestParam(value="price",required = false) String price,
                                                                         @RequestParam(value="page",defaultValue ="0") int page,
                                                                         @RequestParam(value = "size",defaultValue = "9") int size) {
-        System.out.println("date: " + date);
+
         System.out.println("region: " + region);
         System.out.println("join: " + join);
         System.out.println("price: " + price);
+
+        if(date.equals(DateFilter.ALL)) {
+            date = null;
+        }
 
         if(region.equals("전체")){
             region = null;
