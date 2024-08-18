@@ -1,14 +1,19 @@
 package illvent.backend.event.service;
 
-import illvent.backend.event.domain.Event;
-import illvent.backend.event.domain.EventRepository;
+import illvent.backend.event.domain.*;
+import illvent.backend.event.dto.EventInfoResponseDTO;
 import illvent.backend.event.dto.EventRegisterRequestDTO;
 import illvent.backend.event.dto.EventResponseDTO;
 import illvent.backend.event.dto.EventUpdateRequestDTO;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -96,5 +101,44 @@ public class EventService {
         return eventRepository.findTop10ByOrderByLikesDesc().stream()
                 .map(EventResponseDTO::new)
                 .collect(Collectors.toList());
+
+    public List<EventInfoResponseDTO> getEventsByFilter(DateFilter date, String region, String join, String price,int page, int size) {
+        Pageable pageable = PageRequest.of(page,size);
+        Page<Event> events = null;
+
+        Boolean online = null;
+        Boolean offline = null;
+
+        LocalDate startDate = null;
+        LocalDate endDate = null;
+
+        // 날짜 계산
+        if (date != null) {
+            LocalDateRange dateRange = date.getDateRange();
+            startDate = dateRange.getStartDate();
+            endDate = dateRange.getEndDate();
+        }
+
+        // on off 계산
+        if (join != null) {
+            if (join.equals("online")) {
+                online = true;
+            } else if (join.equals("offline")) {
+                offline = true;
+            }
+        }
+
+        if (price != null) {
+            if (price.equals("free")) {
+                events = eventRepository.findEventInfoByConditionAndFree(pageable,startDate, endDate, online, offline, 0,region);
+            } else if (price.equals("paid")) {
+                events = eventRepository.findEventInfoByConditionAndPaid(pageable,startDate, endDate, online, offline, 0,region);
+            }
+        }else { // 전체 가격
+            events = eventRepository.findEventInfoByConditionAndFree(pageable,startDate, endDate, online, offline, null,region);
+        }
+        return events.stream().map(e -> new EventInfoResponseDTO(e.getNo(), e.getTitle(), e.getImageUrl(), e.getPrice(), e.getRegion(),
+                e.getEventDate(), e.isOnline(), e.isOffline(), e.getViews())).toList();
+
     }
 }

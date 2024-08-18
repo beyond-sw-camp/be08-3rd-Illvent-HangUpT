@@ -12,26 +12,24 @@ import java.time.LocalDate;
 import java.util.List;
 
 @Repository
-public interface EventRepository extends JpaRepository<Event, Long>, JpaSpecificationExecutor<Event> {
-    List<Event> findTop10ByOrderByViewsDesc();
+public interface EventInfoRepository extends JpaRepository<EventInfo,Long>, JpaSpecificationExecutor<EventInfo> {
 
-    List<Event> findTop10ByOrderByLikesDesc();
-
-    @Query(value = "select e from Event e where "
+    @Query(value = "select e from EventInfo e where "
+        + "(:startDate is null or e.eventDate>=:startDate) and "
+        + "(:endDate is null or e.eventDate<=:endDate) and "
+        + "(:online is null or e.online is true) and "
+        + "(:offline is null or e.offline is true) and "
+        + "(:region is null or e.region=:region) and "
+        + "(:price is null or e.price=0)",
+    countQuery = "select e from EventInfo e where "
             + "(:startDate is null or e.eventDate>=:startDate) and "
             + "(:endDate is null or e.eventDate<=:endDate) and "
             + "(:online is null or e.online is true) and "
             + "(:offline is null or e.offline is true) and "
             + "(:region is null or e.region=:region) and "
-            + "(:price is null or e.price=0)",
-            countQuery = "select e from Event e where "
-                    + "(:startDate is null or e.eventDate>=:startDate) and "
-                    + "(:endDate is null or e.eventDate<=:endDate) and "
-                    + "(:online is null or e.online is true) and "
-                    + "(:offline is null or e.offline is true) and "
-                    + "(:region is null or e.region=:region) and "
-                    + "(:price is null or e.price=0)")
-    Page<Event> findEventInfoByConditionAndFree(
+            + "(:price is null or e.price=0)")
+
+    Page<EventInfo> findEventInfoByConditionAndFree(
             Pageable pageable,
             @Param("startDate") LocalDate startDate,
             @Param("endDate") LocalDate endDate,
@@ -43,21 +41,22 @@ public interface EventRepository extends JpaRepository<Event, Long>, JpaSpecific
     );
 
 
-    @Query(value = "select e from Event e where "
+
+    @Query(value = "select e from EventInfo e where "
             + "(:startDate is null or e.eventDate>=:startDate) and "
             + "(:endDate is null or e.eventDate<=:endDate) and "
             + "(:online is null or e.online is true) and "
             + "(:offline is null or e.offline is true) and "
             + "(:region is null or e.region=:region) and "
             + "(:price is null or e.price!=0)",
-            countQuery = "select e from Event e where "
-                    + "(:startDate is null or e.eventDate>=:startDate) and "
-                    + "(:endDate is null or e.eventDate<=:endDate) and "
-                    + "(:online is null or e.online is true) and "
-                    + "(:offline is null or e.offline is true) and "
-                    + "(:region is null or e.region=:region) and "
-                    + "(:price is null or e.price!=0)")  // 가격 유료
-    Page<Event> findEventInfoByConditionAndPaid(
+    countQuery = "select e from EventInfo e where "
+            + "(:startDate is null or e.eventDate>=:startDate) and "
+            + "(:endDate is null or e.eventDate<=:endDate) and "
+            + "(:online is null or e.online is true) and "
+            + "(:offline is null or e.offline is true) and "
+            + "(:region is null or e.region=:region) and "
+            + "(:price is null or e.price!=0)")  // 가격 유료
+    Page<EventInfo> findEventInfoByConditionAndPaid(
             Pageable pageable,
             @Param("startDate") LocalDate startDate,
             @Param("endDate") LocalDate endDate,
@@ -66,5 +65,7 @@ public interface EventRepository extends JpaRepository<Event, Long>, JpaSpecific
             @Param("price") Integer price,
             @Param("region") String region
     );
+
+
 
 }
