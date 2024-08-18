@@ -1,0 +1,57 @@
+<template>
+    <div class="container">
+        <!-- 행사 출력 조건 -->
+        <div class="title">
+            <div class="event_count">
+              <span>{{ props.events.length }}</span>   개의 행사가 검색되었습니다.
+            </div>
+
+            <div class="filter">
+                <div>추천순</div>
+                <div>새 행사순</div>
+                <div>모집 마감일순</div>
+            </div>
+        </div>
+
+        <div class="content">
+            <EventCard :events="events"/>
+            
+        </div>
+
+
+    </div>
+
+</template>
+
+<script setup>
+import { ref } from 'vue';
+import EventCard from './EventCard.vue';
+    const props = defineProps(['events']);
+    const numberOfEvents = ref(212);
+    
+</script>
+
+<style lang="scss" scoped>
+    .title {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .event_count{
+        font-size: large;
+        span {
+            color:purple;
+        }
+    }
+    .filter {
+        display: flex;
+        div {
+            margin-left: 6px;
+            color:gray;
+        }
+    }
+
+    .content {
+        // background-color: yellow;
+    }
+</style>
