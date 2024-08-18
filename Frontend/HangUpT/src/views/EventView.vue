@@ -105,11 +105,12 @@
 
     async function getEventsAPI(){
         try{
-            const response = await axios.get('http://localhost:8080/v1/api/events',{
+            const response = await axios.get('http://localhost:8080/v1/api/event',{
                 params:{
                     page:0,
                     size: 9,
-                    // date: "THIS_WEEK",
+                    date: selectDate.value,
+                    // date:"ALL",
                     region: selectRegion.value,
                     join: selectJoin.value,
                     price:selectPrice.value

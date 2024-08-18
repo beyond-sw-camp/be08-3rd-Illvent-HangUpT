@@ -1,12 +1,12 @@
-<template>
+=<template>
     <nav class="navbar">
-        <img src="../assets/images/logo.png">
+        <img src="../assets/images/logo.png" @click="goMain">
         <div class="menu_container">
             <router-link to="/map">지도</router-link>
-            <router-link to="/events">무료</router-link>
-            <router-link to="/events">유료</router-link>
-            <router-link to="/events">온라인</router-link>
-            <router-link to="/events">오프라인</router-link>
+            <router-link :to="{name:'events',query:{selectPrice:'free'}}">무료</router-link>
+            <router-link :to="{name: 'events',query:{selectPrice:'paid'}}">유료</router-link>
+            <router-link :to="{name:'events',query:{selectJoin:'online'}}">온라인</router-link>
+            <router-link :to="{name:'events',query:{selectJoin:'offline'}}">오프라인</router-link>
             <router-link to="/boards">게시판</router-link>
         </div>
 
@@ -20,11 +20,20 @@
 </template>
 
 <script setup>
-    
+import { useRouter } from 'vue-router';
+
+
+    const router =useRouter();
+
+    const goMain=()=>{
+        router.replace('/');
+
+}
+
 </script>
 
 <style lang="scss" scoped>
- .navbar {
+    .navbar {
         padding:15px;
         display: flex;
         flex-direction: row;
@@ -35,6 +44,9 @@
             display: flex;
             // justify-content: center;
             align-items: center;
+        }
+        img {
+            cursor: pointer;
         }
     
 
@@ -61,10 +73,5 @@
             color: #7abdfc;
         }
     }
-</style>
 
-<script>
-export default {
-  name: 'HeaderComponent'
-}
-</script>
+</style>
