@@ -6,6 +6,10 @@ import illvent.backend.event.domain.EventInfoRepository;
 import illvent.backend.event.domain.LocalDateRange;
 import illvent.backend.event.dto.EventInfoResponseDTO;
 import lombok.RequiredArgsConstructor;
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -24,9 +28,9 @@ public class EventInfoService {
                 e.getEventDate(), e.isOnline(), e.isOffline(), e.getViews())).toList();
     }
 
-    public List<EventInfoResponseDTO> getEventsByFilter(DateFilter date, String region, String join, String price) {
-
-        List<EventInfo> events = null;
+    public List<EventInfoResponseDTO> getEventsByFilter(DateFilter date, String region, String join, String price,int page, int size) {
+        Pageable pageable = PageRequest.of(page,size);
+        Page<EventInfo> events = null;
 
         Boolean online = null;
         Boolean offline = null;
@@ -53,12 +57,12 @@ public class EventInfoService {
 
         if (price != null) {
             if (price.equals("무료")) {
-                events = eventInfoRepository.findEventInfoByConditionAndFree(startDate, endDate, online, offline, 0,region);
+                events = eventInfoRepository.findEventInfoByConditionAndFree(pageable,startDate, endDate, online, offline, 0,region);
             } else if (price.equals("유료")) {
-                events = eventInfoRepository.findEventInfoByConditionAndPaid(startDate, endDate, online, offline, 0,region);
+                events = eventInfoRepository.findEventInfoByConditionAndPaid(pageable,startDate, endDate, online, offline, 0,region);
             }
         }else { // 전체 가격
-            events = eventInfoRepository.findEventInfoByConditionAndFree(startDate, endDate, online, offline, null,region);
+            events = eventInfoRepository.findEventInfoByConditionAndFree(pageable,startDate, endDate, online, offline, null,region);
         }
             return events.stream().map(e -> new EventInfoResponseDTO(e.getId(), e.getTitle(), e.getImgUrl(), e.getPrice(), e.getRegion(),
                     e.getEventDate(), e.isOnline(), e.isOffline(), e.getViews())).toList();

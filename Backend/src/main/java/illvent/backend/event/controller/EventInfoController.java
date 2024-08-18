@@ -32,12 +32,14 @@ public class EventInfoController {
     public ResponseEntity<List<EventInfoResponseDTO>> getEventsByFilter(@RequestParam(value="date",required = false) DateFilter date,
                                                                         @RequestParam(value="region",required = false) String region,
                                                                         @RequestParam(value = "join",required = false)String join,
-                                                                        @RequestParam(value="price",required = false) String price) {
-        System.out.println("date: " + date);
-        System.out.println("region: " + region);
-        System.out.println("join: " + join);
-        System.out.println("price: " + price);
-        List<EventInfoResponseDTO> result = eventInfoService.getEventsByFilter(date,region,join,price);
+                                                                        @RequestParam(value="price",required = false) String price,
+                                                                        @RequestParam(value="page",defaultValue ="0") int page,
+                                                                        @RequestParam(value = "size",defaultValue = "9") int size) {
+//        System.out.println("date: " + date);
+//        System.out.println("region: " + region);
+//        System.out.println("join: " + join);
+//        System.out.println("price: " + price);
+        List<EventInfoResponseDTO> result = eventInfoService.getEventsByFilter(date,region,join,price,page,size);
 
         return ResponseEntity.ok(result);
     }
