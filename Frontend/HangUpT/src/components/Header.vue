@@ -11,9 +11,10 @@
         </div>
 
         <div class="login_container">
-            <button>로그인</button>
-            <button>로그아웃</button>
-            <button>마이페이지</button>
+            <router-link v-if="!loginState.isLoggedIn" to="/login" class="btn">로그인</router-link>
+            <router-link v-if="!loginState.isLoggedIn" to="/register" class="btn">회원가입</router-link>
+            <router-link v-if="loginState.isLoggedIn" to="/mypage" class="btn">마이페이지</router-link>
+            <button v-if="loginState.isLoggedIn" @click="logout" class="btn">로그아웃</button>
         </div>
 
     </nav>
@@ -21,6 +22,13 @@
 
 <script setup>
 import { useRouter } from 'vue-router';
+import { inject } from 'vue';
+    const loginState = inject('loginState');
+
+    const logout = () => {
+        loginState.isLoggedIn = false;
+        router.push('/login'); 
+    };
 
 
     const router =useRouter();
@@ -71,6 +79,23 @@ import { useRouter } from 'vue-router';
 
         a:hover {
             color: #7abdfc;
+        }
+        .btn {
+            border: none;
+            background-color: transparent;
+            color: #767474;
+            text-decoration: none;
+            margin-right: 10px;
+            font-size: 1rem;
+            cursor: pointer;
+        }
+
+        .btn:last-child {
+            margin-right: 0;
+        }
+
+        .btn:hover {
+            color: #4b4b4b;
         }
     }
 
