@@ -1,13 +1,10 @@
 <template>
-    <h1>
-        Main Page (example)
-    </h1>
+    <MainBanner/>
 </template>
 
-<script>
-    export default {
-        
-    }
+<script setup>
+    import MainBanner from '../components/MainBanner.vue';
+ 
 </script>
 
 <style lang="scss" scoped>
