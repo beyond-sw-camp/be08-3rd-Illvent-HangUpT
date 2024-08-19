@@ -23,6 +23,9 @@ public class PostResponseDTO {
     private String content;
 
     @JsonProperty
+    private String region;
+
+    @JsonProperty
     private Long memberNo;
 
     @JsonProperty
@@ -33,6 +36,9 @@ public class PostResponseDTO {
 
     @JsonProperty
     private int views;
+
+    @JsonProperty
+    private int likes;
 
     public PostResponseDTO(Post post) {
         this.no = post.getNo();

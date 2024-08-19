@@ -18,4 +18,10 @@ public class PostUpdateRequestDTO {
     @NotNull
     private String content;
 
+    @NotNull
+    private String region;
+
+    @NotNull
+    private int likes;
+
 }

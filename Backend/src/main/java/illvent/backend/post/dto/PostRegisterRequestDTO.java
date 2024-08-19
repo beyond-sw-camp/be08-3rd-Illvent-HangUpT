@@ -18,4 +18,7 @@ public class PostRegisterRequestDTO {
     @NotNull
     private String content;
 
+    @NotNull
+    private String region;
+
 }

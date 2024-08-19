@@ -38,6 +38,7 @@ public class PostService {
         Post post = Post.builder()
                 .title(postRegisterRequestDTO.getTitle())
                 .content(postRegisterRequestDTO.getContent())
+                .region(postRegisterRequestDTO.getRegion())
                 .member(foundMember)
                 .createDate(LocalDateTime.now())
                 .views(0)
@@ -81,4 +82,5 @@ public class PostService {
 
         return new PostResponseDTO(postRepository.save(post));
     }
+
 }
