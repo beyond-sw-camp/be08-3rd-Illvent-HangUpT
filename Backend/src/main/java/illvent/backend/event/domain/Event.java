@@ -14,7 +14,6 @@ import java.util.List;
 @Builder
 @Getter
 @Table(name = "Event")
-@ToString
 public class Event {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)

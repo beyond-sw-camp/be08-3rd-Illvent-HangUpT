@@ -18,4 +18,7 @@ public class PostUpdateRequestDTO {
     @NotNull
     private String content;
 
+    @NotNull
+    private String region;
+
 }

@@ -34,6 +34,9 @@ public class Post{
     @Column(nullable = false, length = 1023)
     private String content;
 
+    @Column(nullable = false)
+    private String region;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_no", nullable = false)
     private Member member;
@@ -55,6 +58,7 @@ public class Post{
     public void update(PostUpdateRequestDTO postUpdateRequestDTO) {
         Optional.ofNullable(postUpdateRequestDTO.getTitle()).ifPresent(title -> this.title = title);
         Optional.ofNullable(postUpdateRequestDTO.getContent()).ifPresent(content -> this.content = content);
+        Optional.ofNullable(postUpdateRequestDTO.getRegion()).ifPresent(region -> this.content = region);
         this.updateDate = LocalDateTime.now();
     }
 

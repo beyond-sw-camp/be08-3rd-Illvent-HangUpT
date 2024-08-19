@@ -23,6 +23,9 @@ public class PostResponseDTO {
     private String content;
 
     @JsonProperty
+    private String region;
+
+    @JsonProperty
     private Long memberNo;
 
     @JsonProperty
