@@ -1,6 +1,6 @@
 =<template>
     <nav class="navbar">
-        <img src="../assets/images/logo.png" @click="goMain">
+        <img src="../assets/images/HUTLogo.png" @click="goMain">
         <div class="menu_container">
             <router-link to="/map">지도</router-link>
             <router-link :to="{name:'events',query:{selectPrice:'free'}}">무료</router-link>
@@ -46,7 +46,7 @@ import { inject } from 'vue';
         display: flex;
         flex-direction: row;
         justify-content: space-between;
-        background-color: #BFDBF5;
+        background-color: #000000;
 
         div {
             display: flex;
@@ -55,6 +55,8 @@ import { inject } from 'vue';
         }
         img {
             cursor: pointer;
+            width: 15%;
+            height: auto;
         }
     
 
