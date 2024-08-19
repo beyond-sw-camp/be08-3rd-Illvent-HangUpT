@@ -1,6 +1,5 @@
 package illvent.backend.member.dto;
 
-import illvent.backend.member.domain.MemberRole;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -19,8 +18,8 @@ public class MemberUpdateRequestDTO {
     @NotNull
     private String name;
 
-    @NotNull
-    private String nickname;
+//    @NotNull
+//    private String nickname;
 
     @NotNull
     private String location;

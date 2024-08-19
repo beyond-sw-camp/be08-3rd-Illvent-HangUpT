@@ -35,6 +35,12 @@ public class EventRegisterRequestDTO {
 
     private int price;
 
+    @NotNull
+    private int views;
+
+    @NotNull
+    private int likes;
+
     private boolean online;
 
     private boolean offline;

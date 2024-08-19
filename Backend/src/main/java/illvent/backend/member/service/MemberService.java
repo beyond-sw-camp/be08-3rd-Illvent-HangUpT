@@ -48,9 +48,9 @@ public class MemberService {
                 .email(memberRegisterRequestDTO.getEmail())
                 .password(hashPassword)
                 .name(memberRegisterRequestDTO.getName())
-                .nickname(memberRegisterRequestDTO.getNickname())
+//                .nickname(memberRegisterRequestDTO.getNickname())
                 .location(memberRegisterRequestDTO.getLocation())
-                .status(memberRegisterRequestDTO.getStatus())
+                .status(MemberStatus.Y)
                 .role(MemberRole.USER)
                 .build();
 
@@ -76,7 +76,7 @@ public class MemberService {
     public Member findMemberByEmail(String email) {
 
         Member member = memberRepository.findByEmail(email).orElseThrow(() ->
-                new IllegalArgumentException("이미 가입되어 있는 이메일 입니다."));
+                new IllegalArgumentException("Member not found"));
 
         return member;
     }

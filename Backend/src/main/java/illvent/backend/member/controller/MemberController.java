@@ -1,8 +1,10 @@
 package illvent.backend.member.controller;
 
 import illvent.backend.event.dto.EventResponseDTO;
+import illvent.backend.member.domain.Member;
 import illvent.backend.member.dto.MemberRegisterRequestDTO;
 import illvent.backend.member.dto.MemberLoginRequestDTO;
+import illvent.backend.member.dto.MemberResponseDTO;
 import illvent.backend.member.dto.MemberUpdateRequestDTO;
 import illvent.backend.member.service.MemberService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -34,12 +36,12 @@ public class MemberController {
 
     @Operation(summary = "로그인 API")
     @PostMapping("/login")
-    public ResponseEntity<String> login(@RequestBody @Valid MemberLoginRequestDTO memberLoginRequestDTO) {
-        memberService.findMemberByEmail(memberLoginRequestDTO.getEmail());
+    public ResponseEntity<MemberResponseDTO> login(@RequestBody @Valid MemberLoginRequestDTO memberLoginRequestDTO) {
+        Member member = memberService.findMemberByEmail(memberLoginRequestDTO.getEmail());
 
         return ResponseEntity.ok()
                 .header(HttpHeaders.SET_COOKIE, memberService.createToken(memberLoginRequestDTO).toString())
-                .body("login success");
+                .body(new MemberResponseDTO(member));
     }
 
     @Operation(summary = "회원 정보를 수정하는 API")

@@ -35,8 +35,8 @@ public class Member {
     @Column(nullable = false, length = 15)
     private String name;
 
-    @Column(nullable = false, length = 50)
-    private String nickname;
+//    @Column(nullable = false, length = 50)
+//    private String nickname;
 
     @Column(nullable = false, length = 20)
     private String location;
@@ -60,7 +60,7 @@ public class Member {
 
     public void update(MemberUpdateRequestDTO memberUpdateRequestDTO) {
         Optional.ofNullable(memberUpdateRequestDTO.getName()).ifPresent(name -> this.name = name);
-        Optional.ofNullable(memberUpdateRequestDTO.getNickname()).ifPresent(nickname -> this.nickname = nickname);
+//        Optional.ofNullable(memberUpdateRequestDTO.getNickname()).ifPresent(nickname -> this.nickname = nickname);
     }
 
     public void updateStatus() {
