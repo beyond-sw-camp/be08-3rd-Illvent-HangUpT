@@ -38,6 +38,8 @@ public class EventService {
                 .views(0)
                 .online(eventRegisterRequestDTO.isOnline())
                 .offline(eventRegisterRequestDTO.isOffline())
+                .x(eventRegisterRequestDTO.getX())
+                .y(eventRegisterRequestDTO.getY())
                 .build();
 
         return Optional.of(eventRepository.save(event));
@@ -60,6 +62,8 @@ public class EventService {
                 .views(eventUpdateRequestDTO.getViews())
                 .online(eventUpdateRequestDTO.isOnline())
                 .offline(eventUpdateRequestDTO.isOffline())
+                .x(eventUpdateRequestDTO.getX())
+                .y(eventUpdateRequestDTO.getY())
                 .build();
 
         eventRepository.save(event);
