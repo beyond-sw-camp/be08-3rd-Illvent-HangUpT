@@ -4,16 +4,16 @@
             <h2>회원가입</h2>
             
             <label for="user-name">이름:</label>
-            <input type="text" placeholder="Name" class="input-field" id="user-name">
+            <input type="text" placeholder="Name" class="input-field" id="user-name" v-model="name">
             
             <label for="user-id">이메일(아이디):</label>
-            <input type="text" placeholder="Emial(ID)" class="input-field" id="user-id">
+            <input type="text" placeholder="Emial(ID)" class="input-field" id="user-id" v-model="email">
             
             <label for="user-password">비밀번호:</label>
-            <input type="password" placeholder="Password" class="input-field" id="user-password">
+            <input type="password" placeholder="Password" class="input-field" id="user-password" v-model="password">
 
             <label for="user-region">지역:</label>
-            <input type="text" placeholder="Region" class="input-field" id="user-region"> <br>
+            <input type="text" placeholder="Region" class="input-field" id="user-region" v-model="location"> <br>
             
             <input type="submit" value="회원가입" class="btn" @click="signup">
 
@@ -24,15 +24,62 @@
     </div>
 </template>
 
-<script>
-export default {
-    methods: {
-        signup() {
-            alert('회원가입 성공!');
-            this.$router.push('/login');
-        }
+<script setup>
+    import { ref } from 'vue';
+    import axios from 'axios';
+    import { useRouter } from 'vue-router';
+
+    const name = ref('');
+    const email = ref('');
+    const password = ref('');
+    const location = ref('');
+    const router =useRouter();
+
+    const signup = ()=>{
+
+    if(name.value==""){
+        alert('이름을 입력해주세요');
+        return;
     }
-}
+    if(email.value==""){
+        alert("이메일을 입력해주세요");
+        return;
+    }
+    if(password.value==""){
+        alert("비밀번호를 입력해주세요");
+        return;
+    }
+    if(location.value==""){
+        alert("거주중인 지역을 입력해주세요");
+        return;
+    }
+
+  //  console.log('회원가입 진행...');
+    loginApi();
+ }
+
+ const loginApi = async()=>{
+    try{
+        const res = await axios.post('http://localhost:8080/v1/api/member/register',{
+            email:email.value,
+            password:password.value,
+            name:name.value,
+            location:location.value
+        })
+        .then((res)=>{
+            console.log("응답값 : ",res);
+            if(res.status==201){
+                alert("회원가입에 성공했습니다.");
+                router.push("/login");
+
+            }
+           
+        })
+    }catch(err){
+        console.log(err);
+        alert('회원가입을 실패했습니다.');
+    }
+ }
 </script>
 
 <style scoped>

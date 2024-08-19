@@ -6,12 +6,12 @@
       </div>
       <form @submit.prevent="login">
         <label for="user-id">이메일(아이디):</label>
-        <input type="text" placeholder="Email(ID)" class="input-field" id="user-id" v-model="id">
+        <input type="text" placeholder="Email(ID)" class="input-field" id="user-id" v-model="email">
 
         <label for="user-password">비밀번호:</label>
         <input type="password" placeholder="Password" class="input-field" id="user-password" v-model="password">
         
-        <input type="submit" value="로그인" class="btn">
+        <input type="button" value="로그인" class="btn" @click="login">
       </form>
       <div class="join">
         <router-link to="/register">회원가입</router-link>
@@ -20,7 +20,53 @@
   </div>
 </template>
 
-<script>
+<script setup>
+import axios from 'axios';
+import { ref } from 'vue';
+import { store } from '../data/store';
+import { useRouter } from 'vue-router';
+
+  const email = ref('');
+  const password = ref('');
+  const router = useRouter();
+
+  const login = ()=>{
+    if(email.value==""){
+      alert("이메일을 입력해주세요");
+      return;
+    }
+
+    if(password.value==""){
+      alert("비밀번호를 입력해주세요");
+      return;
+    }
+
+    loginApi();
+  }
+
+  const loginApi = async()=>{
+    try{
+      axios.post('http://localhost:8080/v1/api/member/login',{
+      email:email.value,
+      password:password.value,
+
+    }).then((res)=>{
+   //   console.log(res);
+      if(res.status==200){
+        alert("로그인을 성공했습니다.");
+        store.isLoggedIn = true; 
+        router.push("/");
+      }
+    });
+
+    }catch(err){
+      console.log(err);
+    }
+  }
+
+
+</script>
+<!-- <script>
 import { inject } from 'vue';
 export default {
   data() {
@@ -55,7 +101,9 @@ export default {
     }
   }
 }
-</script>
+</script> -->
+
+
 
 <style scoped>
 /* 기존 스타일 유지 */
