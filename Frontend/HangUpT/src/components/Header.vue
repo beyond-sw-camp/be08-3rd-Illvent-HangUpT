@@ -11,22 +11,24 @@
         </div>
 
         <div class="login_container">
-            <router-link v-if="!loginState.isLoggedIn" to="/login" class="btn">로그인</router-link>
-            <router-link v-if="!loginState.isLoggedIn" to="/register" class="btn">회원가입</router-link>
-            <router-link v-if="loginState.isLoggedIn" to="/mypage" class="btn">마이페이지</router-link>
-            <button v-if="loginState.isLoggedIn" @click="logout" class="btn">로그아웃</button>
+            <router-link v-if="!store.isLoggedIn" to="/login" class="btn">로그인</router-link>
+            <router-link v-if="!store.isLoggedIn" to="/register" class="btn">회원가입</router-link>
+            <router-link v-if="store.isLoggedIn" to="/mypage" class="btn">마이페이지</router-link>
+            <button v-if="store.isLoggedIn" @click="logout" class="btn">로그아웃</button>
         </div>
 
     </nav>
 </template>
 
 <script setup>
-import { useRouter } from 'vue-router';
-import { inject } from 'vue';
-    const loginState = inject('loginState');
+    import { useRouter } from 'vue-router';
+    import { inject } from 'vue';
+    import { store } from '../data/store';
+
+   // const loginState = inject('loginState');
 
     const logout = () => {
-        loginState.isLoggedIn = false;
+        store.isLoggedIn = false;
         router.push('/login'); 
     };
 
