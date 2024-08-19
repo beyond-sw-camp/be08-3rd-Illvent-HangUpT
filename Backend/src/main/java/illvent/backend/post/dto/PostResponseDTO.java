@@ -37,6 +37,9 @@ public class PostResponseDTO {
     @JsonProperty
     private int views;
 
+    @JsonProperty
+    private int likes;
+
     public PostResponseDTO(Post post) {
         this.no = post.getNo();
         this.title = post.getTitle();

@@ -52,17 +52,22 @@ public class Post{
     @Column(nullable = false)
     private int views;
 
+    @Column(nullable = false)
+    private int likes;
+
     @OneToMany(mappedBy = "post")
     private List<Comment> comments = new ArrayList<>();
 
     public void update(PostUpdateRequestDTO postUpdateRequestDTO) {
         Optional.ofNullable(postUpdateRequestDTO.getTitle()).ifPresent(title -> this.title = title);
         Optional.ofNullable(postUpdateRequestDTO.getContent()).ifPresent(content -> this.content = content);
-        Optional.ofNullable(postUpdateRequestDTO.getRegion()).ifPresent(region -> this.content = region);
+        Optional.ofNullable(postUpdateRequestDTO.getRegion()).ifPresent(region -> this.region = region);
+        this.likes = postUpdateRequestDTO.getLikes();
         this.updateDate = LocalDateTime.now();
     }
 
     public void updateViews(){
         this.views++;
     }
+
 }

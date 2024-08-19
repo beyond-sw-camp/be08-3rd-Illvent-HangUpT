@@ -82,4 +82,5 @@ public class PostService {
 
         return new PostResponseDTO(postRepository.save(post));
     }
+
 }
