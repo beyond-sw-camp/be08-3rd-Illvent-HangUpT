@@ -6,6 +6,9 @@ import EventView from "../views/EventView.vue";
 import BoardNew from "../components/BoardNew.vue";
 import EventDetail from "../components/EventDetails.vue"
 import KakaoMap from "../components/KakaoMap.vue";
+import MyPage from "../components/MyPage.vue";
+import Login from "../components/Login.vue";
+import Register from "../components/Register.vue";
 
 const routes = [
     { path: "/", component: Main, props: route => ({ id: route.query.id })},
@@ -15,6 +18,9 @@ const routes = [
     { path:"/events",name:'events',component: EventView},
     { path: "/event", component: EventDetail, props: true},
     { path: "/map", component: KakaoMap},
+    { path: "/mypage", component: MyPage },
+    { path: "/register", component: Register },
+    { path: "/login", component: Login }
 ];
 
 const router = createRouter({
