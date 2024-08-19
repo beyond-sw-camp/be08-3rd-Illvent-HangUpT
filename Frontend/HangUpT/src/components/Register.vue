@@ -41,7 +41,7 @@ export default {
     justify-content: center;
     align-items: center;
     min-height: 100vh;
-    background-color: #e0f7fa;
+    background-color: #ffffff;
     padding: 90px;
 }
 .signup-box {
@@ -88,7 +88,7 @@ label {
 .btn {
     width: 100%;
     padding: 12px;
-    background-color: #73c7ef;
+    background-color: #000000;
     color: white;
     border: none;
     border-radius: 5px;

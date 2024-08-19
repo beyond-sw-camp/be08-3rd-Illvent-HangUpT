@@ -2,7 +2,7 @@
   <div class="login-container">
     <div class="login-box">
       <div class="logo-container">
-        <img src="../assets/images/logo.png" alt="로고" class="logo">
+        <img src="../assets/images/HUTLogo.png" alt="로고" class="logo">
       </div>
       <form @submit.prevent="login">
         <label for="user-id">이메일(아이디):</label>
@@ -65,16 +65,18 @@ export default {
   justify-content: center;
   align-items: center;
   height: 100vh;
-  background-color: #e0f7fa;
+  background-color: #fbfbfb;
   top: 70px;
 }
 
 .logo-container {
-  margin-bottom: 10px;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
 }
 
 .logo {
-  width: 80px;
+  width: 90%; /* 원하는 크기로 조정 가능 */
 }
 
 .login-box {
@@ -128,7 +130,7 @@ label {
 .btn {
   width: 100%;
   padding: 12px;
-  background-color: #73c7ef;
+  background-color: #000000;
   color: white;
   border: none;
   border-radius: 5px;
