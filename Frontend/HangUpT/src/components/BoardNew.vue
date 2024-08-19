@@ -1,117 +1,121 @@
 <template>
-    <div class="container mt-5">
-      <h1 class="mb-4 text-center">새 글 작성</h1>
-  
-      <!-- 고정된 이미지 -->
-      <div class="fixed-image">
-        <img src="../assets/images/광고용포스터.png" alt="Fixed Image">
-      </div>
-  
-      <div class="form-container">
-        <!-- 주의사항 -->
-        <div class="notice-container">
-          <div class="notice-item">
-            <p class="notice-number">1.</p>
-            <div class="notice-content">
-              <strong>게시글 작성 방법</strong>
-              <p>지역과 게시판 종류를 선택하세요.</p>
-            </div>
-          </div>
-          <div class="notice-item">
-            <p class="notice-number">2.</p>
-            <div class="notice-content">
-              <strong>게시글 작성 시 주의사항</strong>
-              <p>욕설과 비방은 자제하고, 게시판에 맞는 글을 작성하세요.</p>
-            </div>
+  <div class="container mt-5">
+    <h1 class="mb-4 text-center">새 글 작성</h1>
+
+    <!-- 고정된 이미지 -->
+    <div class="fixed-image">
+      <img src="../assets/images/광고용포스터.png" alt="Fixed Image">
+    </div>
+
+    <div class="form-container">
+      <!-- 주의사항 -->
+      <div class="notice-container">
+        <div class="notice-item">
+          <p class="notice-number">1.</p>
+          <div class="notice-content">
+            <strong>게시글 작성 방법</strong>
+            <p>지역과 게시판 종류를 선택하세요.</p>
           </div>
         </div>
-  
-        <form @submit.prevent="submitForm">
-          <!-- 지역 및 게시판 선택 -->
-          <div class="selection-container">
-            <div class="form-group">
-              <label for="area">지역 선택</label>
-              <select id="area" v-model="area" class="form-select" required>
-                <option value="" disabled>--지역선택--</option>
-                <option v-for="region in regions" :key="region" :value="region">{{ region }}</option>
-              </select>
-            </div>
-  
-            <div class="form-group">
-              <label for="boardType">게시판 종류 선택</label>
-              <select id="boardType" v-model="boardType" class="form-select" required>
-                <option value="" disabled>--게시판선택--</option>
-                <option v-for="type in boardTypes" :key="type" :value="type">{{ type }}</option>
-              </select>
-            </div>
+        <div class="notice-item">
+          <p class="notice-number">2.</p>
+          <div class="notice-content">
+            <strong>게시글 작성 시 주의사항</strong>
+            <p>욕설과 비방은 자제하고, 게시판에 맞는 글을 작성하세요.</p>
           </div>
-  
-          <!-- 제목 및 내용 입력 -->
-          <div class="input-section">
-            <div class="form-group">
-              <label for="title">제목</label>
-              <input type="text" v-model="title" id="title" class="form-control" required />
-            </div>
-  
-            <div class="form-group">
-              <label for="content">내용</label>
-              <textarea v-model="content" id="content" class="form-control" rows="5" required></textarea>
-            </div>
-  
-            <div class="form-group">
-              <label for="file-upload">파일 업로드</label>
-              <input type="file" id="file-upload" name="file" />
-            </div>
-          </div>
-  
-          <!-- 버튼 -->
-          <div class="d-flex justify-content-between">
-            <router-link to="/boards" class="btn btn-secondary">취소</router-link>
-            <button type="submit" class="btn btn-primary">작성 완료</button>
-          </div>
-        </form>
+        </div>
       </div>
+
+      <form @submit.prevent="submitForm">
+        <!-- 지역 및 게시판 선택 -->
+        <div class="selection-container">
+          <div class="form-group">
+            <label for="area">지역 선택</label>
+            <select id="area" v-model="area" class="form-select" required>
+              <option value="" disabled>--지역선택--</option>
+              <option v-for="region in regions" :key="region" :value="region">{{ region }}</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="boardType">게시판 종류 선택</label>
+            <select id="boardType" v-model="boardType" class="form-select" required>
+              <option value="" disabled>--게시판선택--</option>
+              <option v-for="type in boardTypes" :key="type" :value="type">{{ type }}</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- 제목 및 내용 입력 -->
+        <div class="input-section">
+          <div class="form-group">
+            <label for="title">제목</label>
+            <input type="text" v-model="title" id="title" class="form-control" required />
+          </div>
+
+          <div class="form-group">
+            <label for="content">내용</label>
+            <textarea v-model="content" id="content" class="form-control" rows="5" required></textarea>
+          </div>
+
+          <div class="form-group">
+            <label for="file-upload">파일 업로드</label>
+            <input type="file" id="file-upload" name="file" />
+          </div>
+        </div>
+
+        <!-- 버튼 -->
+        <div class="d-flex justify-content-between">
+          <router-link to="/boards" class="btn btn-secondary">취소</router-link>
+          <button type="submit" class="btn btn-primary">작성 완료</button>
+        </div>
+      </form>
     </div>
-  </template>
+  </div>
+</template>
   
-  <script setup>
+<script setup>
   import { ref } from 'vue'
   import { useRouter } from 'vue-router'
   import data from '../data/board.js'
-  
+  import axios from 'axios';
+
   const title = ref('')
   const area = ref('')
   const content = ref('')
   const boardType = ref('')
   const router = useRouter()
-  
+
   const regions = [
     "경기도", "강원도", "충청북도", "충청남도", "전라북도",
     "전라남도", "경상북도", "경상남도", "서울특별시",
     "부산광역시", "대구광역시", "인천광역시", "광주광역시",
     "대전광역시", "울산광역시", "세종특별자치시", "제주특별자치도"
   ]
-  
+
   const boardTypes = ["자유게시판", "후기게시판", "모아게시판"]
-  
-  const submitForm = () => {
-    const newPost = {
-      id: data.length + 1,
-      title: title.value,
-      area: area.value,
-      content: content.value,
-      boardType: boardType.value,
-      likes: 0,
-      views: 0,
-      date: new Date().toISOString().slice(0, 10)
+
+  const submitForm = async () => {
+    try {
+      const newPost = {
+        title: title.value,
+        area: area.value,
+        content: content.value,
+        boardType: boardType.value,
+        likes: 0,
+        views: 0,
+        date: new Date().toISOString().slice(0, 10)
+      }
+
+      await axios.post('http://localhost:8080/v1/api/post/register/', newPost)
+      router.push('/boards')
+    } catch (error) {
+      console.error("게시물 등록 중 오류 발생:", error)
     }
-  
-    data.push(newPost)
-    router.push('/boards')
   }
-  </script>
+</script>
   
-  <style scoped>
+<style scoped>
   .container {
     max-width: 800px;
   }
@@ -229,5 +233,4 @@
   .selection-container {
     margin-bottom: 20px;
   }
-  </style>
-  
+</style>

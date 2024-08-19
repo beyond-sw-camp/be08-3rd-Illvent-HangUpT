@@ -44,9 +44,11 @@ public class PostResponseDTO {
         this.no = post.getNo();
         this.title = post.getTitle();
         this.content = post.getContent();
+        this.region = post.getRegion();
         this.memberNo = post.getMember().getNo();
         this.createDate = post.getCreateDate();
         this.updateDate = post.getUpdateDate();
         this.views = post.getViews();
+        this.likes = post.getLikes();
     }
 }

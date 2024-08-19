@@ -57,7 +57,9 @@
               <td>{{ post.id }}</td>
               <td>{{ post.area }}</td>
               <td class="text-start">
-                <router-link :to="`/boards/${post.id}`" class="text-decoration-none">{{ post.title }}</router-link>
+                <router-link :to="`/boards/${post.id}`" class="text-decoration-none" @click.prevent="incrementViews(post.id)">
+                  {{ post.title }}
+                </router-link>
               </td>
               <td>{{ post.likes }}</td>
               <td>{{ post.views }}</td>
@@ -85,25 +87,54 @@
 </template>
 
 <script setup>
-import { ref, computed, watch } from 'vue'
-import data from '../data/board.js'
+import { ref, computed, watch, onMounted } from 'vue'
+import { useRouter } from 'vue-router'
+import axios from 'axios'
 
-// 지역 목록
 const cities = ["경기도", "강원도", "충청북도", "충청남도", "전라북도", 
           "전라남도", "경상북도", "경상남도", "서울특별시", 
           "부산광역시", "대구광역시", "인천광역시", "광주광역시", 
           "대전광역시", "울산광역시", "세종특별자치시", "제주특별자치도"]
 
-const posts = ref(data)
+const posts = ref([])
 const currentPage = ref(1)
 const postsPerPage = ref(10)
-const sortKey = ref('id')  // 기본 정렬은 ID 기준 내림차순
-const selectedCities = ref([]) // 선택된 도시 필터
+const sortKey = ref('id')
+const selectedCities = ref([])
+
+const router = useRouter()
+
+// 서버에서 게시물 목록 로드
+const loadPosts = async () => {
+  try {
+    const response = await axios.get('http://localhost:8080/v1/api/post/list', {
+      params: {
+        page: currentPage.value - 1, 
+        size: postsPerPage.value,
+      },
+    })
+    posts.value = response.data.map(post => ({
+      id: post.no,
+      area: post.region,
+      title: post.title,
+      likes: post.likes || 0,
+      views: post.views,
+      date: post.createDate.split('T')[0], 
+    }))
+  } catch (error) {
+    console.error("게시물 로딩 중 오류 발생:", error)
+  }
+}
+
+// 페이지 로드 시 게시물 목록 로드
+onMounted(() => {
+  loadPosts()
+})
 
 const sortedPosts = computed(() => {
   return [...posts.value].sort((a, b) => {
     if (sortKey.value === 'id') {
-      return b.id - a.id  // 기본 설정: ID 내림차순
+      return b.id - a.id
     } else if (sortKey.value === 'likes') {
       return b.likes - a.likes
     } else if (sortKey.value === 'views') {
@@ -111,6 +142,21 @@ const sortedPosts = computed(() => {
     }
   })
 })
+
+const incrementViews = async (postId) => {
+  try {
+    const post = posts.value.find(post => post.id === postId);
+    await axios.put(`http://localhost:8080/v1/api/post/update/${postId}`, {
+      views: post.views + 1
+    });
+
+    post.views += 1;
+
+    router.push(`/boards/${postId}`);
+  } catch (error) {
+    console.error("조회수 증가 중 오류 발생:", error);
+  }
+};
 
 const filteredPosts = computed(() => {
   let filtered = sortedPosts.value
@@ -129,9 +175,9 @@ const totalPages = computed(() => {
   return Math.ceil(totalFilteredPosts / postsPerPage.value)
 })
 
-// 페이지와 정렬 변경 시 페이지네이션 업데이트
 watch([postsPerPage, sortKey, selectedCities], () => {
-  currentPage.value = 1 // 페이지나 정렬 기준이 바뀔 때 첫 페이지로 이동
+  currentPage.value = 1
+  loadPosts()
 })
 
 const prevPage = () => {
@@ -144,6 +190,7 @@ const nextPage = () => {
 
 const goToPage = (page) => {
   currentPage.value = page
+  loadPosts()
 }
 </script>
 
