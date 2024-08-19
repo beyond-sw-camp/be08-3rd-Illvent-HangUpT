@@ -30,7 +30,6 @@ public class Event {
     @Column(nullable = false)
     private String address;
 
-    @Column(nullable = false)
     private LocalDate eventDate;
 
     @Column(nullable = false)
@@ -39,10 +38,8 @@ public class Event {
     @Column(nullable = false, length = 2047)
     private String description;
 
-    @Column(nullable = false)
     private String region;
 
-    @Column(nullable = false)
     private int price;
 
     @Column(nullable = false)
@@ -51,11 +48,15 @@ public class Event {
     @Column(nullable = false)
     private int likes;
 
-    @Column(nullable = false)
     private boolean online;
 
-    @Column(nullable = false)
     private boolean offline;
+
+    @Column(nullable = false)
+    private Double x;
+
+    @Column(nullable = false)
+    private Double y;
 
     @OneToMany(mappedBy = "event")
     private List<Wish> wishes = new ArrayList<>();

@@ -20,7 +20,6 @@ public class EventUpdateRequestDTO {
     @NotNull
     private String address;
 
-    @NotNull
     private LocalDate eventDate;
 
     @NotNull
@@ -29,10 +28,8 @@ public class EventUpdateRequestDTO {
     @NotNull
     private String description;
 
-    @NotNull
     private String region;
 
-    @NotNull
     private int price;
 
     @NotNull
@@ -41,9 +38,13 @@ public class EventUpdateRequestDTO {
     @NotNull
     private int likes;
 
-    @NotNull
     private boolean online;
 
-    @NotNull
     private boolean offline;
+
+    @NotNull
+    private Double x;
+
+    @NotNull
+    private Double y;
 }
