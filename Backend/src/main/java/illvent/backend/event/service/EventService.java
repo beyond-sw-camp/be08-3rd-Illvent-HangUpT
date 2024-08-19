@@ -95,6 +95,12 @@ public class EventService {
                 .collect(Collectors.toList());
     }
 
+    public List<EventResponseDTO> getEventsOrderByLikes(){
+        return eventRepository.findTop10ByOrderByLikesDesc().stream()
+                .map(EventResponseDTO::new)
+                .collect(Collectors.toList());
+    }
+
     public List<EventInfoResponseDTO> getEventsByFilter(Long loginUserId,DateFilter date, String region, String join, String price,int page, int size) {
         Pageable pageable = PageRequest.of(page,size);
         Page<Object[]> events = null;
