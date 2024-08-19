@@ -13,7 +13,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -60,6 +59,7 @@ public class EventService {
                 .region(eventUpdateRequestDTO.getRegion())
                 .price(eventUpdateRequestDTO.getPrice())
                 .views(eventUpdateRequestDTO.getViews())
+                .likes(eventUpdateRequestDTO.getLikes())
                 .online(eventUpdateRequestDTO.isOnline())
                 .offline(eventUpdateRequestDTO.isOffline())
                 .x(eventUpdateRequestDTO.getX())
