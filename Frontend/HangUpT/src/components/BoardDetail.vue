@@ -3,8 +3,10 @@
     <!-- 게시물 제목 -->
     <h1>{{ post.title }}</h1>
     
-    <!-- 게시물 내용 (note) -->
-    <p>{{ post.note }}</p>
+    <!-- 게시물 내용 -->
+    <div class="post-content mt-4">
+      <p>{{ post.content }}</p>
+    </div>
     
     <!-- 게시물 정보 -->
     <div class="d-flex justify-content-between align-items-center">
@@ -57,113 +59,138 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue'
-import { useRoute } from 'vue-router'
-import data from '../data/board.js'
+  import { ref, onMounted } from 'vue'
+  import { useRoute } from 'vue-router'
+  import axios from 'axios'
 
-const post = ref({})
-const route = useRoute()
+  const post = ref({})
+  const route = useRoute()
 
-// 댓글과 대댓글 관련 데이터 및 메서드
-const comments = ref([])  // 댓글 목록
-const newComment = ref('')  // 새 댓글 입력
+  // 댓글과 대댓글 관련 데이터 및 메서드
+  const comments = ref([]) 
+  const newComment = ref('') 
 
-onMounted(() => {
-  const postId = route.params.id
-  post.value = data.find(p => p.id === parseInt(postId))
-  
-  // 게시물 조회수 증가
-  if (post.value) {
-    post.value.views += 1
+  const loadPost = async () => {
+    try {
+      const postId = route.params.id
+      const response = await axios.get(`http://localhost:8080/v1/api/post/${postId}`)
+      post.value = response.data
+
+      const updatedResponse = await axios.put(`http://localhost:8080/v1/api/post/update/${postId}`, {
+        views: post.value.views + 1
+      })
+
+      post.value.views = updatedResponse.data.views
+    } catch (error) {
+      console.error("게시물 로드 중 오류 발생:", error)
+    }
   }
-})
 
-// 좋아요 수 증가 함수
-const increaseLikes = () => {
-  if (post.value) {
-    post.value.likes += 1
+  onMounted(() => {
+    loadPost()
+  })
+
+  const increaseLikes = async () => {
+    try {
+      post.value.likes += 1
+
+      const response = await axios.put(`http://localhost:8080/v1/api/post/update/${route.params.id}`, { 
+        likes: post.value.likes 
+      })
+
+      post.value.likes = response.data.likes
+    } catch (error) {
+      console.error("좋아요 증가 중 오류 발생:", error)
+    }
   }
-}
 
-const addComment = () => {
-  if (newComment.value.trim()) {
-    comments.value.push({
-      text: newComment.value,
-      replies: [],
-      replyText: '',
-      showReply: false,
-    })
-    newComment.value = ''
+  const addComment = () => {
+    if (newComment.value.trim()) {
+      comments.value.push({
+        text: newComment.value,
+        replies: [],
+        replyText: '',
+        showReply: false,
+      })
+      newComment.value = ''
+    }
   }
-}
 
-const toggleReply = (index) => {
-  comments.value[index].showReply = !comments.value[index].showReply
-}
-
-const addReply = (index) => {
-  const replyText = comments.value[index].replyText.trim()
-  if (replyText) {
-    comments.value[index].replies.push(replyText)
-    comments.value[index].replyText = ''
-    comments.value[index].showReply = false
+  const toggleReply = (index) => {
+    comments.value[index].showReply = !comments.value[index].showReply
   }
-}
+
+  const addReply = (index) => {
+    const replyText = comments.value[index].replyText.trim()
+    if (replyText) {
+      comments.value[index].replies.push(replyText)
+      comments.value[index].replyText = ''
+      comments.value[index].showReply = false
+    }
+  }
 </script>
 
 <style scoped>
-.comments {
-  border-top: 2px solid #dee2e6;
-  padding-top: 20px;
-}
+  .post-content {
+    margin-bottom: 20px;
+    padding: 15px;
+    background-color: #f8f9fa;
+    border: 1px solid #dee2e6;
+    border-radius: 5px;
+  }
 
-.comment {
-  background-color: #f8f9fa;
-  border: 1px solid #dee2e6;
-  padding-left: 10px;
-  position: relative;
-}
+  .comments {
+    border-top: 2px solid #dee2e6;
+    padding-top: 20px;
+  }
 
-.reply {
-  background-color: #e9ecef;
-  border-left: 4px solid #adb5bd;
-  margin-top: 10px;
-}
+  .comment {
+    background-color: #f8f9fa;
+    border: 1px solid #dee2e6;
+    padding-left: 10px;
+    position: relative;
+  }
 
-textarea.form-control {
-  resize: none;
-}
+  .reply {
+    background-color: #e9ecef;
+    border-left: 4px solid #adb5bd;
+    margin-top: 10px;
+  }
 
-.btn-link {
-  font-size: 0.9rem;
-  color: #007bff;
-}
+  textarea.form-control {
+    resize: none;
+  }
 
-.btn-link:hover {
-  color: #0056b3;
-}
+  .btn-link {
+    font-size: 0.9rem;
+    color: #007bff;
+  }
 
-p {
-  margin-bottom: 0.5rem;
-}
+  .btn-link:hover {
+    color: #0056b3;
+  }
 
-.arrow {
-  color: #6c757d;
-  font-size: 1.2rem;
-}
+  p {
+    margin-bottom: 0.5rem;
+  }
 
-.comment::before {
-  content: '';
-  position: absolute;
-  left: 10px;
-  top: 0;
-  bottom: 0;
-  width: 3px;
-  background-color: #dee2e6;
-  border-radius: 5px;
-}
+  .arrow {
+    color: #6c757d;
+    font-size: 1.2rem;
+  }
 
-.comment:first-child::before {
-  display: none;
-}
+  .comment::before {
+    content: '';
+    position: absolute;
+    left: 10px;
+    top: 0;
+    bottom: 0;
+    width: 3px;
+    background-color: #dee2e6;
+    border-radius: 5px;
+  }
+
+  .comment:first-child::before {
+    display: none;
+  }
 </style>
