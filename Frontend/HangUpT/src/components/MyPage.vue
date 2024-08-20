@@ -24,14 +24,26 @@
         <table>
           <thead>
             <tr>
-              <th>No</th>
-              <th>Title</th>
+              <th scope="col" style="width: 5%;">ID</th>
+              <th scope="col" style="width: 12%;">지역</th>
+              <th scope="col" style="width: 50%;">제목</th>
+              <th scope="col" style="width: 8%;">좋아요</th>
+              <th scope="col" style="width: 7%;">조회수</th>
+              <th scope="col" style="width: 12%;">날짜</th>
             </tr>
           </thead>
           <tbody>
-            <tr v-for="(post, index) in posts" :key="post.id">
+            <tr v-for="(post, index) in posts" :key="post.no">
               <td>{{ index + 1 }}</td>
-              <td><a :href="'/posts/' + post.id">{{ post.title }}</a></td>
+              <td>{{ post.region }}</td>
+              <td class="text-start">
+                <router-link :to="`/boards/${post.no}`" class="text-decoration-none" @click.prevent="incrementViews(post.id)">
+                  {{ post.title }}
+                </router-link>
+              </td>
+              <td>{{ post.likes }}</td>
+              <td>{{ post.views }}</td>
+              <td>{{ post.createDate.split('T')[0] }}</td>
             </tr>
           </tbody>
         </table>
@@ -66,17 +78,21 @@
 <script>
 import event1 from '../assets/event1.jpg';
 import event2 from '../assets/event2.jpg';
+import axios from 'axios';
 
 export default {
   name: "MyPage",
   data() {
+    // localStorage에서 userInfo 가져오기
+    const storedUserInfo = JSON.parse(localStorage.getItem("userInfo"));
+
     return {
       activeTab: '관심 행사', 
-      userInfo: {
-        name: '조혜인',
-        email: 'chi1234@naver.com',
-        password: '1234',
-        location: '대구',
+      userInfo: storedUserInfo || {  // localStorage에 정보가 없을 경우 기본값 설정
+        name: '',
+        email: '',
+        password: '',
+        location: '',
       },
       events: [
         {
@@ -88,22 +104,36 @@ export default {
           title: '핑구 삐짐 행사'
         }
       ],
-      posts: [
-        { id: 1, title: '첫 번째 게시물' },
-        { id: 2, title: '두 번째 게시물' },
-        { id: 3, title: '세 번째 게시물' }
-      ]
+      posts: []  // 서버에서 받아올 게시물 목록
     };
   },
   methods: {
     setActiveTab(tabName) {
       this.activeTab = tabName;
     },
+
     submitForm() {
       console.log("사용자 정보:", this.userInfo);
       alert("정보가 성공적으로 수정되었습니다!");
+
+      // 수정된 정보를 localStorage에 다시 저장
+      localStorage.setItem("userInfo", JSON.stringify(this.userInfo));
+    },
+
+    async loadUserPosts() {
+      try {
+        // 서버에 해당 회원이 작성한 게시물을 요청
+        const response = await axios.get(`http://localhost:8080/v1/api/member/list/post/${this.userInfo.no}`);
+        this.posts = response.data;
+      } catch (error) {
+        console.error("게시물 로딩 중 오류 발생:", error);
+      }
     }
-  }
+  },
+
+  mounted() {
+    this.loadUserPosts();  // 컴포넌트가 로드될 때 사용자 게시물 로드
+  },
 };
 </script>
 
@@ -273,6 +303,4 @@ a {
 a:hover {
   text-decoration: underline;
 }
-
-
 </style>
