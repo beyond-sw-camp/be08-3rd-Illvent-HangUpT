@@ -135,12 +135,21 @@ export default {
     width: 100%;
     height: 300px;
     cursor: pointer;
-    
+    display: inline-block;
+    overflow: hidden; /* 이미지를 확대할 때 컨테이너를 벗어나지 않도록 함 */
+    border-radius: 8px; /* 모서리 둥글게 */
     img {
         width: 100%;
         height: 70%;
         border-radius: 5px;
         object-fit: cover;
+        display: block;
+        height: auto;
+        transition: transform 0.3s ease, box-shadow 0.3s ease; /* 변환 및 그림자 효과를 부드럽게 적용 */
+    }
+    img:hover {
+        transform: scale(1.1); /* 마우스를 올리면 이미지가 1.1배 확대 */
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3); /* 확대 시 그림자 추가 */
     }
 }
 
