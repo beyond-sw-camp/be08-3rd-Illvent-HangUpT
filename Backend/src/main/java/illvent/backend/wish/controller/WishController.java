@@ -18,19 +18,26 @@ public class WishController {
 
         private final WishService wishService;
 
-        @Operation(summary = "관심 행사를 등록하는 API")
+        @Operation(summary = "관심 행사를 등록및 삭제하는 API")
         @PostMapping("/register")
         public ResponseEntity<String> registerWish(@RequestBody WishRegisterRequestDTO wishRegisterRequestDTO){
-            wishService.registerWish(wishRegisterRequestDTO);
+            String result = wishService.registerWish(wishRegisterRequestDTO);
 
-            return ResponseEntity.status(HttpStatus.CREATED).build();
+            if(result.equals("register")){
+                return ResponseEntity.ok(result);
+            }else if(result.equals("cancel")){
+                return  ResponseEntity.ok(result);
+            }else{
+                return new ResponseEntity<>(result, HttpStatus.INTERNAL_SERVER_ERROR);
+            }
+
         }
 
-        @Operation(summary = "특정 관심 행사를 삭제하는 API")
-        @DeleteMapping("/delete/")
-        public ResponseEntity<String> deleteWish(@RequestBody WishDeleteRequestDTO wishDeleteRequestDTO) {
-            wishService.deleteWish(wishDeleteRequestDTO);
-
-            return ResponseEntity.ok().build();
-        }
+//        @Operation(summary = "특정 관심 행사를 삭제하는 API")
+//        @DeleteMapping("/delete/")
+//        public ResponseEntity<String> deleteWish(@RequestBody WishDeleteRequestDTO wishDeleteRequestDTO) {
+//            wishService.deleteWish(wishDeleteRequestDTO);
+//
+//            return ResponseEntity.ok().build();
+//        }
 }

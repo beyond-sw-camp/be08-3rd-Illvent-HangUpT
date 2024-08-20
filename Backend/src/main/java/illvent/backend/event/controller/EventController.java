@@ -1,10 +1,7 @@
 package illvent.backend.event.controller;
 
 import illvent.backend.event.domain.DateFilter;
-import illvent.backend.event.dto.EventInfoResponseDTO;
-import illvent.backend.event.dto.EventRegisterRequestDTO;
-import illvent.backend.event.dto.EventResponseDTO;
-import illvent.backend.event.dto.EventUpdateRequestDTO;
+import illvent.backend.event.dto.*;
 import illvent.backend.event.service.EventService;
 import illvent.backend.member.domain.Member;
 import illvent.backend.member.domain.MemberRole;
@@ -83,9 +80,9 @@ public class EventController {
     }
 
 
-    @Operation(summary = "여러 필터를 기준에 맞는 행사 정보를 반환하는 API")
+    @Operation(summary = "여러 필터 기준에 맞는 행사 정보를 반환하는 API")
     @GetMapping("")
-    public ResponseEntity<List<EventInfoResponseDTO>> getEventsByFilter(@RequestParam(value="date",required = false) DateFilter date,
+    public ResponseEntity<EventFilterPagingResponseDTO> getEventsByFilter(@RequestParam(value="date",required = false) DateFilter date,
                                                                         @RequestParam(value="region",required = false) String region,
                                                                         @RequestParam(value = "join",required = false)String join,
                                                                         @RequestParam(value="price",required = false) String price,
@@ -124,7 +121,7 @@ public class EventController {
             price = null;
         }
 
-        List<EventInfoResponseDTO> result = eventService.getEventsByFilter(loginUserId,date,region,join,price,page,size);
+        EventFilterPagingResponseDTO result = eventService.getEventsByFilter(loginUserId,date,region,join,price,page,size);
 
         return ResponseEntity.ok(result);
     }

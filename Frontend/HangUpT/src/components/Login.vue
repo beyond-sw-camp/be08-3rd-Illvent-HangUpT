@@ -54,7 +54,7 @@ import { useRouter } from 'vue-router';
    //   console.log(res);
       if(res.status==200){
         alert("로그인을 성공했습니다.");
-        store.isLoggedIn = 'true'; 
+        // store.isLoggedIn = true; 
         localStorage.setItem("isLoggedIn", true);
         localStorage.setItem("userInfo", JSON.stringify(res.data));
         console.log(JSON.parse(localStorage.getItem("userInfo")));

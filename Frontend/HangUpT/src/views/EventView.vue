@@ -1,8 +1,5 @@
 <template>
     <div class="container">
-        <!-- 배너 -->
-        <!-- <div class="banner_container">
-        </div> -->
         <!-- 내용 -->
         <div class="content_container">
             <!-- 필터 목록 -->
@@ -51,10 +48,15 @@
             </div>
             <!-- 이벤트 목록 -->
             <div class="event_container">
-                <EventList :events="events"/>
-
-             
+                <EventList :events="events" @refresh-data="refreshData"/>
+               
+                 
             </div> 
+
+            <div>
+
+                <!-- <PageNation :startPage="startPage" :currentPage="currentPage" :end-page="endPage" @change-page="changePage"/> -->
+            </div>
 
         </div>
     </div>
@@ -63,16 +65,27 @@
 <script setup>
     import { computed, onMounted, ref, watch } from 'vue';
     import EventList from '../components/EventList.vue';
-    import { useRoute } from 'vue-router';
+    import { useRoute,useRouter } from 'vue-router';
     import axios from 'axios';
+    import PageNation from '../components/PageNation.vue';
 
     const route = useRoute();
+    const router = useRouter();
 
     const events = ref([]);
     const selectDate = ref('ALL'); // 일시 
     const selectRegion = ref('전체'); // 지역 
     const selectJoin = ref(route.query.selectJoin||'onoff'); // 참여 방법 
     const selectPrice = ref(route.query.selectPrice||'freeAndPaid'); // 가격 
+
+     // 페이지네이션을 위한 데이터
+    const currentPage = ref(Number(route.query.page)||1); // 현재 페이지 번호
+    const startPage = ref(0);  // 페이징된 페이지 중에 시작 페이지
+    const endPage = ref(0); // 페이징된 페이지 중 마지막 페이지
+    const maxPage = ref(0); // 전체 페이지중 마지막 페이지
+    const pageLimit = 5;  // 한 페이지에 보여지는 페이지 수
+    const listLimit = 9; // 한 페이지에 표시될 리스트수
+
 
     
     onMounted(()=>{
@@ -104,13 +117,14 @@
     const fetchEventData = ()=>{
         // todo : api 호출
         console.log('api 호출 !')
-        getEventsAPI();
+        getEventsAPI(currentPage.value);
 
     }
 
-    async function getEventsAPI(){
+    async function getEventsAPI(page){
+        // console.log(`getEventsAPI : ${page}`)
         try{
-            const response = await axios.get('http://localhost:8080/v1/api/event',{
+            const response = await axios.get(`http://localhost:8080/v1/api/event`,{
                 params:{
                     page:0,
                     size: 9,
@@ -121,29 +135,39 @@
                     price:selectPrice.value
                 }
             });
-            console.log(response);
-            console.log(response.data);
-            events.value = response.data;
+            // console.log(response);
+            // console.log(response.data);
+             const res = response.data;
+            //  currentPage.value = res.pageNumber;
+
+            //  maxPage.value = parseInt(Math.ceil(res.totalElements/listLimit));
+
+            // startPage.value = (pageLimit * parseInt((page-1)/pageLimit)) + 1;
+
+            // endPage.value = startPage.value + pageLimit - 1;
+            // endPage.value = endPage.value > maxPage.value ? maxPage.value : endPage.value;
+
+            events.value = res.contents;
 
         }catch(error){
             console.log('API 요청 실패 : ',error);
         }
+    }
+    const refreshData = ()=>{
+        getEventsAPI(currentPage.value);
     }
 </script>
 
 <style lang="scss" scoped>
 
 .container {
-    // background-color: yellow;
+    margin: 0 auto;
     height: 100vh;
-    padding: 0 30px;
+    padding: 0 1px;
 }
 
-.banner_container {
-    height: 170px;
-    background-color: pink;
-}
 .content_container {
+    // background-color: bisque;
     display: flex;
 
 }

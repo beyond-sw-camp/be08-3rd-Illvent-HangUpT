@@ -2,12 +2,12 @@
     <nav class="navbar">
         <img src="../assets/images/HUTLogo.png" @click="goMain">
         <div class="menu_container">
-            <router-link to="/map">지도</router-link>
-            <router-link :to="{name:'events',query:{selectPrice:'free'}}">무료</router-link>
-            <router-link :to="{name: 'events',query:{selectPrice:'paid'}}">유료</router-link>
-            <router-link :to="{name:'events',query:{selectJoin:'online'}}">온라인</router-link>
-            <router-link :to="{name:'events',query:{selectJoin:'offline'}}">오프라인</router-link>
-            <router-link to="/boards">게시판</router-link>
+            <router-link to="/map" exact-active-class="active-link">지도</router-link>
+            <router-link :to="{name:'events',query:{selectPrice:'free'}}" exact-active-class="active-link">무료</router-link>
+            <router-link exact-active-class="active-link" :to="{name: 'events',query:{selectPrice:'paid'}}">유료</router-link>
+            <router-link exact-active-class="active-link" :to="{name:'events',query:{selectJoin:'online'}}">온라인</router-link>
+            <router-link exact-active-class="active-link" :to="{name:'events',query:{selectJoin:'offline'}}">오프라인</router-link>
+            <router-link to="/boards" exact-active-class="active-link">게시판</router-link>
         </div>
 
         <div class="login_container">
@@ -77,16 +77,10 @@
             cursor: pointer;
         }
 
-        a{
-            text-decoration: none;
-            margin-right: 35px;
-            color: white;
-            font-size: 1.3rem;
-        }
-
-        a:hover {
-            color: #7abdfc;
-        }
+       
+        // a:hover {
+        //     color: #7abdfc;
+        // }
         .btn {
             border: none;
             background-color: transparent;
@@ -105,5 +99,21 @@
             color: #4b4b4b;
         }
     }
+
+    .menu_container {
+        a {
+            text-decoration: none;
+            margin-right: 35px;
+            color: white;
+        }
+
+        .active-link {
+        color: #7abdfc;
+    }
+    }
+
+    
+
+    
 
 </style>
