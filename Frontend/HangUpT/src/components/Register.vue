@@ -33,7 +33,7 @@
     const email = ref('');
     const password = ref('');
     const location = ref('');
-    const router =useRouter();
+    const router = useRouter();
 
     const signup = ()=>{
 
