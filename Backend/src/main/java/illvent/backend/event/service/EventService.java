@@ -1,10 +1,7 @@
 package illvent.backend.event.service;
 
 import illvent.backend.event.domain.*;
-import illvent.backend.event.dto.EventInfoResponseDTO;
-import illvent.backend.event.dto.EventRegisterRequestDTO;
-import illvent.backend.event.dto.EventResponseDTO;
-import illvent.backend.event.dto.EventUpdateRequestDTO;
+import illvent.backend.event.dto.*;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -105,8 +102,8 @@ public class EventService {
                 .collect(Collectors.toList());
     }
 
-    public List<EventInfoResponseDTO> getEventsByFilter(Long loginUserId,DateFilter date, String region, String join, String price,int page, int size) {
-        Pageable pageable = PageRequest.of(page,size);
+    public EventFilterPagingResponseDTO getEventsByFilter(Long loginUserId,DateFilter date, String region, String join, String price,int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
         Page<Object[]> events = null;
 
         Boolean online = null;
@@ -134,19 +131,20 @@ public class EventService {
 
         if (price != null) {
             if (price.equals("free")) {
-                events = eventRepository.findEventInfoByConditionAndFree(loginUserId,pageable,startDate, endDate, online, offline, 0,region);
+                events = eventRepository.findEventInfoByConditionAndFree(loginUserId, pageable, startDate, endDate, online, offline, 0, region);
             } else if (price.equals("paid")) {
-                events = eventRepository.findEventInfoByConditionAndPaid(loginUserId,pageable,startDate, endDate, online, offline, 0,region);
+                events = eventRepository.findEventInfoByConditionAndPaid(loginUserId, pageable, startDate, endDate, online, offline, 0, region);
             }
-        }else { // 전체 가격
-            events = eventRepository.findEventInfoByConditionAndFree(loginUserId,pageable,startDate, endDate, online, offline, null,region);
+        } else { // 전체 가격
+            events = eventRepository.findEventInfoByConditionAndFree(loginUserId, pageable, startDate, endDate, online, offline, null, region);
         }
 
 
 //        return events.stream().map(e -> new EventInfoResponseDTO(e.getNo(), e.getTitle(), e.getImageUrl(), e.getPrice(), e.getRegion(),
 //                e.getEventDate(), e.isOnline(), e.isOffline(), e.getViews())).toList();
 
-        return events.stream().map(item->{
+
+        List<EventInfoResponseDTO> data = events.stream().map(item -> {
             Event event = (Event) item[0];
             Boolean isWish = (Boolean) item[1];
             return EventInfoResponseDTO.builder()
@@ -162,5 +160,13 @@ public class EventService {
                     .isWish(isWish)
                     .build();
         }).toList();
+
+        return EventFilterPagingResponseDTO.builder()
+                .totalPages(events.getTotalPages())
+                .totalElements(events.getTotalElements())
+                .pageNumber(events.getNumber())
+                .pageSize(events.getSize())
+                .contents(data)
+                .build();
     }
 }
