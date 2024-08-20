@@ -14,7 +14,7 @@
           <p class="notice-number">1.</p>
           <div class="notice-content">
             <strong>게시글 작성 방법</strong>
-            <p>지역과 게시판 종류를 선택하세요.</p>
+            <p>지역을 선택하세요.</p>
           </div>
         </div>
         <div class="notice-item">
@@ -27,21 +27,13 @@
       </div>
 
       <form @submit.prevent="submitForm">
-        <!-- 지역 및 게시판 선택 -->
+        <!-- 지역 선택 -->
         <div class="selection-container">
           <div class="form-group">
             <label for="area">지역 선택</label>
             <select id="area" v-model="area" class="form-select" required>
               <option value="" disabled>--지역선택--</option>
               <option v-for="region in regions" :key="region" :value="region">{{ region }}</option>
-            </select>
-          </div>
-
-          <div class="form-group">
-            <label for="boardType">게시판 종류 선택</label>
-            <select id="boardType" v-model="boardType" class="form-select" required>
-              <option value="" disabled>--게시판선택--</option>
-              <option v-for="type in boardTypes" :key="type" :value="type">{{ type }}</option>
             </select>
           </div>
         </div>
@@ -73,48 +65,53 @@
     </div>
   </div>
 </template>
-  
+
 <script setup>
-  import { ref } from 'vue'
-  import { useRouter } from 'vue-router'
-  import data from '../data/board.js'
-  import axios from 'axios';
+import { ref } from 'vue'
+import { useRouter } from 'vue-router'
+import axios from 'axios';
 
-  const title = ref('')
-  const area = ref('')
-  const content = ref('')
-  const boardType = ref('')
-  const router = useRouter()
+const title = ref('')
+const area = ref('')
+const content = ref('')
+const router = useRouter()
 
-  const regions = [
-    "경기도", "강원도", "충청북도", "충청남도", "전라북도",
-    "전라남도", "경상북도", "경상남도", "서울특별시",
-    "부산광역시", "대구광역시", "인천광역시", "광주광역시",
-    "대전광역시", "울산광역시", "세종특별자치시", "제주특별자치도"
-  ]
+const regions = [
+  "경기도", "강원도", "충청북도", "충청남도", "전라북도",
+  "전라남도", "경상북도", "경상남도", "서울특별시",
+  "부산광역시", "대구광역시", "인천광역시", "광주광역시",
+  "대전광역시", "울산광역시", "세종특별자치시", "제주특별자치도"
+]
 
-  const boardTypes = ["자유게시판", "후기게시판", "모아게시판"]
-
-  const submitForm = async () => {
-    try {
-      const newPost = {
-        title: title.value,
-        area: area.value,
-        content: content.value,
-        boardType: boardType.value,
-        likes: 0,
-        views: 0,
-        date: new Date().toISOString().slice(0, 10)
-      }
-
-      await axios.post('http://localhost:8080/v1/api/post/register/', newPost)
-      router.push('/boards')
-    } catch (error) {
-      console.error("게시물 등록 중 오류 발생:", error)
+const submitForm = async () => {
+  try {
+    if (!area.value) {
+      alert("지역을 선택해주세요.");
+      return;
     }
+
+    const userInfo = JSON.parse(localStorage.getItem("userInfo")); // 사용자 정보 가져오기
+
+    const newPost = {
+      title: title.value,
+      region: area.value,
+      content: content.value,
+      likes: 0,
+      views: 0,
+      date: new Date().toISOString().slice(0, 10),
+      memberId: userInfo.no 
+    }
+
+    console.log(newPost); // 로그 추가
+
+    await axios.post('http://localhost:8080/v1/api/post/register/' + userInfo.no, newPost);
+    router.push('/boards')
+  } catch (error) {
+    console.error("게시물 등록 중 오류 발생:", error);
   }
+}
 </script>
-  
+
 <style scoped>
   .container {
     max-width: 800px;
