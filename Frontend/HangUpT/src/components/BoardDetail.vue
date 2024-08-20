@@ -86,23 +86,23 @@
     }
   }
 
+  const increaseLikes = async () => {
+    try {
+      // 서버로 요청하여 좋아요 수 증가
+      const response = await axios.put(`http://localhost:8080/v1/api/post/update/${route.params.id}`, { 
+        likes: post.value.likes + 1 // 서버에서 현재 값을 1 증가시킴
+      });
+
+      // 서버에서 반환된 값을 로컬 상태에 반영
+      post.value.likes = response.data.likes;
+    } catch (error) {
+      console.error("좋아요 증가 중 오류 발생:", error);
+    }
+  };
+
   onMounted(() => {
     loadPost()
   })
-
-  const increaseLikes = async () => {
-    try {
-      post.value.likes += 1
-
-      const response = await axios.put(`http://localhost:8080/v1/api/post/update/${route.params.id}`, { 
-        likes: post.value.likes 
-      })
-
-      post.value.likes = response.data.likes
-    } catch (error) {
-      console.error("좋아요 증가 중 오류 발생:", error)
-    }
-  }
 
   const addComment = () => {
     if (newComment.value.trim()) {
