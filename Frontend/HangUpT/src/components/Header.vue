@@ -11,10 +11,10 @@
         </div>
 
         <div class="login_container">
-            <router-link v-if="!store.isLoggedIn" to="/login" class="btn">로그인</router-link>
-            <router-link v-if="!store.isLoggedIn" to="/register" class="btn">회원가입</router-link>
-            <router-link v-if="store.isLoggedIn" to="/mypage" class="btn">마이페이지</router-link>
-            <button v-if="store.isLoggedIn" @click="logout" class="btn">로그아웃</button>
+            <router-link v-if="store.isLoggedIn === 'false'" to="/login" class="btn">로그인</router-link>
+            <router-link v-if="store.isLoggedIn === 'false'" to="/register" class="btn">회원가입</router-link>
+            <router-link v-if="store.isLoggedIn === 'true'" to="/mypage" class="btn">마이페이지</router-link>
+            <button v-if="store.isLoggedIn === 'true'" @click="logout" class="btn">로그아웃</button>
         </div>
 
     </nav>
@@ -28,10 +28,13 @@
    // const loginState = inject('loginState');
 
     const logout = () => {
-        store.isLoggedIn = false;
+        store.isLoggedIn = 'false';
+        localStorage.setItem("isLoggedIn", false);
+        localStorage.removeItem("userInfo");
+
         router.push('/login'); 
     };
-
+    
 
     const router =useRouter();
 
