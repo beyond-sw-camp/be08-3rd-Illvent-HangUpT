@@ -9,8 +9,9 @@
 
         <div class="content">
             <EventCard :events="events" @refresh-data="refreshData"/>
-            
+          
         </div>
+    
     </div>
 
 </template>
@@ -18,14 +19,20 @@
 <script setup>
 import { ref } from 'vue';
 import EventCard from './EventCard.vue';
-    const props = defineProps(['events']);
 
+import { useRoute, useRouter } from 'vue-router';
+
+    const currentRoute = useRoute();
+    const router = useRouter();
+
+    const props = defineProps(['events']);
     const emit = defineEmits(['refresh-data']);
 
     const refreshData=()=>{
         emit('refresh-data');
     }
 
+   
     
 </script>
 
