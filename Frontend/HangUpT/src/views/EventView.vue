@@ -1,8 +1,5 @@
 <template>
     <div class="container">
-        <!-- 배너 -->
-        <!-- <div class="banner_container">
-        </div> -->
         <!-- 내용 -->
         <div class="content_container">
             <!-- 필터 목록 -->
@@ -137,16 +134,13 @@
 <style lang="scss" scoped>
 
 .container {
-    // background-color: yellow;
+    margin: 0 auto;
     height: 100vh;
-    padding: 0 30px;
+    padding: 0 1px;
 }
 
-.banner_container {
-    height: 170px;
-    background-color: pink;
-}
 .content_container {
+    // background-color: bisque;
     display: flex;
 
 }

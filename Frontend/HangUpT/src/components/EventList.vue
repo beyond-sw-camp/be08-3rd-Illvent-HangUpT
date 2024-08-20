@@ -5,20 +5,12 @@
             <div class="event_count">
               <span>{{ props.events.length }}</span>   개의 행사가 검색되었습니다.
             </div>
-
-            <div class="filter">
-                <div>추천순</div>
-                <div>새 행사순</div>
-                <div>모집 마감일순</div>
-            </div>
         </div>
 
         <div class="content">
             <EventCard :events="events" @refresh-data="refreshData"/>
             
         </div>
-
-
     </div>
 
 </template>
@@ -41,6 +33,8 @@ import EventCard from './EventCard.vue';
     .title {
         display: flex;
         justify-content: space-between;
+        height: 50px;
+        // background-color: aqua;
     }
 
     .event_count{
@@ -49,13 +43,7 @@ import EventCard from './EventCard.vue';
             color:purple;
         }
     }
-    .filter {
-        display: flex;
-        div {
-            margin-left: 6px;
-            color:gray;
-        }
-    }
+  
 
    
 </style>
