@@ -133,7 +133,7 @@ export default {
     margin-bottom: 20px;
     padding: 10px;
     width: 100%;
-    height: 300px;
+    height: auto;
     cursor: pointer;
     display: inline-block;
     overflow: hidden; /* 이미지를 확대할 때 컨테이너를 벗어나지 않도록 함 */
@@ -161,9 +161,9 @@ export default {
 }
 
 .etc_container {
-    height: 30%;
     display: flex;
     justify-content: space-between;
+    height: auto;
 }
 
 .title {

@@ -1,38 +1,45 @@
 <template>
-    <button class="like-button"
-        @click="toggle">
-        {{ userLiked.value ? '좋아요 ♡' : '좋아요 누르기 ♡' }}
-    </button>
     <div class="event-details-container">
         <header class="event-header">
-            <p>{{id}}</p>
-            <p>{{event.id}}</p>
         </header>
-        <section class="sidebar">
-            <!-- <p>{{event.title }}</p> -->
+        <!-- <section class="sidebar">
+            <p>{{event.title }}</p>
             <p>경기/인천/서울</p>
-            <h3>Busan NE(O)RDINARY DemoDay : FLASH</h3>
+            <h3>{{ event.title }}</h3>
             <img src="../assets/list/1.jpg"><br>
             <div>
-            <button class="register-button">신청하기</button>
+                <button class="register-button">신청하기</button>
+                <button class="like-button"
+                    @click="toggle">
+                    {{ userLiked.value ? '좋아요 ♡' : '좋아요 누르기 ♡' }}
+                </button>
             </div>
-        </section>
+        </section> -->
         <section class="event-content">
-            <!-- <img :src="getImageUrl(event.bannerImage)" class="event-banner" alt="Event Banner"/> -->
-            <img src="https://eventusstorage.blob.core.windows.net/evs/Image/sparklabs-demoday12/88048/ProjectInfo/Cover/29a292e4e86e44cebe25ad72929b975e.jpg" 
-            clss="event-banner" alt="Event Banner">
+            <img :src="event.imageUrl" class="event-banner" alt="Event Banner">
+            <div class="event-description">
+                <h4>{{ `"${event.description}"` }}</h4>
+            </div>
+            <div class="event-title">
+                <h1>{{ event.title }}</h1>
+            </div>
             <div class="event-info">
+                <div class="etc">
+                    <div class="view_count">조회 {{ event.views }}</div>
+                    <div class="view_likes">관심 {{ event.likes }}</div>
+                </div>
                 <div class="event-details">
                     <h2>행사 정보</h2>
                     <ul>
-                        <li><strong>일시</strong> {{ event.date }} </li>
-                        <li><strong>비용</strong> {{ event.price }}</li>
+                        <li><strong>일시</strong> {{ event.eventDate }} </li>
+                        <li><strong>비용</strong> {{ event.price == 0 ? '무료' : `${event.price}원` }}</li>
                         <li><strong>장소</strong> {{ event.location }}</li>
                         <li><strong>주소</strong> {{ event.address }} </li>
                         <!-- <li><strong>Organizer</strong> {{ event.organizer }}</li>
                             <li><strong>Speakers</strong> {{ event.speakers }}</li> -->
                     </ul>
                 </div>
+
                 <!-- <div v-for="(des, i) in event.description" :key="i">
                     <p class="event-description" >{{ des }}</p>
                 </div> -->
@@ -104,13 +111,13 @@ export default {
 <style>
 .event-details-container {
     float: left;
-    width: 80%;
+    width: 100%;
     margin-top: 100px;
     padding: 20px;
     align-items: left;
     /* padding-right: 400px; */
-    padding-left: 15%;
-    height: 2000px;
+    padding-left: 10%;
+    height: auto;
 }
 
 .event-header {
@@ -120,7 +127,7 @@ export default {
 
 .event-title {
     font-size: 2rem;
-    margin: 0;
+    margin-top: 20px;
 }
 
 .event-meta {
@@ -135,14 +142,13 @@ export default {
 .event-content {
     display: flex;
     flex-direction: column;
-    align-items: left;
-    padding-right: 30px;
+    height: auto;   
+    width: 80%;
 }
 
 .event-banner {
     width: 100%;
     height: auto;
-    max-height: 400px;
     object-fit: cover;
     margin-bottom: 20px;
 }
@@ -150,14 +156,25 @@ export default {
 .event-info {
     /* max-width: 800px; */
     text-align: center;
-    padding-top: 200px;
+    padding-top: 20px;
 }
 
 .event-description {
-    font-size: 1.2rem;
-    margin-bottom: 20px;
-    padding-top: 30px;
-    text-align: left;
+    color: rgb(93, 15, 165);
+    background-color: #E6E6FA; /* 연보라색 배경색 */
+    padding: 20px; /* 내용 주변의 여백을 좀 더 여유 있게 */
+    border-radius: 15px; /* 모서리 둥글게 */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* 약간의 그림자 추가 */
+    margin: 5px 0; /* 상하 여백 추가 */
+    display: flex; /* Flexbox 사용 */
+    justify-content: center; /* 가로 방향 중앙 정렬 */
+    align-items: center; /* 세로 방향 중앙 정렬 */
+    text-align: center; /* 텍스트 가운데 정렬 */
+    height: 50px; /* 필요한 높이 조정, 또는 사용자의 필요에 따라 조정 */
+    h4{
+        font-size: 20px;
+        margin-top: 5px;
+    };
 }
 
 .event-details {
@@ -214,11 +231,12 @@ export default {
 .sidebar {
     position: sticky;
     top: 100px;
-    width: 400px; 
+    width: 30%; 
     background-color: white;
     padding: 20px;
     box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.3);
     float: right;
+    margin-left: 100px;
 }
 .sidebar h {
     font-size: 25px;
@@ -227,6 +245,15 @@ export default {
 .sidebar p {
     font-size: 13px;
     color: gray;
+}
+
+.etc {
+    display: flex;
+    justify-content: space-around;
+    padding-bottom: 50px;
+}
+.view_likes {
+    color: blueviolet;
 }
 
 </style>
