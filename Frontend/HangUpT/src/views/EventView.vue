@@ -51,7 +51,7 @@
             </div>
             <!-- 이벤트 목록 -->
             <div class="event_container">
-                <EventList :events="events"/>
+                <EventList :events="events" @refresh-data="refreshData"/>
 
              
             </div> 
@@ -128,6 +128,9 @@
         }catch(error){
             console.log('API 요청 실패 : ',error);
         }
+    }
+    const refreshData = ()=>{
+        getEventsAPI();
     }
 </script>
 

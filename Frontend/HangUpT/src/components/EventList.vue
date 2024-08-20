@@ -14,7 +14,7 @@
         </div>
 
         <div class="content">
-            <EventCard :events="events"/>
+            <EventCard :events="events" @refresh-data="refreshData"/>
             
         </div>
 
@@ -27,7 +27,13 @@
 import { ref } from 'vue';
 import EventCard from './EventCard.vue';
     const props = defineProps(['events']);
-    const numberOfEvents = ref(212);
+
+    const emit = defineEmits(['refresh-data']);
+
+    const refreshData=()=>{
+        emit('refresh-data');
+    }
+
     
 </script>
 
@@ -51,7 +57,5 @@ import EventCard from './EventCard.vue';
         }
     }
 
-    .content {
-        // background-color: yellow;
-    }
+   
 </style>

@@ -6,7 +6,7 @@
                
                 <img :src="event.imgUrl" :alt="event.title">  
                 <!-- <img :src="scrapImgUrl" class="scrap-button" @click="onScrap"></img> -->
-                <img :src="event.wish? checkImg:unCheckImg" class="scrap-button" @click="onScrap"></img>
+                <img :src="event.wish? checkImg:unCheckImg" class="scrap-button" @click="onScrap(event.id)"></img>
               
 
             
@@ -32,12 +32,14 @@
     import { computed, onMounted, ref } from 'vue';
     import scrapUnCheck from '../assets/images/scrap_uncheck.png';
     import scrapCheck from '../assets/images/scrap_check.png';
+    import axios from 'axios';
 
     const scrapImgUrl = ref(scrapUnCheck);
     const unCheckImg = ref(scrapUnCheck);
     const checkImg = ref(scrapCheck);
 
     const props = defineProps(['events']);
+    const emit = defineEmits(['refresh-data']);
 
     // const events = ref(props.events);
 
@@ -46,10 +48,48 @@
     //     events.value = props.events;
     // });
 
-    const onScrap =()=>{
+
+    const onScrap =(eventNo)=>{
      //   scrapImgUrl.value = scrapCheck;
      // 로그인 여부 먼저 확인 
      // todo 스크랩 api 호출
+     console.log('onScrap 클릭');
+     const isLoggedIn = localStorage.getItem("isLoggedIn");
+    
+     
+     if(isLoggedIn=="false"){
+        alert("로그인후 이용해주세요");
+        return;
+     }
+     // todo : 관심행사 등록 api 호출
+     // api 재실행 
+     const userInfo = localStorage.getItem("userInfo");
+     const memberNo = JSON.parse(userInfo)['no'];
+
+     console.log(`memberNo : ${memberNo}`);
+     console.log(`eventNo : ${eventNo}`);
+
+     scrapApi(memberNo,eventNo);
+
+    }
+
+    const scrapApi = async(memberNo,eventNo)=>{
+        try{
+                await axios.post('http://localhost:8080/v1/api/wish/register',{
+                 memberNo,
+                 eventNo
+            }).then((res)=>{
+                if(res.status==201){
+                    alert("관심행사로 등록되었습니다.");
+                    emit('refresh-data');
+                }else if(res.status==400){
+                    alert("관심행사 등록에 실패했습니다.");
+                }
+            })
+
+        }catch(err){
+            console.log(err);
+        }
 
     }
     
