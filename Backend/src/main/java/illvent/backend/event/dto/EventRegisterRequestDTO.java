@@ -23,7 +23,6 @@ public class EventRegisterRequestDTO {
     @NotNull
     private String address;
 
-    @NotNull
     private LocalDate eventDate;
 
     @NotNull
@@ -32,15 +31,23 @@ public class EventRegisterRequestDTO {
     @NotNull
     private String description;
 
-    @NotNull
     private String region;
 
-    @NotNull
     private int price;
 
     @NotNull
-    private boolean online;
+    private int views;
 
     @NotNull
+    private int likes;
+
+    private boolean online;
+
     private boolean offline;
+
+    @NotNull
+    private Double x;
+
+    @NotNull
+    private Double y;
 }

@@ -1,13 +1,12 @@
 <template>
-    <h1>
-        Main Page (example)
-    </h1>
+    <MainBanner/>
+    <Events/>
 </template>
 
-<script>
-    export default {
-        
-    }
+<script setup>
+    import MainBanner from './MainBanner.vue';
+    import Events from './Events.vue'
+    if(localStorage.getItem("isLoggedIn") == null) localStorage.setItem("isLoggedIn", false);   
 </script>
 
 <style lang="scss" scoped>

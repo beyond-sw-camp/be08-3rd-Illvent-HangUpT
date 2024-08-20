@@ -1,10 +1,12 @@
 package illvent.backend.event.dto;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 
 import java.time.LocalDate;
 
+@Builder
 @AllArgsConstructor
 @Getter
 public class EventInfoResponseDTO {
@@ -17,5 +19,6 @@ public class EventInfoResponseDTO {
     private boolean online;
     private boolean offline;
     private int views;
+    private boolean isWish;
 
 }

@@ -1,5 +1,5 @@
 <template>
-    <Carousel :autoplay="3000" :wrap-around="true" transition="1000" pauseAutoplayOnHover="true"
+    <Carousel :autoplay="3000" :wrap-around="true" :transition="1000" :pauseAutoplayOnHover="true"
             @mouseover="isHovered = true" @mouseout="isHovered = false">
         <Slide v-for="(image, i) in images" :key="i">
             <div class="carousel__item" >
@@ -25,7 +25,7 @@
     import data from '../assets/image.js'
 
 export default defineComponent({
-    name: 'Autoplay',
+    name: 'MainBanner',
         components: {
             Carousel,
             Slide,
@@ -58,10 +58,6 @@ export default defineComponent({
     display: flex;
     justify-content: center;
     align-items: center;
-}
-
-.carousel__slide {
-    /* padding: 10px; */
 }
 
 .carousel__prev,

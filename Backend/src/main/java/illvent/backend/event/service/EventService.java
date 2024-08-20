@@ -1,10 +1,7 @@
 package illvent.backend.event.service;
 
 import illvent.backend.event.domain.*;
-import illvent.backend.event.dto.EventInfoResponseDTO;
-import illvent.backend.event.dto.EventRegisterRequestDTO;
-import illvent.backend.event.dto.EventResponseDTO;
-import illvent.backend.event.dto.EventUpdateRequestDTO;
+import illvent.backend.event.dto.*;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -13,7 +10,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -38,6 +34,8 @@ public class EventService {
                 .views(0)
                 .online(eventRegisterRequestDTO.isOnline())
                 .offline(eventRegisterRequestDTO.isOffline())
+                .x(eventRegisterRequestDTO.getX())
+                .y(eventRegisterRequestDTO.getY())
                 .build();
 
         return Optional.of(eventRepository.save(event));
@@ -58,8 +56,11 @@ public class EventService {
                 .region(eventUpdateRequestDTO.getRegion())
                 .price(eventUpdateRequestDTO.getPrice())
                 .views(eventUpdateRequestDTO.getViews())
+                .likes(eventUpdateRequestDTO.getLikes())
                 .online(eventUpdateRequestDTO.isOnline())
                 .offline(eventUpdateRequestDTO.isOffline())
+                .x(eventUpdateRequestDTO.getX())
+                .y(eventUpdateRequestDTO.getY())
                 .build();
 
         eventRepository.save(event);
@@ -95,9 +96,15 @@ public class EventService {
                 .collect(Collectors.toList());
     }
 
-    public List<EventInfoResponseDTO> getEventsByFilter(DateFilter date, String region, String join, String price,int page, int size) {
-        Pageable pageable = PageRequest.of(page,size);
-        Page<Event> events = null;
+    public List<EventResponseDTO> getEventsOrderByLikes(){
+        return eventRepository.findTop10ByOrderByLikesDesc().stream()
+                .map(EventResponseDTO::new)
+                .collect(Collectors.toList());
+    }
+
+    public EventFilterPagingResponseDTO getEventsByFilter(Long loginUserId,DateFilter date, String region, String join, String price,int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        Page<Object[]> events = null;
 
         Boolean online = null;
         Boolean offline = null;
@@ -124,15 +131,42 @@ public class EventService {
 
         if (price != null) {
             if (price.equals("free")) {
-                events = eventRepository.findEventInfoByConditionAndFree(pageable,startDate, endDate, online, offline, 0,region);
+                events = eventRepository.findEventInfoByConditionAndFree(loginUserId, pageable, startDate, endDate, online, offline, 0, region);
             } else if (price.equals("paid")) {
-                events = eventRepository.findEventInfoByConditionAndPaid(pageable,startDate, endDate, online, offline, 0,region);
+                events = eventRepository.findEventInfoByConditionAndPaid(loginUserId, pageable, startDate, endDate, online, offline, 0, region);
             }
-        }else { // 전체 가격
-            events = eventRepository.findEventInfoByConditionAndFree(pageable,startDate, endDate, online, offline, null,region);
+        } else { // 전체 가격
+            events = eventRepository.findEventInfoByConditionAndFree(loginUserId, pageable, startDate, endDate, online, offline, null, region);
         }
-        return events.stream().map(e -> new EventInfoResponseDTO(e.getNo(), e.getTitle(), e.getImageUrl(), e.getPrice(), e.getRegion(),
-                e.getEventDate(), e.isOnline(), e.isOffline(), e.getViews())).toList();
 
+
+//        return events.stream().map(e -> new EventInfoResponseDTO(e.getNo(), e.getTitle(), e.getImageUrl(), e.getPrice(), e.getRegion(),
+//                e.getEventDate(), e.isOnline(), e.isOffline(), e.getViews())).toList();
+
+
+        List<EventInfoResponseDTO> data = events.stream().map(item -> {
+            Event event = (Event) item[0];
+            Boolean isWish = (Boolean) item[1];
+            return EventInfoResponseDTO.builder()
+                    .id(event.getNo())
+                    .title(event.getTitle())
+                    .imgUrl(event.getImageUrl())
+                    .price(event.getPrice())
+                    .region(event.getRegion())
+                    .eventDate(event.getEventDate())
+                    .online(event.isOnline())
+                    .offline(event.isOffline())
+                    .views(event.getViews())
+                    .isWish(isWish)
+                    .build();
+        }).toList();
+
+        return EventFilterPagingResponseDTO.builder()
+                .totalPages(events.getTotalPages())
+                .totalElements(events.getTotalElements())
+                .pageNumber(events.getNumber())
+                .pageSize(events.getSize())
+                .contents(data)
+                .build();
     }
 }

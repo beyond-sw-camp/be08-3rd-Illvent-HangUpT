@@ -1,6 +1,5 @@
 package illvent.backend.member.dto;
 
-import illvent.backend.member.domain.MemberStatus;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -22,13 +21,13 @@ public class MemberRegisterRequestDTO {
     @NotNull
     private String name;
 
-    @NotNull
-    private String nickname;
+//    @NotNull
+//    private String nickname;
 
     @NotNull
     private String location;
 
-    @NotNull
-    private MemberStatus status;
+//    @NotNull
+//    private MemberStatus status;
 
 }

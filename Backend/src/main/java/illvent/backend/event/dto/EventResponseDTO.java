@@ -44,10 +44,19 @@ public class EventResponseDTO {
     private int views;
 
     @JsonProperty
+    private int likes;
+
+    @JsonProperty
     private boolean online;
 
     @JsonProperty
     private boolean offline;
+
+    @JsonProperty
+    private Double x;
+
+    @JsonProperty
+    private Double y;
 
     public EventResponseDTO(Event event){
         this.no = event.getNo();
@@ -60,7 +69,10 @@ public class EventResponseDTO {
         this.region = event.getRegion();
         this.price = event.getPrice();
         this.views = event.getViews();
+        this.likes = event.getLikes();
         this.online = event.isOnline();
         this.offline = event.isOffline();
+        this.x = event.getX();
+        this.y = event.getY();
     }
 }

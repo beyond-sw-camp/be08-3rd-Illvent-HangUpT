@@ -34,6 +34,9 @@ public class Post{
     @Column(nullable = false, length = 1023)
     private String content;
 
+    @Column(nullable = false)
+    private String region;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_no", nullable = false)
     private Member member;
@@ -49,16 +52,22 @@ public class Post{
     @Column(nullable = false)
     private int views;
 
+    @Column(nullable = false)
+    private int likes;
+
     @OneToMany(mappedBy = "post")
     private List<Comment> comments = new ArrayList<>();
 
     public void update(PostUpdateRequestDTO postUpdateRequestDTO) {
         Optional.ofNullable(postUpdateRequestDTO.getTitle()).ifPresent(title -> this.title = title);
         Optional.ofNullable(postUpdateRequestDTO.getContent()).ifPresent(content -> this.content = content);
+        Optional.ofNullable(postUpdateRequestDTO.getRegion()).ifPresent(region -> this.region = region);
+        this.likes = postUpdateRequestDTO.getLikes();
         this.updateDate = LocalDateTime.now();
     }
 
     public void updateViews(){
         this.views++;
     }
+
 }

@@ -1,4 +1,8 @@
 <template>
+    <button class="like-button"
+        @click="toggle">
+        {{ userLiked.value ? '좋아요 ♡' : '좋아요 누르기 ♡' }}
+    </button>
     <div class="event-details-container">
         <header class="event-header">
             <p>{{id}}</p>
@@ -9,8 +13,9 @@
             <p>경기/인천/서울</p>
             <h3>Busan NE(O)RDINARY DemoDay : FLASH</h3>
             <img src="../assets/list/1.jpg"><br>
-            <a align="center" class="register-button">신청하기</a>
-            <a align="center" class="inquiry-button">관심 행사 ♡</a>
+            <div>
+            <button class="register-button">신청하기</button>
+            </div>
         </section>
         <section class="event-content">
             <!-- <img :src="getImageUrl(event.bannerImage)" class="event-banner" alt="Event Banner"/> -->
@@ -56,25 +61,31 @@ export default {
 
         const route = useRoute();
         const id = route.query.id;
+
+        const userLiked = ref(true);
+        const toggle = () => {
+            if(userLiked.value){
+                userLiked.value = false;
+                // post api call
+            }else{
+                userLiked.value = true;
+                // delete api call
+            }
+            console.log('Toggled, userLiked:', userLiked.value);
+        }
     
         const getImageUrl = (url) => {
             return new URL(`${url}`, import.meta.url).href;
         };
         
-        const fetchData = async() => {
-            try {
-                const result = await axios.get(`${baseUrl}/${id}`);
-                console.log(result.data);
-                event.value = result.data;
-            } catch (error) {
-                console.error('Error fetching data:', error);
-            } finally {
-                message.value = "Data loaded";
-            }
+        const getEventAPI = async() => {
+            const result = await axios.get(`${baseUrl}/${id}`);
+            console.log(result.data);
+            event.value = result.data;
         };
 
         onMounted(() => {
-            fetchData();
+            getEventAPI();
         });
     
         return {
@@ -83,7 +94,8 @@ export default {
             id,
             event,
             route,
-            message
+            userLiked,
+            toggle,
         };
     }
 };
@@ -176,7 +188,7 @@ export default {
 }
 
 .register-button,
-.inquiry-button {
+.like-button {
     display: inline-block;
     padding: 10px 20px;
     margin: 10px;
@@ -191,11 +203,14 @@ export default {
     background-color: rebeccapurple;
 }
 
-.inquiry-button {
+.like-button {
     background-color: rgb(138, 236, 239);
     color: rgb(55, 118, 218);
 }
 
+.liked {
+    background-color: crimson;
+}
 .sidebar {
     position: sticky;
     top: 100px;
@@ -213,4 +228,5 @@ export default {
     font-size: 13px;
     color: gray;
 }
+
 </style>
