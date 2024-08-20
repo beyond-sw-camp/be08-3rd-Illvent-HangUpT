@@ -7,6 +7,8 @@ import illvent.backend.member.dto.MemberLoginRequestDTO;
 import illvent.backend.member.dto.MemberRegisterRequestDTO;
 import illvent.backend.member.dto.MemberUpdateRequestDTO;
 import illvent.backend.member.util.JwtTokenProvider;
+import illvent.backend.post.domain.Post;
+import illvent.backend.post.dto.PostResponseDTO;
 import illvent.backend.wish.domain.Wish;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -141,10 +143,19 @@ public class MemberService {
         List<Wish> wishes = member.getWishes();
         List<Event> events = new ArrayList<>();
         for(Wish wish : wishes) events.add(wish.getEvent());
-        for(Event event : events) System.out.println(event.getNo());
 
         return events.stream()
                 .map(EventResponseDTO::new)
+                .collect(Collectors.toList());
+    }
+
+    public List<PostResponseDTO> getAllPosts(Long memberNo){
+        Member member = memberRepository.findById(memberNo).orElseThrow(() ->
+                new IllegalArgumentException("Member not found"));
+        List<Post> posts = member.getPosts();
+
+        return posts.stream()
+                .map(PostResponseDTO::new)
                 .collect(Collectors.toList());
     }
 }

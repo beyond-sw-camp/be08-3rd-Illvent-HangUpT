@@ -7,6 +7,7 @@ import illvent.backend.member.dto.MemberLoginRequestDTO;
 import illvent.backend.member.dto.MemberResponseDTO;
 import illvent.backend.member.dto.MemberUpdateRequestDTO;
 import illvent.backend.member.service.MemberService;
+import illvent.backend.post.dto.PostResponseDTO;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
@@ -61,10 +62,18 @@ public class MemberController {
     }
 
     @Operation(summary = "회원의 모든 관심 행사를 반환하는 API")
-    @GetMapping("/list/{memberNo}")
+    @GetMapping("/list/wish/{memberNo}")
     public ResponseEntity<List<EventResponseDTO>> getAllWishEvents(@PathVariable Long memberNo){
         List<EventResponseDTO> events = memberService.getAllWishEvents(memberNo);
 
         return ResponseEntity.ok(events);
+    }
+
+    @Operation(summary = "회원이 작성한 글을 반환하는 API")
+    @GetMapping("/list/post/{memberNo}")
+    public ResponseEntity<List<PostResponseDTO>> getAllPosts(@PathVariable Long memberNo){
+        List<PostResponseDTO> posts = memberService.getAllPosts(memberNo);
+
+        return ResponseEntity.ok(posts);
     }
 }
