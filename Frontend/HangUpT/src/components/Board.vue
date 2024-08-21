@@ -69,10 +69,7 @@
         </table>
 
         <!-- 페이지네이션 -->
-        <PageNation
-          :currentPage="currentPage"
-          :startPage="startPage"
-          :endPage="endPage"
+        <PageNation :currentPage="currentPage" :startPage="startPage" :endPage="endPage"
           @change-page="handlePageChange"
         />
       </div>
@@ -93,13 +90,15 @@ const cities = ["경기도", "강원도", "충청북도", "충청남도", "전�
           "대전광역시", "울산광역시", "세종특별자치시", "제주특별자치도"];
 
 const posts = ref([]);
-const currentPage = ref(1);
-const postsPerPage = ref(10);
+const currentPage = ref(1); // 기본값 1로 지정
+const postsPerPage = ref(10); // 한 페이지에 보여줄 데이터 개수
 const sortKey = ref('id');
 const selectedCities = ref([]);
-const totalPages = ref(1);
-const startPage = ref(1);
-const endPage = ref(5); // 페이지 버튼을 5개씩 보여줌
+const maxPage = ref(0);
+const startPage = ref(0);  // 페이징된 페이지 중에 시작 페이지
+const endPage = ref(0); // 페이징된 페이지 중 마지막 페이지
+const pageLimit = 5;
+
 
 const router = useRouter();
 
@@ -112,7 +111,18 @@ const loadPosts = async () => {
         size: postsPerPage.value,
       },
     });
-    posts.value = response.data.map(post => ({
+ //  console.log(response.data);
+    const result = response.data;
+    
+
+    currentPage.value = result.currentPageNumber + 1; // 현재 페이지 번호
+    maxPage.value = parseInt(Math.ceil(result.totalDataCount/postsPerPage.value)); 
+    startPage.value = (pageLimit * parseInt((currentPage.value - 1)/pageLimit)) + 1;
+    endPage.value = startPage.value + pageLimit - 1;
+    endPage.value = endPage.value > maxPage.value ? maxPage.value : endPage.value;
+
+
+    posts.value = result.posts.map(post => ({
       id: post.no,
       area: post.region,
       title: post.title,
@@ -121,14 +131,6 @@ const loadPosts = async () => {
       date: post.createDate.split('T')[0], 
     }));
 
-    // 총 페이지 수 계산
-    const totalItems = parseInt(response.headers['x-total-count'], 10);
-    totalPages.value = Math.ceil(totalItems / postsPerPage.value);
-
-    // 현재 페이지 범위 설정 (5개씩 페이지 버튼을 보여줌)
-    const currentRange = Math.floor((currentPage.value - 1) / 5);
-    startPage.value = currentRange * 5 + 1;
-    endPage.value = Math.min(startPage.value + 4, totalPages.value);
 
   } catch (error) {
     console.error("게시물 로딩 중 오류 발생:", error);
@@ -146,8 +148,11 @@ watch([postsPerPage, sortKey, selectedCities], () => {
 });
 
 const handlePageChange = (page) => {
-  currentPage.value = page;
-  loadPosts();
+  if(page>=1 && page<=maxPage.value){
+    currentPage.value = page;
+    loadPosts();
+  }
+
 };
 
 // 조회수 증가
