@@ -30,7 +30,7 @@ import { useRoute, useRouter } from 'vue-router';
     const emit = defineEmits(['refresh-data']);
 
     const refreshData=()=>{
-        emit('refresh-data');
+        emit('refresh-data',props.currentPage);
     }
 
     const changePage=(page)=>{

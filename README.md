@@ -25,40 +25,58 @@
 <br>
 <br>
 
-## :four_leaf_clover: 프로젝트 소개
+<div align=center>
 
-<br>
-
-## :high_brightness: 프로젝트 목적 및 기대효과
-
-<br>
-
-## :wrench: 기술 스택
-<div align=left>
+## 🛠️ Tech Stack 🛠️
   <img src="https://img.shields.io/badge/html5-E34F26?style=for-the-badge&logo=html&logoColor=white"> 
   <img src="https://img.shields.io/badge/css-1572B6?style=for-the-badge&logo=css3&logoColor=white">
   <img src="https://img.shields.io/badge/javascript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black">
-  <img src="https://img.shields.io/badge/vue.js-4FC08D?style=for-the-badge&logo=vue.js&logoColor=white">
   <br>
+  <img src="https://img.shields.io/badge/vue.js-4FC08D?style=for-the-badge&logo=vue.js&logoColor=white">
   <img src="https://img.shields.io/badge/springboot-6DB33F?style=for-the-badge&logo=springboot&logoColor=white"/>
   <img src="https://img.shields.io/badge/mysql-4479A1?style=for-the-badge&logo=mysql&logoColor=white">
   <br>
+  <img src="https://img.shields.io/badge/docker-2496ED?style=for-the-badge&logo=docker&logoColor=white">
+  <img src="https://img.shields.io/badge/bootstrap-7952B3?style=for-the-badge&logo=bootstrap&logoColor=white">
+
+
+<br>
+<br>
+
+ 
+ ## ⚙️ Tool ⚙️
   <img src="https://img.shields.io/badge/github-181717?style=for-the-badge&logo=github&logoColor=white">
   <img src="https://img.shields.io/badge/Notion-000000?style=for-the-badge&logo=Notion&logoColor=white">
-  <img src="https://img.shields.io/badge/docker-2496ED?style=for-the-badge&logo=docker&logoColor=white">
+  <img src= "https://img.shields.io/badge/Visual%20Studio%20Code-0078d7.svg?style=for-the-badge&logo=visual-studio-code&logoColor=white">
 
 </div>
- 
+<br>
+<br>
+<br>
+
+## 🍀 프로젝트 소개
+
+행업튀는 "행사 업고 튀어!"라는 이름처럼, 사용자에게 주변과 타 지역의 행사 정보를 쉽고 빠르게 제공하는 서비스입니다. 
+<br><br> 이 프로젝트는 복잡한 정보 속에서 필요한 행사만을 쏙쏙 골라낼 수 있도록 돕기 위해 개발되었습니다. 
+<br> 지도 기반 인터페이스를 통해 행사 위치와 사용자의 위치 간 거리를 직관적으로 확인할 수 있으며, 지역별 행사 수를 쉽게 파악할 수 있습니다. 
+<br> 또한, 다양한 필터 기능을 통해 관심 있는 행사만을 빠르게 찾아볼 수 있습니다. 
+<br><br> 간편하고 재미있는 행사 탐색, 이제 행업튀와 함께하세요!
+
+<br>
+
+## 🔆 프로젝트 목적 및 기대효과
+
+<br>
 
 
 <br>
 
-## :bookmark_tabs: 요구사항 명세서
+## 📑 요구사항 명세서
 [요구사항 명세서](https://docs.google.com/spreadsheets/d/13E_mtIu6xKc1JoF_HQh8CLfdxFWL-oyIPik1oPiHtm0/edit?gid=292227401#gid=292227401)
 
 <br>
 
-## :page_with_curl: 테이블 명세서
+## 📃 테이블 명세서
 [테이블 명세서](https://docs.google.com/spreadsheets/d/13E_mtIu6xKc1JoF_HQh8CLfdxFWL-oyIPik1oPiHtm0/edit?gid=1722768850#gid=1722768850)
 <br>
 
@@ -67,17 +85,30 @@
 
 <br>
 
-## :clipboard: ERD
+## 📋 ERD
 ![HangUpT (1)](https://github.com/user-attachments/assets/e24c2583-1812-41cd-836b-1884babe1635)
 
 <br>
 
-## :page_facing_up: API 명세서
+## 📄 API 명세서
 [API 명세서]()
 
 <br>
+<br>
 
-## :scroll: 테스트 케이스 정의서
+## 📐 화면 설계서
+[Figma 보러가기](https://www.figma.com/design/fairCGNOJ8JbOFODmVtExk/ILLVENT?node-id=0-1&t=7ETNDkGSz4G9M7R4-0)
+
+<br>
+<br>
+
+
+## 화면 정의서
+
+<br>
+<br>
+
+## 📜 테스트 케이스 정의서
 [테스트 케이스](https://docs.google.com/spreadsheets/d/13E_mtIu6xKc1JoF_HQh8CLfdxFWL-oyIPik1oPiHtm0/edit?gid=1237116601#gid=1237116601)
 <br>
 
@@ -85,18 +116,18 @@
 
 
 <br>
-
-## :triangular_ruler: 화면 설계서
-[화면 설계서]()
-
 <br>
 
-## :date: WBS
+## 📅 WBS
 [WBS](https://docs.google.com/spreadsheets/d/13E_mtIu6xKc1JoF_HQh8CLfdxFWL-oyIPik1oPiHtm0/edit?gid=1108790350#gid=1108790350)
 
 <br>
 
-## :bear: 회고
+## 시연
+[PDF]()
+
+
+## 🐻 회고
 |&nbsp;&nbsp;팀&nbsp;원&nbsp;&nbsp;&nbsp;|회고|
 |:---:|---|
 |👑김은경||
