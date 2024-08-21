@@ -3,10 +3,10 @@
         <img src="../assets/images/HUTLogo.png" @click="goMain">
         <div class="menu_container">
             <router-link to="/map" exact-active-class="active-link">지도</router-link>
-            <router-link :to="{name:'events',query:{selectPrice:'free'}}" exact-active-class="active-link">무료</router-link>
-            <router-link exact-active-class="active-link" :to="{name: 'events',query:{selectPrice:'paid'}}">유료</router-link>
-            <router-link exact-active-class="active-link" :to="{name:'events',query:{selectJoin:'online'}}">온라인</router-link>
-            <router-link exact-active-class="active-link" :to="{name:'events',query:{selectJoin:'offline'}}">오프라인</router-link>
+            <router-link :to="{name:'events',query:{selectPrice:'free'}}" :class="{active:isActive1}">무료</router-link>
+            <router-link  :class="{active:isActive2}" :to="{name: 'events',query:{selectPrice:'paid'}}">유료</router-link>
+            <router-link  :class="{active:isActive3}" :to="{name:'events',query:{selectJoin:'online'}}">온라인</router-link>
+            <router-link  :class="{active:isActive4}" :to="{name:'events',query:{selectJoin:'offline'}}">오프라인</router-link>
             <router-link to="/boards" exact-active-class="active-link">게시판</router-link>
         </div>
 
@@ -21,8 +21,8 @@
 </template>
 
 <script setup>
-    import { useRouter } from 'vue-router';
-    import { inject } from 'vue';
+    import { useRouter,useRoute } from 'vue-router';
+    import { inject,computed } from 'vue';
     import { store } from '../data/store';
 
    // const loginState = inject('loginState');
@@ -37,12 +37,30 @@
     
 
     const router =useRouter();
+    const route = useRoute();
 
     const goMain=()=>{
         router.replace('/');
 
-}
 
+    }
+    const isActive1 = computed(()=>{
+        return route.fullPath == "/events?selectPrice=free";
+    });
+
+    const isActive2 = computed(()=>{
+        return route.fullPath == "/events?selectPrice=paid";
+    });
+
+    const isActive3 = computed(()=>{
+        return route.fullPath == "/events?selectJoin=online";
+    });
+
+    const isActive4 = computed(()=>{
+        return route.fullPath === "/events?selectJoin=offline";
+    });
+
+    
 </script>
 
 <style lang="scss" scoped>
@@ -109,7 +127,12 @@
 
         .active-link {
         color: #7abdfc;
+
+       
     }
+     .active {
+            color: #7abdfc;
+        }
     }
 
     

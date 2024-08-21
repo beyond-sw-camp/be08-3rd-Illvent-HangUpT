@@ -87,6 +87,7 @@
 
 
     onMounted(()=>{
+        console.log(route.fullPath);
         fetchEventData();
     });
 
@@ -150,7 +151,7 @@
                 }
             });
             // console.log(response);
-             console.log(response.data);
+          //   console.log(response.data);
              const res = response.data;
              currentPage.value = res.pageNumber+1;
 
@@ -171,13 +172,13 @@
         getEventsAPI(currentPage.value-1);
     }
 
-    // const changePage=(page)=>{
+     const changePage=(page)=>{
     //     console.log('페이지 이동');
         if(page>=1 && page<=maxPage.value){
             getLoginUserId();
             getEventsAPI(page-1);
         }
-
+    }
 
 
 </script>
