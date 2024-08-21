@@ -87,25 +87,15 @@ public class EventController {
                                                                         @RequestParam(value = "join",required = false)String join,
                                                                         @RequestParam(value="price",required = false) String price,
                                                                         @RequestParam(value="page",defaultValue ="0") int page,
-                                                                        @RequestParam(value = "size",defaultValue = "9") int size) {
+                                                                        @RequestParam(value = "size",defaultValue = "9") int size,
+                                                                          @RequestParam(value="userId" ,required = false) Long userId) {
 
 //        System.out.println("region: " + region);
 //        System.out.println("join: " + join);
 //        System.out.println("price: " + price);
 //        System.out.println("page: " + page);
+//        System.out.println("userId: " + userId);
 
-        // todo : 로그인한 유저 정보 가져옴.
-//        // 테스트용 유저 생성
-//        Member member = Member.builder()
-//                .email("test@naver.com")
-//                .password("1234")
-//                .name("홍길동")
-//                .nickname("hong")
-//                .location("aa")
-//                .role(MemberRole.USER)
-//                .status(MemberStatus.Y).build();
-
-        Long loginUserId = 1L;
 
 
         if(date.equals(DateFilter.ALL)) {
@@ -122,7 +112,7 @@ public class EventController {
             price = null;
         }
 
-        EventFilterPagingResponseDTO result = eventService.getEventsByFilter(loginUserId,date,region,join,price,page,size);
+        EventFilterPagingResponseDTO result = eventService.getEventsByFilter(userId,date,region,join,price,page,size);
 
         return ResponseEntity.ok(result);
     }
