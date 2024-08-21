@@ -68,42 +68,40 @@
           </tbody>
         </table>
 
-        <nav class="mt-3">
-          <ul class="pagination justify-content-center">
-            <li class="page-item" :class="{ disabled: currentPage === 1 }">
-              <button class="page-link" @click="prevPage">이전</button>
-            </li>
-            <li v-for="page in totalPages" :key="page" class="page-item" :class="{ active: currentPage === page }">
-              <button class="page-link" @click="goToPage(page)">{{ page }}</button>
-            </li>
-            <li class="page-item" :class="{ disabled: currentPage === totalPages }">
-              <button class="page-link" @click="nextPage">다음</button>
-            </li>
-          </ul>
-        </nav>
+        <!-- 페이지네이션 -->
+        <PageNation
+          :currentPage="currentPage"
+          :startPage="startPage"
+          :endPage="endPage"
+          @change-page="handlePageChange"
+        />
       </div>
     </div>
   </div>
 </template>
 
 <script setup>
-import { ref, computed, watch, onMounted } from 'vue'
-import { useRouter } from 'vue-router'
-import axios from 'axios'
-import { store } from '../data/store' // store를 import
+import { ref, computed, watch, onMounted } from 'vue';
+import { useRouter } from 'vue-router';
+import axios from 'axios';
+import { store } from '../data/store'; // store를 import
+import PageNation from './PageNation.vue';
 
 const cities = ["경기도", "강원도", "충청북도", "충청남도", "전라북도", 
           "전라남도", "경상북도", "경상남도", "서울특별시", 
           "부산광역시", "대구광역시", "인천광역시", "광주광역시", 
-          "대전광역시", "울산광역시", "세종특별자치시", "제주특별자치도"]
+          "대전광역시", "울산광역시", "세종특별자치시", "제주특별자치도"];
 
-const posts = ref([])
-const currentPage = ref(1)
-const postsPerPage = ref(10)
-const sortKey = ref('id')
-const selectedCities = ref([])
+const posts = ref([]);
+const currentPage = ref(1);
+const postsPerPage = ref(10);
+const sortKey = ref('id');
+const selectedCities = ref([]);
+const totalPages = ref(1);
+const startPage = ref(1);
+const endPage = ref(5); // 페이지 버튼을 5개씩 보여줌
 
-const router = useRouter()
+const router = useRouter();
 
 // 서버에서 게시물 목록 로드
 const loadPosts = async () => {
@@ -113,7 +111,7 @@ const loadPosts = async () => {
         page: currentPage.value - 1, 
         size: postsPerPage.value,
       },
-    })
+    });
     posts.value = response.data.map(post => ({
       id: post.no,
       area: post.region,
@@ -121,29 +119,38 @@ const loadPosts = async () => {
       likes: post.likes || 0,
       views: post.views,
       date: post.createDate.split('T')[0], 
-    }))
+    }));
+
+    // 총 페이지 수 계산
+    const totalItems = parseInt(response.headers['x-total-count'], 10);
+    totalPages.value = Math.ceil(totalItems / postsPerPage.value);
+
+    // 현재 페이지 범위 설정 (5개씩 페이지 버튼을 보여줌)
+    const currentRange = Math.floor((currentPage.value - 1) / 5);
+    startPage.value = currentRange * 5 + 1;
+    endPage.value = Math.min(startPage.value + 4, totalPages.value);
+
   } catch (error) {
-    console.error("게시물 로딩 중 오류 발생:", error)
+    console.error("게시물 로딩 중 오류 발생:", error);
   }
-}
+};
 
 // 페이지 로드 시 게시물 목록 로드
 onMounted(() => {
-  loadPosts()
-})
+  loadPosts();
+});
 
-const sortedPosts = computed(() => {
-  return [...posts.value].sort((a, b) => {
-    if (sortKey.value === 'id') {
-      return b.id - a.id
-    } else if (sortKey.value === 'likes') {
-      return b.likes - a.likes
-    } else if (sortKey.value === 'views') {
-      return b.views - a.views
-    }
-  })
-})
+watch([postsPerPage, sortKey, selectedCities], () => {
+  currentPage.value = 1;
+  loadPosts();
+});
 
+const handlePageChange = (page) => {
+  currentPage.value = page;
+  loadPosts();
+};
+
+// 조회수 증가
 const incrementViews = async (postId) => {
   try {
     const post = posts.value.find(post => post.id === postId);
@@ -160,39 +167,24 @@ const incrementViews = async (postId) => {
 };
 
 const filteredPosts = computed(() => {
-  let filtered = sortedPosts.value
+  let filtered = sortedPosts.value;
   if (selectedCities.value.length > 0) {
-    filtered = filtered.filter(post => selectedCities.value.includes(post.area))
+    filtered = filtered.filter(post => selectedCities.value.includes(post.area));
   }
-  const start = (currentPage.value - 1) * postsPerPage.value
-  const end = start + postsPerPage.value
-  return filtered.slice(start, end)
-})
+  return filtered;
+});
 
-const totalPages = computed(() => {
-  const totalFilteredPosts = selectedCities.value.length > 0
-    ? sortedPosts.value.filter(post => selectedCities.value.includes(post.area)).length
-    : sortedPosts.value.length
-  return Math.ceil(totalFilteredPosts / postsPerPage.value)
-})
-
-watch([postsPerPage, sortKey, selectedCities], () => {
-  currentPage.value = 1
-  loadPosts()
-})
-
-const prevPage = () => {
-  if (currentPage.value > 1) currentPage.value--
-}
-
-const nextPage = () => {
-  if (currentPage.value < totalPages.value) currentPage.value++
-}
-
-const goToPage = (page) => {
-  currentPage.value = page
-  loadPosts()
-}
+const sortedPosts = computed(() => {
+  return [...posts.value].sort((a, b) => {
+    if (sortKey.value === 'id') {
+      return b.id - a.id;
+    } else if (sortKey.value === 'likes') {
+      return b.likes - a.likes;
+    } else if (sortKey.value === 'views') {
+      return b.views - a.views;
+    }
+  });
+});
 </script>
 
 <style scoped>
