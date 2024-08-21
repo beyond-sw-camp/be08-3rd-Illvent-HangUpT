@@ -96,7 +96,7 @@
 <br>
 <br>
 
-## 화면 설계서
+## 📐 화면 설계서
 [Figma 보러가기](https://www.figma.com/design/fairCGNOJ8JbOFODmVtExk/ILLVENT?node-id=0-1&t=7ETNDkGSz4G9M7R4-0)
 
 <br>
@@ -116,10 +116,6 @@
 
 
 <br>
-
-## 📐 화면 설계서
-[화면 설계서]()
-
 <br>
 
 ## 📅 WBS
