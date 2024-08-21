@@ -159,7 +159,106 @@
 <br>
 
 ## 시연
-[PDF]()
+<details>
+  <summary>회원</summary>
+  <br>
+  <details>
+    <summary>회원가입</summary>
+    <img src="https://github.com/user-attachments/assets/1a94525e-7a30-4e76-96fe-fb9f00184c50">
+  </details>
+  <details>
+    <summary>로그인</summary>
+    <img src="https://github.com/user-attachments/assets/406e12ae-a852-4449-ad2d-b81fa014952e">
+  </details>
+  <details>
+    <summary>로그아웃</summary>
+    <img src="https://github.com/user-attachments/assets/d3857d1f-32ae-4c4e-a2fd-ac44e2b07225">
+  </details>
+</details>
+
+<br>
+
+<details>
+  <summary>마이페이지</summary>
+  <br>
+  <details>
+    <summary>내 정보</summary>
+    <img src="">
+  </details>
+  <details>
+    <summary>내 게시물</summary>
+    <img src="">
+  </details>
+</details>
+  
+<br>
+
+<details>
+  <summary>메인</summary>
+  <br>
+  <details>
+    <summary>베너</summary>
+    <img src="https://github.com/user-attachments/assets/8fb23e06-0542-4b01-8018-985bfb537c89">
+  </details>
+  <details>
+    <summary>메인 -> 상세페이지 이동</summary>
+    <img src="https://github.com/user-attachments/assets/cdf0b0ad-c2b6-4df0-8a0b-366a3afeb74d">
+  </details>
+</details>
+
+<br>
+
+<details>
+  <summary>지도</summary>
+  <br>
+  <details>
+    <summary>클러스터링을 통한 확대 및 축소</summary>
+    <img src="https://github.com/user-attachments/assets/c889abbe-9490-4dca-a882-fdb37f464fff">
+  </details>
+  <details>
+    <summary>지도 마크 -> 상세페이지 이동</summary>
+    <img src="https://github.com/user-attachments/assets/fea2949e-3e0c-4853-b841-a156d7650a35">
+  </details>
+</details>
+
+<br>
+
+<details>
+  <summary>행사</summary>
+  <br>
+  <details>
+    <summary>조건 필터링</summary>
+    <img src="https://github.com/user-attachments/assets/363e09b7-54b5-4baf-99fe-09f95b3dc7cd">
+  </details>
+  <details>
+    <summary>행사 목록 -> 상세페이지 이동</summary>
+    <img src="https://github.com/user-attachments/assets/d5981ea8-ac1f-4b72-aaca-668f56bdc72b">
+  </details>
+  <details>
+    <summary>관심행사 지정 및 취소</summary>
+    <img src="https://github.com/user-attachments/assets/5b7e79a3-2363-4c39-87ca-7a7e7be50dbe">
+  </details>
+</details>
+
+<br>
+
+<details>
+  <summary>게시판</summary>
+  <br>
+  <details>
+    <summary></summary>
+    <img src="">
+  </details>
+  <details>
+    <summary></summary>
+    <img src="">
+  </details>
+</details>
+
+<br>
+
+
+
 
 
 ## 🐻 한줄 회고록
