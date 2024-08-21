@@ -48,15 +48,12 @@
             </div>
             <!-- 이벤트 목록 -->
             <div class="event_container">
-                <EventList :events="events" @refresh-data="refreshData"/>
+                <EventList :events="events" @refresh-data="refreshData" :startPage="startPage" :currentPage="currentPage" :endPage="endPage" @change-page="changePage"/>
                
-                 
+                <!-- <PageNation :startPage="startPage" :currentPage="currentPage" :end-page="endPage" @change-page="changePage"/> -->
             </div> 
 
-            <div>
-
-                <!-- <PageNation :startPage="startPage" :currentPage="currentPage" :end-page="endPage" @change-page="changePage"/> -->
-            </div>
+    
 
         </div>
     </div>
@@ -79,7 +76,9 @@
     const selectPrice = ref(route.query.selectPrice||'freeAndPaid'); // 가격 
 
      // 페이지네이션을 위한 데이터
-    const currentPage = ref(Number(route.query.page)||1); // 현재 페이지 번호
+   // const currentPage = ref(Number(route.query.page)||1); // 현재 페이지 번호
+    // const page = ref(0);
+    const currentPage = ref(1); // 현재 페이지 번호
     const startPage = ref(0);  // 페이징된 페이지 중에 시작 페이지
     const endPage = ref(0); // 페이징된 페이지 중 마지막 페이지
     const maxPage = ref(0); // 전체 페이지중 마지막 페이지
@@ -111,22 +110,24 @@
         selectRegion.value = '전체';
         selectJoin.value = 'onoff';
         selectPrice.value = 'freeAndPaid';
+        currentPage.value = 1;
+        
         fetchEventData();
     }
 
     const fetchEventData = ()=>{
         // todo : api 호출
         console.log('api 호출 !')
-        getEventsAPI(currentPage.value);
+        getEventsAPI(currentPage.value-1);
 
     }
 
     async function getEventsAPI(page){
-        // console.log(`getEventsAPI : ${page}`)
+        console.log(`getEventsAPI : ${page}`)
         try{
             const response = await axios.get(`http://localhost:8080/v1/api/event`,{
                 params:{
-                    page:0,
+                    page:page,
                     size: 9,
                     date: selectDate.value,
                     // date:"ALL",
@@ -136,16 +137,16 @@
                 }
             });
             // console.log(response);
-            // console.log(response.data);
+            console.log(response.data);
              const res = response.data;
-            //  currentPage.value = res.pageNumber;
+             currentPage.value = res.pageNumber+1;
 
-            //  maxPage.value = parseInt(Math.ceil(res.totalElements/listLimit));
+             maxPage.value = parseInt(Math.ceil(res.totalElements/listLimit));
 
-            // startPage.value = (pageLimit * parseInt((page-1)/pageLimit)) + 1;
+            startPage.value = (pageLimit * parseInt((page-1)/pageLimit)) + 1;
 
-            // endPage.value = startPage.value + pageLimit - 1;
-            // endPage.value = endPage.value > maxPage.value ? maxPage.value : endPage.value;
+            endPage.value = startPage.value + pageLimit - 1;
+            endPage.value = endPage.value > maxPage.value ? maxPage.value : endPage.value;
 
             events.value = res.contents;
 
@@ -155,6 +156,15 @@
     }
     const refreshData = ()=>{
         getEventsAPI(currentPage.value);
+    }
+
+    const changePage=(page)=>{
+        console.log('페이지 이동');
+        if(page>=1 && page<=maxPage.value){
+            getEventsAPI(page-1);
+        }
+
+
     }
 </script>
 
@@ -207,6 +217,8 @@
 .event_container {
     margin-top:20px;
     width:80%;
+    display: flex;
+    flex-direction: column;
 
 }
 
