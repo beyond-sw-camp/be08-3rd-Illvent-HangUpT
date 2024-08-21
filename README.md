@@ -34,10 +34,14 @@
   <br>
   <img src="https://img.shields.io/badge/vue.js-4FC08D?style=for-the-badge&logo=vue.js&logoColor=white">
   <img src="https://img.shields.io/badge/springboot-6DB33F?style=for-the-badge&logo=springboot&logoColor=white"/>
+  <img src="https://img.shields.io/badge/java-007396?style=for-the-badge&logo=java&logoColor=white"> 
+  <img src="https://img.shields.io/badge/-Swagger-%23Clojure?style=for-the-badge&logo=swagger&logoColor=white"/>
   <img src="https://img.shields.io/badge/mysql-4479A1?style=for-the-badge&logo=mysql&logoColor=white">
   <br>
   <img src="https://img.shields.io/badge/docker-2496ED?style=for-the-badge&logo=docker&logoColor=white">
+  <img src="https://img.shields.io/badge/Redis-%23D92B21.svg?style=for-the-badge&logo=redis&logoColor=white"/>
   <img src="https://img.shields.io/badge/bootstrap-7952B3?style=for-the-badge&logo=bootstrap&logoColor=white">
+  
 
 
 <br>
@@ -48,6 +52,7 @@
   <img src="https://img.shields.io/badge/github-181717?style=for-the-badge&logo=github&logoColor=white">
   <img src="https://img.shields.io/badge/Notion-000000?style=for-the-badge&logo=Notion&logoColor=white">
   <img src= "https://img.shields.io/badge/Visual%20Studio%20Code-0078d7.svg?style=for-the-badge&logo=visual-studio-code&logoColor=white">
+  <img src="https://img.shields.io/badge/IntelliJIDEA-000000.svg?style=for-the-badge&logo=intellij-idea&logoColor=white">
 
 </div>
 <br>
@@ -114,7 +119,9 @@
 <br>
 
 ## 📋 ERD
-![HangUpT (1)](https://github.com/user-attachments/assets/e24c2583-1812-41cd-836b-1884babe1635)
+[ERD](https://www.erdcloud.com/d/vrJuznrhmcSEgDax2)
+
+![HangUpT (3)](https://github.com/user-attachments/assets/34203277-f7c5-401f-b1f0-1c460d3bcbce)
 
 <br>
 
