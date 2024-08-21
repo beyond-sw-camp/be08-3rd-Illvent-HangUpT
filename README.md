@@ -109,6 +109,13 @@
 
 <br>
 
+## 📑 시스템 아키텍처
+[시스템 아키텍처]
+
+![HangUpT](https://github.com/user-attachments/assets/c3329d2d-3054-463c-ad95-92ffacb391a1)
+
+<br>
+
 ## 📃 테이블 명세서
 [테이블 명세서](https://docs.google.com/spreadsheets/d/13E_mtIu6xKc1JoF_HQh8CLfdxFWL-oyIPik1oPiHtm0/edit?gid=1722768850#gid=1722768850)
 <br>
