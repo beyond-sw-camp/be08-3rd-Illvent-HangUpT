@@ -92,6 +92,7 @@ public class EventController {
 //        System.out.println("region: " + region);
 //        System.out.println("join: " + join);
 //        System.out.println("price: " + price);
+//        System.out.println("page: " + page);
 
         // todo : 로그인한 유저 정보 가져옴.
 //        // 테스트용 유저 생성
