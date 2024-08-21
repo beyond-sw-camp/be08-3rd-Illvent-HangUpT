@@ -5,7 +5,7 @@
       <ul>
         <li :class="{ active: activeTab === '관심 행사' }" @click="setActiveTab('관심 행사')">관심 행사</li>
         <li :class="{ active: activeTab === '내 게시물' }" @click="setActiveTab('내 게시물')">내 게시물</li>
-        <li :class="{ active: activeTab === '내 정보 수정' }" @click="setActiveTab('내 정보 수정')">내 정보 수정</li>
+        <li :class="{ active: activeTab === '내 정보' }" @click="setActiveTab('내 정보')">내 정보</li>
       </ul>
     </div>
     <div class="content">
@@ -64,7 +64,7 @@
       </div>
       
       <!-- 내 정보 수정 -->
-      <div v-if="activeTab === '내 정보 수정'">
+      <div v-if="activeTab === '내 정보'">
         <form @submit.prevent="submitForm">
           <div class="form-group">
             <label for="name">이름</label>
@@ -74,15 +74,15 @@
             <label for="email">이메일</label>
             <input type="email" id="email" v-model="userInfo.email" />
           </div>
-          <div class="form-group">
+          <!-- <div class="form-group">
             <label for="password">비밀번호</label>
             <input type="password" id="password" v-model="userInfo.password" />
-          </div>
+          </div> -->
           <div class="form-group">
             <label for="location">지역</label>
             <input type="text" id="location" v-model="userInfo.location" />
           </div>
-          <button type="submit">수정 완료</button>
+          <!-- <button type="submit">수정 완료</button> -->
         </form>
       </div>
     </div>

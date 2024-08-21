@@ -5,11 +5,13 @@ import illvent.backend.member.domain.MemberRepository;
 import illvent.backend.member.domain.MemberStatus;
 import illvent.backend.post.domain.Post;
 import illvent.backend.post.domain.PostRepository;
+import illvent.backend.post.dto.PostPageResponseDTO;
 import illvent.backend.post.dto.PostRegisterRequestDTO;
 import illvent.backend.post.dto.PostResponseDTO;
 import illvent.backend.post.dto.PostUpdateRequestDTO;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -67,12 +69,19 @@ public class PostService {
         return new PostResponseDTO(post);
     }
 
-    public List<PostResponseDTO> getAllPosts(int page, int size) {
+    public PostPageResponseDTO getAllPosts(int page, int size) {
         Pageable pageable = PageRequest.of(page, size);
 
-        return postRepository.findAll(pageable).stream()
-                .map(PostResponseDTO::new)
-                .collect(Collectors.toList());
+        Page<Post> posts = postRepository.findAll(pageable);
+
+        return PostPageResponseDTO
+                .builder()
+                        .posts(posts.getContent().stream().map(PostResponseDTO::new).collect(Collectors.toList()))
+                                .totalDataCount(posts.getTotalElements())
+                                        .totalPageCount(posts.getTotalPages())
+                                                .currentPageNumber(posts.getNumber())
+                .build();
+
     }
 
     public PostResponseDTO getPost(Long postNo) {

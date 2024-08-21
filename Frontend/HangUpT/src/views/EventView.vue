@@ -150,8 +150,6 @@
                     userId: memberNo.value,
                 }
             });
-            // console.log(response);
-          //   console.log(response.data);
              const res = response.data;
              currentPage.value = res.pageNumber+1;
 
