@@ -9,6 +9,7 @@
 
         <div class="content">
             <EventCard :events="events" @refresh-data="refreshData"/>
+            <PageNation :startPage="startPage" :currentPage="currentPage" :endPage="endPage" @change-page="changePage"/>
           
         </div>
     
@@ -19,19 +20,22 @@
 <script setup>
 import { ref } from 'vue';
 import EventCard from './EventCard.vue';
-
+import PageNation from '../components/PageNation.vue';
 import { useRoute, useRouter } from 'vue-router';
 
     const currentRoute = useRoute();
     const router = useRouter();
 
-    const props = defineProps(['events']);
+    const props = defineProps(['events','startPage','currentPage','endPage']);
     const emit = defineEmits(['refresh-data']);
 
     const refreshData=()=>{
         emit('refresh-data');
     }
 
+    const changePage=(page)=>{
+        emit('change-page',page);
+    }
    
     
 </script>
