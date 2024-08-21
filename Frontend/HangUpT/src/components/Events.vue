@@ -3,12 +3,13 @@
         <div class="list">
             ⭐ 지금 현재 사람들이 가장 많이 본 행사!
         </div>
-        <Carousel :items-to-show="4.5" :wrap-around="false" :autoplay="false" transition="500">
+        <Carousel :items-to-show="4.5" :wrap-around="false" :autoplay="false" transition="1000">
             <Slide v-for="event in listByView" :key="event.no"
                 @mousedown="handleMouseDown" @mouseup="handleMouseUp" @mousemove="handleMouseMove">
-                <div class="slide-item-container" @click="handleClick(event.no)">
+                <div class="slide-item-container" >
                     <div>
-                        <img :src="event.imageUrl" :alt="event.title">
+                        <img :src="event.imageUrl" :alt="event.title" @click="handleClick(event.no)">
+                        <img :src="wishExist(event.no) ? checkImg : unCheckImg" class="scrap-button" @click="onScrap(event.no)"></img>   
                     </div>
                     <div>
                         <div class="date">{{ event.eventDate }}</div>
@@ -27,18 +28,19 @@
         <div class="list2">
             💙 생각지도 못한 행사들이 우르르~! 궁금하다면 클릭!
         </div>
-        <Carousel :items-to-show="4.5" :wrap-around="false" :autoplay="false" transition="500">
+        <Carousel :items-to-show="4.5" :wrap-around="false" :autoplay="false" transition="1000">
             <Slide v-for="event in listByLike" :key="event.no"
                 @mousedown="handleMouseDown" @mouseup="handleMouseUp" @mousemove="handleMouseMove">
-                <div class="slide-item-container" @click="handleClick(event.no)">
+                <div class="slide-item-container" >
                     <div>
-                        <img :src="event.imageUrl" :alt="event.title">
+                        <img :src="event.imageUrl" :alt="event.title" @click="handleClick(event.no)">
+                        <img :src="this.wishExist(event.no) ? checkImg : unCheckImg" class="scrap-button" @click="onScrap(event.no)"></img>   
                     </div>
                     <div>
                         <div class="date">{{ event.eventDate }}</div>
                         <div class="title">{{ event.title }}</div>
                         <div class="etc_container">
-                            <div class="price">{{ event.price > 0 ? `${event.price}원` : '무료' }}</div>
+                            <div class="price">{{ event.price > 0 ? `${event.price} 원` : '무료' }}</div>
                             <div class="view_count">조회 {{ event.views }}</div>
                         </div>
                     </div>
@@ -49,11 +51,13 @@
 </template>
 
 <script>
-import { ref, onMounted } from 'vue';
+import { computed, ref, onMounted } from 'vue';
 import { Carousel, Navigation, Slide } from 'vue3-carousel';
 import 'vue3-carousel/dist/carousel.css';
 import axios from 'axios';
 import { useRouter } from 'vue-router';
+import scrapUnCheck from '../assets/images/scrap_uncheck.png';
+import scrapCheck from '../assets/images/scrap_check.png';
 
 const baseUrl = 'http://localhost:8080/v1/api/event';
 
@@ -67,17 +71,32 @@ export default {
     setup() {
         const listByView = ref([]);
         const listByLike = ref([]);
+        const listLike = ref([]);
         const router = useRouter();
         let isDragging = false;
         let startX = 0;
         let startY = 0;
 
+        const scrapImgUrl = ref(scrapUnCheck);
+        const unCheckImg = ref(scrapUnCheck);
+        const checkImg = ref(scrapCheck);
+        
+
         const requestAPI = async () => {
             const resultByView = await axios.get(`${baseUrl}/list/top/view`);
             listByView.value = resultByView.data;
+            console.log(listByView.value);
 
             const resultByLike = await axios.get(`${baseUrl}/list/top/like`);
             listByLike.value = resultByLike.data;
+
+            const isLoggedIn = localStorage.getItem("isLoggedIn");
+            if(isLoggedIn === 'false') return;
+
+            const userInfo = JSON.parse(localStorage.getItem("userInfo"));
+            const resultLike = await axios.get(`http://localhost:8080/v1/api/member/list/wish/${userInfo.no}`);
+            listLike.value = resultLike.data;
+            console.log(listLike.value);
         };
 
         const handleMouseDown = (event) => {
@@ -103,6 +122,62 @@ export default {
                 router.push({ path: '/event', query: { id } });
             }
         };
+        
+        const onScrap =(eventNo)=>{
+            //   scrapImgUrl.value = scrapCheck;
+            // 로그인 여부 먼저 확인 
+            // todo 스크랩 api 호출
+            console.log('onScrap 클릭');
+            const isLoggedIn = localStorage.getItem("isLoggedIn");
+    
+    
+            if(isLoggedIn=="false"){
+                alert("관심행사 등록은 로그인 후 이용해주세요");
+                return;
+            }
+            // todo : 관심행사 등록 api 호출
+            // api 재실행 
+            const userInfo = localStorage.getItem("userInfo");
+            const memberNo = JSON.parse(userInfo)['no'];
+
+            console.log(`memberNo : ${memberNo}`);
+            console.log(`eventNo : ${eventNo}`);
+
+            scrapApi(memberNo,eventNo);
+        }
+
+        const scrapApi = async(memberNo,eventNo)=>{
+            try{
+                await axios.post('http://localhost:8080/v1/api/wish/register',{
+                    memberNo,
+                    eventNo
+                }).then((res)=>{
+                    console.log(res);
+                    console.log(res.data);
+                    if(res.data=="register"){
+                        // emit('refresh-data');
+                        alert("관심행사로 등록되었습니다.");
+                    }else if(res.data=="cancel"){
+                        // emit('refresh-data');
+                        alert("관심행사 등록을 취소했습니다.")
+                    }
+                
+                })
+            }catch(err){
+                console.log(err);
+            }
+
+        }
+
+        const wishExist = (eventNo) => {
+            const isLoggedIn = localStorage.getItem("isLoggedIn");
+            if(isLoggedIn === 'false') return;
+            const userInfo = JSON.parse(localStorage.getItem("userInfo"));
+            for(let i = 0; i < listLike.value.length; i++){
+                if(listLike.value[i].no === eventNo) return true;
+            }
+            return false;
+        }
 
         onMounted(() => {
             requestAPI();
@@ -115,6 +190,13 @@ export default {
             handleMouseDown,
             handleMouseMove,
             handleMouseUp,
+            onScrap,
+            scrapApi,
+            scrapImgUrl,
+            unCheckImg,
+            checkImg,
+            wishExist,
+            listLike,
         };
     },
 };
@@ -199,4 +281,14 @@ export default {
     transform: translateY(-5px); /* 마우스 올렸을 때 텍스트 살짝 위로 */
     color: rgb(255, 99, 71); /* 텍스트 색상 변경 */
 }
+
+.scrap-button {
+       position: absolute;
+       top:5px;
+       right:10px;
+       width:35px !important;
+       cursor: pointer;
+     
+    }
+
 </style>
