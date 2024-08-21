@@ -34,7 +34,7 @@
       <!-- 댓글 목록 -->
       <div v-for="(comment, index) in comments" :key="index" class="comment mb-4 p-3 rounded">
         <div class="d-flex justify-content-between align-items-center">
-          <p class="mb-1"><strong>익명</strong></p>
+          <p class="mb-1"><strong>{{ comment.memberName }}</strong></p> <!-- 회원 이름 표시 -->
           <button @click="toggleReply(index)" class="btn btn-sm btn-link">답글</button>
         </div>
         <p>{{ comment.text }}</p>
@@ -66,9 +66,20 @@
   const post = ref({})
   const route = useRoute()
 
-  // 댓글과 대댓글 관련 데이터 및 메서드
   const comments = ref([]) 
   const newComment = ref('') 
+  const memberInfo = JSON.parse(localStorage.getItem("userInfo"))
+
+  const loadCommentsFromLocalStorage = () => {
+    const storedComments = JSON.parse(localStorage.getItem(`comments_${route.params.id}`));
+    if (storedComments) {
+      comments.value = storedComments;
+    }
+  };
+
+  const saveCommentsToLocalStorage = () => {
+    localStorage.setItem(`comments_${route.params.id}`, JSON.stringify(comments.value));
+  };
 
   const loadPost = async () => {
     try {
@@ -86,35 +97,45 @@
     }
   }
 
-  onMounted(() => {
-    loadPost()
-  })
-
   const increaseLikes = async () => {
     try {
-      post.value.likes += 1
-
       const response = await axios.put(`http://localhost:8080/v1/api/post/update/${route.params.id}`, { 
-        likes: post.value.likes 
-      })
+        likes: post.value.likes + 1 
+      });
 
-      post.value.likes = response.data.likes
+      post.value.likes = response.data.likes;
     } catch (error) {
-      console.error("좋아요 증가 중 오류 발생:", error)
+      console.error("좋아요 증가 중 오류 발생:", error);
     }
-  }
+  };
 
-  const addComment = () => {
+  const addComment = async () => {
     if (newComment.value.trim()) {
-      comments.value.push({
-        text: newComment.value,
-        replies: [],
-        replyText: '',
-        showReply: false,
-      })
-      newComment.value = ''
+      try {
+        const postId = route.params.id;
+        const commentData = {
+          content: newComment.value,
+          memberNo: memberInfo.no 
+        };
+        
+        await axios.post(`http://localhost:8080/v1/api/comment/register/${postId}`, commentData);
+
+        comments.value.push({
+          text: newComment.value,
+          memberName: memberInfo.name,
+          replies: [],
+          replyText: '',
+          showReply: false,
+        });
+
+        saveCommentsToLocalStorage();
+
+        newComment.value = '';
+      } catch (error) {
+        console.error("댓글 등록 중 오류 발생:", error);
+      }
     }
-  }
+  };
 
   const toggleReply = (index) => {
     comments.value[index].showReply = !comments.value[index].showReply
@@ -126,8 +147,15 @@
       comments.value[index].replies.push(replyText)
       comments.value[index].replyText = ''
       comments.value[index].showReply = false
+
+      saveCommentsToLocalStorage();
     }
   }
+
+  onMounted(() => {
+    loadPost()
+    loadCommentsFromLocalStorage() 
+  })
 </script>
 
 <style scoped>

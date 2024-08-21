@@ -4,7 +4,7 @@
 
     <!-- 글쓰기 버튼 -->
     <div class="d-flex justify-content-end mb-3">
-      <router-link to="/boards/new" class="btn btn-primary">글쓰기</router-link>
+      <router-link v-if="store.isLoggedIn === 'true'" to="/boards/new" class="btn btn-primary">글쓰기</router-link>
     </div>
 
     <div class="row justify-content-center">
@@ -47,7 +47,7 @@
               <th scope="col" style="width: 5%;">ID</th>
               <th scope="col" style="width: 12%;">지역</th>
               <th scope="col" style="width: 50%;">제목</th>
-              <th scope="col" style="width: 8%;">좋아요 수</th>
+              <th scope="col" style="width: 8%;">좋아요</th>
               <th scope="col" style="width: 7%;">조회수</th>
               <th scope="col" style="width: 12%;">날짜</th>
             </tr>
@@ -90,6 +90,7 @@
 import { ref, computed, watch, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import axios from 'axios'
+import { store } from '../data/store' // store를 import
 
 const cities = ["경기도", "강원도", "충청북도", "충청남도", "전라북도", 
           "전라남도", "경상북도", "경상남도", "서울특별시", 

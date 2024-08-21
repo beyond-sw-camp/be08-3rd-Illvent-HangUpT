@@ -1,6 +1,6 @@
 <template>
     <div class="container">
-        <div  class="item_container" v-for="event in events" :key="event.id">
+        <div  class="item_container" v-for="event in events" :key="event.id" @click="goToEventDetail(event.id)">
             <div>
                 <div class="img_container">
                     <img :src="event.imgUrl" :alt="event.title">  
@@ -26,6 +26,7 @@
     import scrapUnCheck from '../assets/images/scrap_uncheck.png';
     import scrapCheck from '../assets/images/scrap_check.png';
     import axios from 'axios';
+    import { useRouter } from 'vue-router';
 
     const scrapImgUrl = ref(scrapUnCheck);
     const unCheckImg = ref(scrapUnCheck);
@@ -33,6 +34,7 @@
 
     const props = defineProps(['events']);
     const emit = defineEmits(['refresh-data']);
+    const router = useRouter();
 
     // const events = ref(props.events);
 
@@ -88,6 +90,9 @@
             console.log(err);
         }
 
+    }
+    const goToEventDetail = (id)=>{
+        router.push({ path: '/event', query: { id } });
     }
     
     
