@@ -144,11 +144,25 @@
 
     .scrap-button {
        position: absolute;
-       top:5px;
-       right:10px;
+       top:0px;
+       right:5px;
        width:35px !important;
        cursor: pointer;
      
+    }
+    img {
+        width: 100%;
+        height: 70%;
+        border-radius: 5px;
+        object-fit: cover;
+        display: block;
+        height: auto;
+        transition: transform 0.3s ease, box-shadow 0.3s ease; /* 변환 및 그림자 효과를 부드럽게 적용 */
+    }
+     
+    img:hover {
+        transform: scale(1.1); /* 마우스를 올리면 이미지가 1.1배 확대 */
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3); /* 확대 시 그림자 추가 */
     }
 
 </style>
