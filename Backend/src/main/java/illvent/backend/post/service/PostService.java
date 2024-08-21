@@ -68,7 +68,7 @@ public class PostService {
     }
 
     public List<PostResponseDTO> getAllPosts(int page, int size) {
-        Pageable pageable = PageRequest.of(page, 10);
+        Pageable pageable = PageRequest.of(page, size);
 
         return postRepository.findAll(pageable).stream()
                 .map(PostResponseDTO::new)
