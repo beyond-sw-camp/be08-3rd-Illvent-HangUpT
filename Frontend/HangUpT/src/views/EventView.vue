@@ -86,7 +86,6 @@
     const listLimit = 9; // 한 페이지에 표시될 리스트수
 
 
-    
     onMounted(()=>{
         fetchEventData();
     });
@@ -101,6 +100,7 @@
     });
     watch([selectDate,selectRegion,selectJoin,selectPrice],()=>{
         // 필터 조건값이 바뀌면 api 재 요청
+        currentPage.value = 1;
         fetchEventData();
     });
 
