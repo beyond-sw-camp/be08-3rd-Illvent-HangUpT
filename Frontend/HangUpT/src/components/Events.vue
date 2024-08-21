@@ -156,9 +156,11 @@ export default {
                     console.log(res.data);
                     if(res.data=="register"){
                         // emit('refresh-data');
+                        requestAPI();
                         alert("관심행사로 등록되었습니다.");
                     }else if(res.data=="cancel"){
                         // emit('refresh-data');
+                        requestAPI();
                         alert("관심행사 등록을 취소했습니다.")
                     }
                 
