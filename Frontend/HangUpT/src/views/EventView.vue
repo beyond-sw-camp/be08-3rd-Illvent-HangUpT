@@ -64,7 +64,6 @@
     import EventList from '../components/EventList.vue';
     import { useRoute,useRouter } from 'vue-router';
     import axios from 'axios';
-    import PageNation from '../components/PageNation.vue';
 
     const route = useRoute();
     const router = useRouter();
@@ -74,6 +73,7 @@
     const selectRegion = ref('전체'); // 지역 
     const selectJoin = ref(route.query.selectJoin||'onoff'); // 참여 방법 
     const selectPrice = ref(route.query.selectPrice||'freeAndPaid'); // 가격 
+    const memberNo = ref(null);
 
      // 페이지네이션을 위한 데이터
    // const currentPage = ref(Number(route.query.page)||1); // 현재 페이지 번호
@@ -117,13 +117,26 @@
 
     const fetchEventData = ()=>{
         // todo : api 호출
-        console.log('api 호출 !')
+        // console.log('api 호출 !')
+        getLoginUserId();
         getEventsAPI(currentPage.value-1);
 
     }
 
+    const getLoginUserId=()=>{
+        const isLoggedIn = localStorage.getItem("isLoggedIn");
+        if(isLoggedIn=="true"){
+            const userInfo = localStorage.getItem("userInfo");
+            memberNo.value = JSON.parse(userInfo)['no'];
+        }else{
+            memberNo.value = null;
+        }
+
+        // console.log(`userId : ${memberNo}`);
+
+    }
+
     async function getEventsAPI(page){
-        console.log(`getEventsAPI : ${page}`)
         try{
             const response = await axios.get(`http://localhost:8080/v1/api/event`,{
                 params:{
@@ -132,7 +145,8 @@
                     date: selectDate.value,
                     region: selectRegion.value,
                     join: selectJoin.value,
-                    price:selectPrice.value
+                    price:selectPrice.value,
+                    userId: memberNo.value,
                 }
             });
             // console.log(response);
@@ -152,13 +166,15 @@
         }
     }
     const refreshData = ()=>{
-        console.log('refreshData : ',currentPage.value);
+        // console.log('refreshData : ',currentPage.value);
+        getLoginUserId();
         getEventsAPI(currentPage.value-1);
     }
 
-    const changePage=(page)=>{
-        console.log('페이지 이동');
+    // const changePage=(page)=>{
+    //     console.log('페이지 이동');
         if(page>=1 && page<=maxPage.value){
+            getLoginUserId();
             getEventsAPI(page-1);
         }
 
