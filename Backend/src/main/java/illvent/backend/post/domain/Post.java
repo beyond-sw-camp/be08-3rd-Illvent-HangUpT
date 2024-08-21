@@ -55,7 +55,7 @@ public class Post{
     @Column(nullable = false)
     private int likes;
 
-    @OneToMany(mappedBy = "post")
+    @OneToMany(mappedBy = "post", cascade = CascadeType.REMOVE)
     private List<Comment> comments = new ArrayList<>();
 
     public void update(PostUpdateRequestDTO postUpdateRequestDTO) {

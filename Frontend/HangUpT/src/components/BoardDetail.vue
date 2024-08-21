@@ -1,7 +1,10 @@
 <template>
   <div class="container mt-5">
-    <!-- 게시물 제목 -->
-    <h1>{{ post.title }}</h1>
+    <div class="d-flex justify-content-between align-items-center">
+      <h1>{{ post.title }}</h1>
+      <!-- 게시물 삭제 버튼 -->
+      <button v-if="post.memberNo === memberInfo.no" @click="deletePost" class="btn btn-danger">삭제</button>
+    </div>
     
     <!-- 게시물 내용 -->
     <div class="post-content mt-4">
@@ -106,6 +109,20 @@
       post.value.likes = response.data.likes;
     } catch (error) {
       console.error("좋아요 증가 중 오류 발생:", error);
+    }
+  };
+
+  const deletePost = async () => {
+    if (confirm("정말로 이 게시물을 삭제하시겠습니까?")) {
+      try {
+        const postId = route.params.id;
+        await axios.delete(`http://localhost:8080/v1/api/post/delete/${postId}`);
+
+        alert("게시물이 삭제되었습니다.");
+        router.push('/boards'); // 삭제 후 게시물 목록으로 이동
+      } catch (error) {
+        console.error("게시물 삭제 중 오류 발생:", error);
+      }
     }
   };
 
