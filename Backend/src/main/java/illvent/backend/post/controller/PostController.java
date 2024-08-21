@@ -1,5 +1,6 @@
 package illvent.backend.post.controller;
 
+import illvent.backend.post.dto.PostPageResponseDTO;
 import illvent.backend.post.dto.PostRegisterRequestDTO;
 import illvent.backend.post.dto.PostResponseDTO;
 import illvent.backend.post.dto.PostUpdateRequestDTO;
@@ -39,11 +40,11 @@ public class PostController {
 
     @Operation(summary = "모든 게시물을 반환하는 API")
     @GetMapping("/list")
-    public ResponseEntity<List<PostResponseDTO>> getAllPosts(@RequestParam(value = "page", defaultValue = "0") int page,
-                                                  @RequestParam(value = "size", defaultValue = "0") int size){
-        List<PostResponseDTO> postList = postService.getAllPosts(page, size);
+    public ResponseEntity<PostPageResponseDTO> getAllPosts(@RequestParam(value = "page", defaultValue = "0") int page,
+                                           @RequestParam(value = "size", defaultValue = "10") int size){
+        PostPageResponseDTO allPosts = postService.getAllPosts(page, size);
 
-        return ResponseEntity.ok(postList);
+        return ResponseEntity.ok(allPosts);
     }
 
     @Operation(summary = "특정 게시물을 반환하는 API")
