@@ -51,7 +51,7 @@ import { useRouter } from 'vue-router';
       password:password.value,
 
     }).then((res)=>{
-   //   console.log(res);
+      console.log(res);
       if(res.status==200){
         alert("로그인을 성공했습니다.");
         store.isLoggedIn = 'true'; 
