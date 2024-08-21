@@ -49,11 +49,6 @@
             <label for="content">내용</label>
             <textarea v-model="content" id="content" class="form-control" rows="5" required></textarea>
           </div>
-
-          <div class="form-group">
-            <label for="file-upload">파일 업로드</label>
-            <input type="file" id="file-upload" name="file" />
-          </div>
         </div>
 
         <!-- 버튼 -->
