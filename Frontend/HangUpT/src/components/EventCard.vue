@@ -1,11 +1,11 @@
 <template>
     <div class="container">
-        <div  class="item_container" v-for="event in events" :key="event.id" @click="goToEventDetail(event.id)">
+        <div  class="item_container" v-for="event in events" :key="event.id" >
             <div>
                 <div class="img_container">
-                    <img :src="event.imgUrl" :alt="event.title">  
+                    <img :src="event.imgUrl" :alt="event.title" @click.prevent="goToEventDetail(event.id)">  
                     <!-- <img :src="scrapImgUrl" class="scrap-button" @click="onScrap"></img> -->
-                    <img :src="event.wish? checkImg:unCheckImg" class="scrap-button" @click="onScrap(event.id)"></img>   
+                    <img :src="event.wish? checkImg:unCheckImg" class="scrap-button" @click.prevent="onScrap(event.id)"></img>   
                 </div>     
             </div>         
             <div>

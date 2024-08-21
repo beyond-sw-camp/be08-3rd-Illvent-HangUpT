@@ -130,32 +130,30 @@
                     page:page,
                     size: 9,
                     date: selectDate.value,
-                    // date:"ALL",
                     region: selectRegion.value,
                     join: selectJoin.value,
                     price:selectPrice.value
                 }
             });
             // console.log(response);
-            console.log(response.data);
+             console.log(response.data);
              const res = response.data;
              currentPage.value = res.pageNumber+1;
 
-             maxPage.value = parseInt(Math.ceil(res.totalElements/listLimit));
-
+            maxPage.value = parseInt(Math.ceil(res.totalElements/listLimit));
             startPage.value = (pageLimit * parseInt((page-1)/pageLimit)) + 1;
-
             endPage.value = startPage.value + pageLimit - 1;
             endPage.value = endPage.value > maxPage.value ? maxPage.value : endPage.value;
-
-            events.value = res.contents;
+            
+            events.value = res.contents; 
 
         }catch(error){
             console.log('API 요청 실패 : ',error);
         }
     }
     const refreshData = ()=>{
-        getEventsAPI(currentPage.value);
+        console.log('refreshData : ',currentPage.value);
+        getEventsAPI(currentPage.value-1);
     }
 
     const changePage=(page)=>{
