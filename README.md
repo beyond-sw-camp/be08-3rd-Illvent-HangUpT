@@ -111,9 +111,8 @@
 <br>
 
 ## 📑 시스템 아키텍처
-[시스템 아키텍처]
+![image](https://github.com/user-attachments/assets/7df0ffaa-db1a-4809-93bb-f6b2e8280214)
 
-![HangUpT](https://github.com/user-attachments/assets/c3329d2d-3054-463c-ad95-92ffacb391a1)
 
 <br>
 
