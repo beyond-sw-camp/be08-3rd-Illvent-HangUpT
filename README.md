@@ -183,7 +183,8 @@
 ## 📅 WBS
 [WBS](https://docs.google.com/spreadsheets/d/13E_mtIu6xKc1JoF_HQh8CLfdxFWL-oyIPik1oPiHtm0/edit?gid=1108790350#gid=1108790350)
 
-![image](https://github.com/user-attachments/assets/3d21bf69-3f58-4fd2-81a8-1dfbb02ea3b9)
+![image](https://github.com/user-attachments/assets/be1acd50-0ee8-48b7-b1b1-bb00f5ea4802)
+
 
 <br>
 
