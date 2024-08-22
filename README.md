@@ -107,7 +107,8 @@
 
 ## 📑 요구사항 명세서
 [요구사항 명세서](https://docs.google.com/spreadsheets/d/13E_mtIu6xKc1JoF_HQh8CLfdxFWL-oyIPik1oPiHtm0/edit?gid=292227401#gid=292227401)
-![image](https://github.com/user-attachments/assets/b6ac9db3-0353-40ac-9412-96deb107d513)
+![image](https://github.com/user-attachments/assets/6ec01061-8da7-41a2-bac3-3c018548a6dc)
+
 
 <br>
 
@@ -291,11 +292,11 @@
 ## 🐻 한줄 회고록
 |&nbsp;&nbsp;팀&nbsp;원&nbsp;&nbsp;&nbsp;|회고|
 |:---:|---|
-|👑김은경||
-|🍙김태영||
-|🐶박성준||
-|🍉이주희||
-|🧁정진주|<br>짧은 기간이었지만 알찬 경험이었습니다! 고생한 팀원들에게 감사합니다 :><br>&nbsp; |
+|👑김은경|<br><br>&nbsp;|
+|🍙김태영|<br><br>&nbsp;|
+|🐶박성준|<br><br>&nbsp;|
+|🍉이주희|<br>Vue.js를 사용해 Kakao Map 기능을 구현하며, 아키텍처 설계와 기능 개발 로직에 대해 깊이 고민할 수 있는 뜻깊은 시간을 보냈습니다. 함께 프로젝트를 진행한 팀원들 모두 멋졌고, 그들의 수고와 지원에 깊이 감사드립니다.<br>&nbsp;|
+|🧁정진주|<br>짧은 기간이었지만 알찬 경험이었습니다! 고생한 팀원들에게 감사합니다 :><br>&nbsp;|
 |🐧조혜인|<br>다들 너무 고생하셨습니다. 인상깊은건 수줍음 많은 팀장님이 쿠키를 주실때였습니다. 감사했습니다<br>&nbsp;|
 
 <br>
