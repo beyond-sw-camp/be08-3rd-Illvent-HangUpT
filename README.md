@@ -298,7 +298,7 @@
 
 
 ## 🐻 한줄 회고록
-|&nbsp;&nbsp;팀&nbsp;원&nbsp;&nbsp;&nbsp;|회고|
+|&nbsp;&nbsp;&nbsp;&nbsp;팀&nbsp;원&nbsp;&nbsp;&nbsp;|회고|
 |:----:|----|
 |👑김은경|<br><br>&nbsp;|
 |🍙김태영|<br>처음 해보는 프론트 프로젝트라서 낯설었지만, 백엔드까지 함께 사용하여서, 프로젝트의 전반적인 구조를 알 수 있었던 경험이었습니다<br>&nbsp;|
