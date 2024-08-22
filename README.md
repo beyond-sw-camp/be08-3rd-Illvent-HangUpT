@@ -107,7 +107,8 @@
 
 ## 📑 요구사항 명세서
 [요구사항 명세서](https://docs.google.com/spreadsheets/d/13E_mtIu6xKc1JoF_HQh8CLfdxFWL-oyIPik1oPiHtm0/edit?gid=292227401#gid=292227401)
-![image](https://github.com/user-attachments/assets/6ec01061-8da7-41a2-bac3-3c018548a6dc)
+![image](https://github.com/user-attachments/assets/6e0ac0ff-09da-4103-86ac-60214679fdf4)
+
 
 
 <br>
@@ -298,7 +299,7 @@
 
 
 ## 🐻 한줄 회고록
-|&nbsp;&nbsp;&nbsp;&nbsp;팀&nbsp;원&nbsp;&nbsp;&nbsp;|회고|
+|&nbsp;&nbsp;&nbsp;&nbsp;팀&nbsp;원&nbsp;&nbsp;&nbsp;&nbsp;|회고|
 |:----:|----|
 |👑김은경|<br>짧은 기간 안에 완성을 하느라 힘든점도 많았지만, 더 빨리 성장할 수 있었던것 같습니다. 이번 프로젝트에서는 Vue로 프론트 개발 뿐만아니라 저번에 배운 스프링 프레임워크를 사용해 백엔드까지 구현을 하면서 전체적인 웹 개발 흐름을 이해할 수 있었습니다.<br>&nbsp;|
 |🍙김태영|<br>처음 해보는 프론트 프로젝트라서 낯설었지만, 백엔드까지 함께 사용하여서, 프로젝트의 전반적인 구조를 알 수 있었던 경험이었습니다<br>&nbsp;|
@@ -308,5 +309,3 @@
 |🐧조혜인|<br>다들 너무 고생하셨습니다. 인상깊은건 수줍음 많은 팀장님이 쿠키를 주실때였습니다. 감사했습니다<br>&nbsp;|
 
 <br>
-
-
