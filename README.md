@@ -270,12 +270,24 @@
   <summary>게시판</summary>
   <br>
   <details>
-    <summary></summary>
-    <img src="">
+    <summary>게시글 작성</summary>
+    <img src="https://github.com/user-attachments/assets/beb10ef5-8969-4846-bcc3-345222353454">
   </details>
   <details>
-    <summary></summary>
-    <img src="">
+    <summary>정렬 기능</summary>
+    <img src="https://github.com/user-attachments/assets/c75e4ef7-6c29-43cf-9153-e5e62cd23507">
+  </details>
+  <details>
+    <summary>댓글 작성 및 조회수, 좋아요 기능</summary>
+    <img src="https://github.com/user-attachments/assets/4ccf5682-e0e5-482f-b836-81e186d4f0a1">
+  </details>
+  <details>
+    <summary>지역 필터링</summary>
+    <img src="https://github.com/user-attachments/assets/6533d3d0-1caf-427f-adbf-028e5d8dbf94">
+  </details>
+  <details>
+    <summary>게시글 삭제</summary>
+    <img src="https://github.com/user-attachments/assets/fb97e6fa-071e-45b0-8645-6e4ea99b18f7">
   </details>
 </details>
 
