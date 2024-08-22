@@ -112,7 +112,7 @@
 <br>
 
 ## 📑 시스템 아키텍처
-![image](https://github.com/user-attachments/assets/7df0ffaa-db1a-4809-93bb-f6b2e8280214)
+![image](https://github.com/user-attachments/assets/72030b26-f537-433e-8625-34b9a4441e5c)
 
 
 <br>
