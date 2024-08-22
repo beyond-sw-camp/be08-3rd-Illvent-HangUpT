@@ -146,7 +146,8 @@
 <br>
 
 
-## Story Board
+## 🩰 Story Board
+[StoryBoard 보러가기](https://docs.google.com/spreadsheets/d/13E_mtIu6xKc1JoF_HQh8CLfdxFWL-oyIPik1oPiHtm0/edit?gid=919152135#gid=919152135)
 
 <br>
 <br>
