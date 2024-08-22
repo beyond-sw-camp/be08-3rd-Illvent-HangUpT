@@ -63,11 +63,12 @@
 
 <script setup>
   import { ref, onMounted } from 'vue'
-  import { useRoute } from 'vue-router'
+  import { useRoute, useRouter } from 'vue-router'
   import axios from 'axios'
 
   const post = ref({})
-  const route = useRoute()
+  const route = useRoute();
+  const router = useRouter();
 
   const comments = ref([]) 
   const newComment = ref('') 
