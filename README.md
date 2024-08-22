@@ -136,7 +136,7 @@
 <br>
 
 ## 📄 API 명세서
-[API 명세서]()
+[API 명세서](https://docs.google.com/spreadsheets/d/13E_mtIu6xKc1JoF_HQh8CLfdxFWL-oyIPik1oPiHtm0/edit?gid=1880524329#gid=1880524329)
 ![image](https://github.com/user-attachments/assets/6fc0d30f-4a6c-448c-a18f-106c1a77adaf)
 ![image](https://github.com/user-attachments/assets/d12a9c6e-a974-4d27-b15f-90ee510c56e8)
 ![image](https://github.com/user-attachments/assets/7aafaa78-60b1-4827-b455-f15202b1356e)
