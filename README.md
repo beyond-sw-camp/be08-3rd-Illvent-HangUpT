@@ -107,6 +107,7 @@
 
 ## 📑 요구사항 명세서
 [요구사항 명세서](https://docs.google.com/spreadsheets/d/13E_mtIu6xKc1JoF_HQh8CLfdxFWL-oyIPik1oPiHtm0/edit?gid=292227401#gid=292227401)
+![image](https://github.com/user-attachments/assets/b6ac9db3-0353-40ac-9412-96deb107d513)
 
 <br>
 
@@ -134,6 +135,11 @@
 
 ## 📄 API 명세서
 [API 명세서]()
+![image](https://github.com/user-attachments/assets/6fc0d30f-4a6c-448c-a18f-106c1a77adaf)
+![image](https://github.com/user-attachments/assets/d12a9c6e-a974-4d27-b15f-90ee510c56e8)
+![image](https://github.com/user-attachments/assets/7aafaa78-60b1-4827-b455-f15202b1356e)
+![image](https://github.com/user-attachments/assets/4d16f8ee-eceb-4300-91b6-e129db3dd45a)
+![image](https://github.com/user-attachments/assets/3667f5a9-c0d2-4c75-9ae6-807d7be608c8)
 
 <br>
 <br>
