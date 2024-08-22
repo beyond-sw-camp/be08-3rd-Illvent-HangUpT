@@ -210,12 +210,8 @@
   <summary>마이페이지</summary>
   <br>
   <details>
-    <summary>내 정보</summary>
-    <img src="">
-  </details>
-  <details>
-    <summary>내 게시물</summary>
-    <img src="">
+    <summary>내 관심 행사, 내 게시물, 내 정보</summary>
+    <img src="https://github.com/user-attachments/assets/9f2e71c8-a13a-4d40-8e92-d49b85430dbe">
   </details>
 </details>
   
