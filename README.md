@@ -139,7 +139,7 @@
 <br>
 <br>
 
-## 📐 화면 설계서
+## 📺 화면 설계서
 [Figma 보러가기](https://www.figma.com/design/fairCGNOJ8JbOFODmVtExk/ILLVENT?node-id=0-1&t=7ETNDkGSz4G9M7R4-0)
 
 <br>
@@ -164,6 +164,8 @@
 
 ## 📅 WBS
 [WBS](https://docs.google.com/spreadsheets/d/13E_mtIu6xKc1JoF_HQh8CLfdxFWL-oyIPik1oPiHtm0/edit?gid=1108790350#gid=1108790350)
+
+![image](https://github.com/user-attachments/assets/3d21bf69-3f58-4fd2-81a8-1dfbb02ea3b9)
 
 <br>
 
