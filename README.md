@@ -146,7 +146,7 @@
 <br>
 
 
-## 화면 정의서
+## Story Board
 
 <br>
 <br>
