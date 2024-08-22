@@ -153,6 +153,8 @@
 
 ## 🩰 Story Board
 [StoryBoard 보러가기](https://docs.google.com/spreadsheets/d/13E_mtIu6xKc1JoF_HQh8CLfdxFWL-oyIPik1oPiHtm0/edit?gid=919152135#gid=919152135)
+![image](https://github.com/user-attachments/assets/9aabf2c8-e7eb-4aaa-8e7b-7a32ee6e2674)
+![image](https://github.com/user-attachments/assets/d8b8d486-8103-4eba-a2b8-c5a1c0c64601)
 
 <br>
 <br>
